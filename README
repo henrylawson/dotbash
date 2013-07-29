@@ -2,8 +2,7 @@ My bash configuration.
 
 To get started:
 1. Apply settings/simple.theme
-2. Create symbolic links
-2.1 ln -s /full/path/to/bashrc ~/.bashrc
-2.2 ln -s /full/path/to/bash_profile ~/.bash_profile
-2.3 ln -s /full/path/to/bash ~/.bash
-3. chmod 755 ~/.bash/bin/*
+2. ln -s /full/path/to/bashrc ~/.bashrc
+3. ln -s /full/path/to/bash_profile ~/.bash_profile
+4. ln -s /full/path/to/bash ~/.bash
+5. chmod 755 ~/.bash/bin/*
