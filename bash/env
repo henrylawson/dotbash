@@ -1,7 +1,7 @@
 # SETTINGS
 ## History
-HISTFILESIZE=1000000
-HISTSIZE=1000000
+HISTSIZE=100000
+HISTFILE=~/.bash_history
 
 # PATHS
 ## Add RVM to PATH for scripting
