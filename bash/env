@@ -1,16 +1,22 @@
-# Add RVM to PATH for scripting
+# SETTINGS
+## History
+HISTFILESIZE=1000000
+HISTSIZE=1000000
+
+# PATHS
+## Add RVM to PATH for scripting
 export PATH=$PATH:$HOME/.rvm/bin
 export PATH=$PATH:/opt/local/bin:/opt/local/sbin
 
-# Android tools
+## Android tools
 export PATH=$PATH:~/android-sdk-macosx/tools
 export PATH=$PATH:~/android-sdk-macosx/platform-tools
 
-# Git
+## Git
 export PATH=$PATH:/usr/local/git/bin
 
-# Use brew SVN
+## Use brew SVN
 export PATH=$PATH:/usr/local/bin
 
-# Use dotfiles' bash bin
+## Use dotfiles' bash bin
 export PATH=$PATH:~/.bash/bin

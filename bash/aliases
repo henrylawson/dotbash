@@ -6,11 +6,15 @@
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 
 # Bash
-alias brel="source ~/.bashrc"
-alias balias="vim ~/.bash/aliases && brel"
-alias bconf="vim ~/.bash/config && brel"
-alias benv="vim ~/.bash/config && brel"
+alias br="source ~/.bashrc"
+alias ba="vim ~/.bash/aliases && brel"
+alias bc="vim ~/.bash/config && brel"
+alias be="vim ~/.bash/env && brel"
+alias c=clear
 
 # List files
 alias l="ls -lGh"
 alias la="l -a"
+
+# History
+alias th=bash_top_history
