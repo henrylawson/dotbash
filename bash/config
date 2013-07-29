@@ -40,4 +40,5 @@ BWHITE='\e[47m'
 
 # Update the command prompt to be <user>:<current_directory>(git_branch) >
 # Note that the git branch is given a special color
-PS1="\n\[$RED\][\u@\h]\[$NO_COLOR\]:\[$BLUE\]\w\[$NO_COLOR\] \[$EBLACK\]\$(vcprompt)\[$NO_COLOR\] \n\[$RED\]$\[$NO_COLOR\] "
+PS1="\n\[$RED\][\u@\h]\[$NO_COLOR\]:\[$BLUE\]\w\[$NO_COLOR\] \[$EBLACK\]\$(vcprompt)\[$NO_COLOR\] \n\[$RED\]\$\[$NO_COLOR\] "
+PS2="\[$RED\]>\[$NO_COLOR\] "
