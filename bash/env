@@ -15,8 +15,8 @@ export PATH=$PATH:~/android-sdk-macosx/platform-tools
 ## Git
 export PATH=$PATH:/usr/local/git/bin
 
-## Use brew SVN
-export PATH=$PATH:/usr/local/bin
+## Use brew
+export PATH=/usr/local/bin:$PATH
 
 ## Use dotfiles' bash bin
 export PATH=$PATH:~/.bash/bin
