@@ -1,0 +1,16 @@
+# Node Version Manager 
+[[ -s /Users/hlawson/.nvm/nvm.sh ]] && . /Users/hlawson/.nvm/nvm.sh
+ 
+# Ruby Version Manager
+[[ -s "/Users/hlawson/.rvm/scripts/rvm" ]] && source "/Users/hlawson/.rvm/scripts/rvm"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+
+# Bash
+alias brel="source ~/.bashrc"
+alias balias="vim ~/.bash/aliases && brel"
+alias bconf="vim ~/.bash/config && brel"
+alias benv="vim ~/.bash/config && brel"
+
+# List files
+alias l="ls -lGh"
+alias la="l -a"
