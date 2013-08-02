@@ -7,9 +7,9 @@
 
 # Bash
 alias br="source ~/.bashrc"
-alias ba="vim ~/.bash/aliases && brel"
-alias bc="vim ~/.bash/config && brel"
-alias be="vim ~/.bash/env && brel"
+alias ba="vim ~/.bash/aliases && br"
+alias bc="vim ~/.bash/config && br"
+alias be="vim ~/.bash/env && br"
 alias c=clear
 
 # List files
@@ -18,3 +18,13 @@ alias la="l -a"
 
 # History
 alias th=bash_top_history
+
+# Postgress
+alias postgres_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres/postgres.log start"
+alias postgres_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
+
+# Open
+alias o="/usr/bin/open"
+
+# Vim
+alias v="vim"

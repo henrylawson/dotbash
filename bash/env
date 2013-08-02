@@ -20,3 +20,7 @@ export PATH=/usr/local/bin:$PATH
 
 ## Use dotfiles' bash bin
 export PATH=$PATH:~/.bash/bin
+
+# Directories
+gapsvn=/Users/hlawson/ThoughtWorks/GapApps/svn/
+learning=/Users/hlawson/ThoughtWorks/LearningProjects/
