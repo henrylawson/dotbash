@@ -28,3 +28,15 @@ alias o="/usr/bin/open"
 
 # Vim
 alias v="vim"
+
+# Utility
+alias t="take"
+function take() { mkdir -p "$@" && cd "$@"; }
+alias lol='echo "hahahaha"'
+
+# Notes
+function n() {
+	local NOTES_DIR=/Users/hlawson/ThoughtWorks/LearningProjects/notes;
+	local GIT_ARGS="--git-dir=$NOTES_DIR/.git --work-tree=$NOTES_DIR";
+	vim $NOTES_DIR/notes && git $GIT_ARGS add $NOTES_DIR/notes && git $GIT_ARGS commit -am "Auto commit";
+}
