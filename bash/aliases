@@ -38,5 +38,6 @@ alias lol='echo "hahahaha"'
 function n() {
 	local NOTES_DIR=/Users/hlawson/ThoughtWorks/LearningProjects/notes;
 	local GIT_ARGS="--git-dir=$NOTES_DIR/.git --work-tree=$NOTES_DIR";
-	vim $NOTES_DIR/notes && git $GIT_ARGS add $NOTES_DIR/notes && git $GIT_ARGS commit -am "Auto commit";
+	local NOTES_FILE=notes
+	vim $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS add $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS commit -am "Auto commit";
 }
