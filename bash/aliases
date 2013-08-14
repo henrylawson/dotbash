@@ -7,9 +7,9 @@
 
 # Bash
 alias br="source ~/.bashrc"
-alias ba="vim ~/.bash/aliases && br"
-alias bc="vim ~/.bash/config && br"
-alias be="vim ~/.bash/env && br"
+alias ba="v ~/.bash/aliases && br"
+alias bc="v ~/.bash/config && br"
+alias be="v ~/.bash/env && br"
 alias c=clear
 
 # List files
@@ -24,7 +24,7 @@ alias postgres_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/po
 alias postgres_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 
 # Open
-alias o="/usr/bin/open"
+alias o="open"
 
 # Vim
 alias v="vim"
@@ -33,11 +33,13 @@ alias v="vim"
 alias t="take"
 function take() { mkdir -p "$@" && cd "$@"; }
 alias lol='echo "hahahaha"'
+alias f="find"
+alias ws='python -m SimpleHTTPServer'
 
 # Notes
 function n() {
 	local NOTES_DIR=/Users/hlawson/ThoughtWorks/LearningProjects/notes;
 	local GIT_ARGS="--git-dir=$NOTES_DIR/.git --work-tree=$NOTES_DIR";
 	local NOTES_FILE=notes
-	vim $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS add $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS commit -am "Auto commit";
+	v $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS add $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS commit -am "Auto commit";
 }

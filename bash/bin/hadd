@@ -1,0 +1,6 @@
+#!/bin/bash
+websites=""
+for var in "$@"
+do
+	echo -e "127.0.0.1"'\t'"$var" >> /etc/hosts
+done

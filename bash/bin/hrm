@@ -1,0 +1,14 @@
+#!/bin/bash
+websites=""
+for var in "$@"
+do 
+	if [ -z "$websites" ]
+	then
+		websites=$var
+	else
+		websites=$websites"|"$var
+	fi
+done
+escaped=${websites//./\\.}
+command="/$escaped/d"
+sed -i_bak -E "$command" /etc/hosts
