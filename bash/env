@@ -22,5 +22,4 @@ export PATH=/usr/local/bin:$PATH
 export PATH=$PATH:~/.bash/bin
 
 # Directories
-gapsvn=/Users/hlawson/ThoughtWorks/GapApps/svn/
 learning=/Users/hlawson/ThoughtWorks/LearningProjects/
