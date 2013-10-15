@@ -51,4 +51,4 @@ alias tc='truecrypt'
 alias vbx="VBoxManage"
 
 # Remove
-alias r="trash -v"
+alias tr="trash"
