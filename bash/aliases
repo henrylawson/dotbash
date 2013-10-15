@@ -49,3 +49,6 @@ alias tc='truecrypt'
 
 # Virtual Box
 alias vbx="VBoxManage"
+
+# Remove
+alias r="trash -v"
