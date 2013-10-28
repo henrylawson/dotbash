@@ -35,17 +35,16 @@ alias lol='echo "hahahaha"'
 alias f="find"
 alias ws='python -m SimpleHTTPServer'
 
-# Notes
-function n() {
-	local NOTES_DIR=/Users/hlawson/ThoughtWorks/LearningProjects/notes;
-	local GIT_ARGS="--git-dir=$NOTES_DIR/.git --work-tree=$NOTES_DIR";
-	local NOTES_FILE=notes
-	v $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS add $NOTES_DIR/$NOTES_FILE && git $GIT_ARGS commit -am "Auto commit";
-}
-
 # TrueCrypt
 alias truecrypt='/Applications/TrueCrypt.app/Contents/MacOS/TrueCrypt --text'
 alias tc='truecrypt'
+function tcm() {
+	tc ~/Volumes/$1.truecrypt /Volumes/$1 && cd /Volumes/$1
+}
+function tcd() {
+	local PREV=$(pwd)
+	cd ~ && tc -d /Volumes/$1 || cd $PREV
+}
 
 # Virtual Box
 alias vbx="VBoxManage"
