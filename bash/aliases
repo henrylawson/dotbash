@@ -39,7 +39,13 @@ alias ws='python -m SimpleHTTPServer'
 alias truecrypt='/Applications/TrueCrypt.app/Contents/MacOS/TrueCrypt --text'
 alias tc='truecrypt'
 function tcm() {
-	tc ~/Volumes/$1.truecrypt /Volumes/$1 && cd /Volumes/$1
+	TC_FILE=~/Volumes/$1.truecrypt
+	if [ -f $TC_FILE ];
+	then
+		tc $TC_FILE /Volumes/$1 && cd /Volumes/$1
+	else
+		echo "TrueCrypt Volume $TC_FILE does not exist"
+	fi
 }
 function tcd() {
 	local PREV=$(pwd)

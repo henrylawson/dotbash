@@ -23,3 +23,8 @@ export PATH=$PATH:~/.bash/bin
 
 # Directories
 learning=/Users/hlawson/ThoughtWorks/LearningProjects/
+
+# Bash completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	. $(brew --prefix)/etc/bash_completion
+fi
