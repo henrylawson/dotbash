@@ -5,4 +5,5 @@ To get started:
 2. ln -s /full/path/to/bashrc ~/.bashrc
 3. ln -s /full/path/to/bash_profile ~/.bash_profile
 4. ln -s /full/path/to/bash ~/.bash
+5. ln -s /full/path/to/inputrc ~/.inputrc
 5. chmod 755 ~/.bash/bin/*

@@ -1,0 +1,3 @@
+set completion-ignore-case on
+set bell-style visible
+set show-all-if-ambiguous on
