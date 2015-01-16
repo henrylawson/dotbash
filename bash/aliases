@@ -2,8 +2,7 @@
 [[ -s /Users/hlawson/.nvm/nvm.sh ]] && . /Users/hlawson/.nvm/nvm.sh
  
 # Ruby Version Manager
-[[ -s "/Users/hlawson/.rvm/scripts/rvm" ]] && source "/Users/hlawson/.rvm/scripts/rvm"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+source ~/.profile
 
 # Bash
 alias br="source ~/.bashrc"
@@ -14,6 +13,7 @@ alias c=clear
 
 # List files
 alias l="ls -lGha"
+alias ll=l
 
 # History
 alias th=bash_top_history
@@ -55,5 +55,31 @@ function tcd() {
 # Virtual Box
 alias vbx="VBoxManage"
 
-# Remove
-alias tr="trash"
+# Time
+alias epoch='date +"%s"'
+
+alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+
+# Junos
+alias junos_on='launchctl load -w /Library/LaunchAgents/net.juniper.pulsetray.plist'
+alias junos_off='launchctl unload -w /Library/LaunchAgents/net.juniper.pulsetray.plist'
+
+# Update them all!
+function uall() {
+  local brew="brew update; brew upgrade;"
+  local gem="gem update;"
+  local pip="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
+	local macosx="softwareupdate -ia;"
+	local npm="npm update;"
+
+	printf "${GREEN}## Update Brew and Brew packages\n${NORMAL}"
+  bash -c "$brew"
+	printf "\n${GREEN}## Update NPM packages\n${NORMAL}"
+  bash -c "$npm"
+	printf "\n${GREEN}## Update Ruby gems\n${NORMAL}"
+	sudo bash -c "$gem"
+	printf "\n${GREEN}## Update PIP packages\n${NORMAL}"
+	bash -c "$pip"
+	printf "\n${GREEN}## Update MacOSX\n${NORMAL}"
+	sudo bash -c "$macosx"
+}
