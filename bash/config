@@ -38,7 +38,23 @@ BMAGENTA='\e[45m'
 BCYAN='\e[46m'
 BWHITE='\e[47m'
 
-# Update the command prompt to be <user>:<current_directory>(git_branch) >
-# Note that the git branch is given a special color
-PS1="\n\[$RED\][\u@\h]\[$NO_COLOR\]:\[$BLUE\]\w\[$NO_COLOR\] \[$EBLACK\]\$(vcprompt)\[$NO_COLOR\] \n\[$RED\]\$\[$NO_COLOR\] "
-PS2="\[$RED\]>\[$NO_COLOR\] "
+export PROMPT_COMMAND=__prompt_command
+
+function __prompt_command() {
+	local EXIT="$?"
+	local EXIT_CODE="\[$CYAN\][$EXIT]\[$NO_COLOR\]"
+  local HOST_USER="\[$RED\][\u@\h]\[$NO_COLOR\]"
+	local CURRENT_PATH="\[$BLUE\]\w\[$NO_COLOR\]"
+	local VCS_PROMPT="\[$EBLACK\]\$(vcprompt)\[$NO_COLOR\]"
+	local INPUT_PROMPT="\[$RED\]$\[$NO_COLOR\]"
+	
+	PS1=""
+	if [ $EXIT != 0 ]; then
+		PS1+="$EXIT_CODE\n"
+	fi
+	
+	PS1+="\n$HOST_USER:$CURRENT_PATH $VCS_PROMPT \n$INPUT_PROMPT "
+}
+
+INPUT_PROMPT_SECONDARY="\[$RED\]>\[$NO_COLOR\]"
+PS2="$INPUT_PROMPT_SECONDARY "

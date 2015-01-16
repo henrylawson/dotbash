@@ -1,0 +1,21 @@
+#!/bin/bash -e
+
+NO_COLOR='\e[0m'
+GREEN='\e[0;32m'
+
+brew="brew update; brew upgrade;"
+gem="gem update;"
+pip="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
+macosx="softwareupdate -ia;"
+npm="npm update;"
+
+printf "${GREEN}## Update Brew and Brew packages\n${NO_COLOR}"
+bash -c "$brew"
+printf "\n${GREEN}## Update NPM packages\n${NO_COLOR}"
+bash -c "$npm"
+printf "\n${GREEN}## Update Ruby gems\n${NO_COLOR}"
+sudo bash -c "$gem"
+printf "\n${GREEN}## Update PIP packages\n${NO_COLOR}"
+bash -c "$pip"
+printf "\n${GREEN}## Update MacOSX\n${NO_COLOR}"
+sudo bash -c "$macosx"
