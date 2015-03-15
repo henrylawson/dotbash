@@ -1,9 +1,6 @@
 # Node Version Manager 
 [[ -s /Users/hlawson/.nvm/nvm.sh ]] && . /Users/hlawson/.nvm/nvm.sh
  
-# Ruby Version Manager
-source ~/.profile
-
 # Bash
 alias br="source ~/.bashrc"
 alias ba="v ~/.bash/aliases && br"

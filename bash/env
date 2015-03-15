@@ -4,10 +4,6 @@ HISTSIZE=100000
 HISTFILE=~/.bash_history
 
 # PATHS
-## Add RVM to PATH for scripting
-export PATH=$PATH:$HOME/.rvm/bin
-export PATH=$PATH:/opt/local/bin:/opt/local/sbin
-
 ## Android tools
 export PATH=$PATH:~/android-sdk-macosx/tools
 export PATH=$PATH:~/android-sdk-macosx/platform-tools
@@ -29,9 +25,6 @@ export PATH=$PATH:~/.composer/vendor/bin
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 	. $(brew --prefix)/etc/bash_completion
 fi
-
-# RVM Allow Sudoers
-export rvmsudo_secure_path=1
 
 # Bash shell options
 shopt -s globstar 
