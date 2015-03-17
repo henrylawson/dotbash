@@ -12,6 +12,9 @@ alias c=clear
 alias l="ls -lGha"
 alias ll=l
 
+# Grep with colour
+alias grep="grep --color --line-number"
+
 # History
 alias th=bash_top_history
 
@@ -49,6 +52,13 @@ function tcd() {
 	cd ~ && tc -d /Volumes/$1 || cd $PREV
 }
 
+# RVM Create .ruby-version .ruby-gemset
+function rvmc() {
+	echo $1 > .ruby-version
+	echo $2 > .ruby-gemset
+	cd ./
+}
+
 # Virtual Box
 alias vbx="VBoxManage"
 
@@ -63,3 +73,9 @@ alias junos_off='launchctl unload -w /Library/LaunchAgents/net.juniper.pulsetray
 
 # Update them all!
 alias uall=updateall
+
+# Oracle SQLPlus
+export ORACLE_HOME=/Applications/SQLPlus/instantclient_11_2
+export DYLD_LIBRARY_PATH=$ORACLE_HOME
+export TNS_ADMIN=$ORACLE_HOME/network/admin
+export PATH=$PATH:$DYLD_LIBRARY_PATH
