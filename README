@@ -7,3 +7,12 @@ To get started:
 4. ln -s /full/path/to/bash ~/.bash
 5. ln -s /full/path/to/inputrc ~/.inputrc
 5. chmod 755 ~/.bash/bin/*
+6. Install Brew
+7. brew install bash
+8. brew install fasd
+9. brew install vcprompt
+10. Install RVM
+
+After running brew install bash, you can change the default shell safely by:
+1. Add /usr/local/bin/bash to /etc/shells
+2. Running chsh -s /usr/local/bin/bash.

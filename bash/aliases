@@ -1,5 +1,6 @@
 # Node Version Manager 
-[[ -s /Users/hlawson/.nvm/nvm.sh ]] && . /Users/hlawson/.nvm/nvm.sh
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
  
 # Bash
 alias br="source ~/.bashrc"
@@ -34,23 +35,6 @@ function take() { mkdir -p "$@" && cd "$@"; }
 alias lol='echo "hahahaha"'
 alias f="find"
 alias ws='python -m SimpleHTTPServer'
-
-# TrueCrypt
-alias truecrypt='/Applications/TrueCrypt.app/Contents/MacOS/TrueCrypt --text'
-alias tc='truecrypt'
-function tcm() {
-	TC_FILE=~/Volumes/$1.truecrypt
-	if [ -f $TC_FILE ];
-	then
-		tc $TC_FILE /Volumes/$1 && cd /Volumes/$1
-	else
-		echo "TrueCrypt Volume $TC_FILE does not exist"
-	fi
-}
-function tcd() {
-	local PREV=$(pwd)
-	cd ~ && tc -d /Volumes/$1 || cd $PREV
-}
 
 # RVM Create .ruby-version .ruby-gemset
 function rvmc() {
