@@ -37,7 +37,7 @@ alias f="find"
 alias ws='python -m SimpleHTTPServer'
 
 # RVM Create .ruby-version .ruby-gemset
-function rvmc() {
+function rc() {
 	echo $1 > .ruby-version
 	echo $2 > .ruby-gemset
 	cd ./
