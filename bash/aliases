@@ -63,3 +63,6 @@ alias uall=updateall
 #export DYLD_LIBRARY_PATH=$ORACLE_HOME
 #export TNS_ADMIN=$ORACLE_HOME/network/admin
 #export PATH=$PATH:$DYLD_LIBRARY_PATH
+
+# rbenv 
+eval "$(rbenv init -)"
