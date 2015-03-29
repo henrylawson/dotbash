@@ -8,7 +8,8 @@ To get started:
 5. ln -s /full/path/to/inputrc ~/.inputrc
 5. chmod 755 ~/.bash/bin/*
 6. Install Brew
-7. brew install bash fasd vcprompt nodejs nvm rbenv ruby-build
+7. brew tap Homebrew/brewdler
+8. brew brewdle 
 9. Install JRE and JDK
 
 After running brew install bash, you can change the default shell safely by:
