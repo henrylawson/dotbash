@@ -58,11 +58,6 @@ alias junos_off='launchctl unload -w /Library/LaunchAgents/net.juniper.pulsetray
 # Update them all!
 alias uall=updateall
 
-# Oracle SQLPlus
-#export ORACLE_HOME=/Applications/SQLPlus/instantclient_11_2
-#export DYLD_LIBRARY_PATH=$ORACLE_HOME
-#export TNS_ADMIN=$ORACLE_HOME/network/admin
-#export PATH=$PATH:$DYLD_LIBRARY_PATH
-
 # rbenv 
 eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH"
