@@ -42,6 +42,6 @@ fi
 source "$fasd_cache"
 unset fasd_cache
 
-#Java
+# Java
 JAVA_HOME=$(/usr/libexec/java_home)
 export PATH=$JAVA_HOME/bin:$PATH
