@@ -45,3 +45,9 @@ unset fasd_cache
 # Java
 JAVA_HOME=$(/usr/libexec/java_home)
 export PATH=$JAVA_HOME/bin:$PATH
+
+# Tunnelblick Script
+export PATH=/Users/hlawson/Workspace/tunnelblick-script:$PATH
+
+# ccat
+export PATH=$PATH:/usr/local/opt/go/libexec/bin

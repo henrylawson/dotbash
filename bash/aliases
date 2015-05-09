@@ -3,11 +3,11 @@ export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
  
 # Bash
-alias br="source ~/.bashrc"
-alias ba="v ~/.bash/aliases && br"
-alias bc="v ~/.bash/config && br"
-alias be="v ~/.bash/env && br"
-alias c=clear
+alias dotbr="source ~/.bashrc"
+alias dotba="v ~/.bash/aliases && dotbr"
+alias dotbc="v ~/.bash/config && dotbr"
+alias dotbe="v ~/.bash/env && dotbr"
+alias dotc=clear
 
 # List files
 alias l="ls -lGha"
@@ -65,3 +65,12 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 # autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} history -a"
+
+# ruby/rails dev
+alias be="bundle exec"
+
+# openvpnstart
+alias openvpnstart=/Applications/Tunnelblick.app/Contents/Resources/openvpnstart
+
+# ccat
+alias cat=ccat 
