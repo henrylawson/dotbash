@@ -27,7 +27,9 @@ alias postgres_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias o="open"
 
 # Vim
-alias v="vim"
+alias v="mvim"
+alias vi="mvim"
+alias vim="mvim"
 
 # Utility
 alias t="take"
