@@ -10,7 +10,7 @@ alias dotbe="v ~/.bash/env && dotbr"
 alias dotc=clear
 
 # List files
-alias l="ls -lGha"
+alias l="ls -Glha"
 alias ll=l
 
 # Grep with colour
