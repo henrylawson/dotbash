@@ -1,7 +1,7 @@
-# Node Version Manager 
+# Node Version Manager
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
- 
+
 # Bash
 alias dotbr="source ~/.bashrc"
 alias dotba="v ~/.bash/aliases && dotbr"
@@ -60,7 +60,7 @@ alias junos_off='launchctl unload -w /Library/LaunchAgents/net.juniper.pulsetray
 # Update them all!
 alias uall=updateall
 
-# rbenv 
+# rbenv
 eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/bin:$PATH"
 
@@ -75,4 +75,8 @@ alias be="bundle exec"
 alias openvpnstart=/Applications/Tunnelblick.app/Contents/Resources/openvpnstart
 
 # ccat
-alias cat=ccat 
+alias cat=ccat
+
+# rspec
+alias rs="rspec --colour --format d"
+alias rt="ruby -rminitest/pride"

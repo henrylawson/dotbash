@@ -10,9 +10,10 @@ To get started:
 1. Install iTerm2
 1. Install Brew
 1. brew tap Homebrew/brewdler
-1. brew brewdle 
+1. brew brewdle
 1. Install JRE and JDK
 1. Install Source Code Pro font
+1. Install rbenv-gem-rehash, rbenv-bundle-exec
 
 After running brew install bash, you can change the default shell safely by:
 1. Add /usr/local/bin/bash to /etc/shells
