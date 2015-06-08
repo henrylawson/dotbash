@@ -12,7 +12,7 @@ To get started:
 1. brew tap Homebrew/brewdler
 1. brew brewdle
 1. Install JRE and JDK
-1. Install Source Code Pro font
+1. Install Source Code Pro font (https://github.com/powerline/fonts)
 1. Install rbenv-gem-rehash, rbenv-bundle-exec
 
 After running brew install bash, you can change the default shell safely by:
