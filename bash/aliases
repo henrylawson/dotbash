@@ -36,7 +36,7 @@ alias t="take"
 function take() { mkdir -p "$@" && cd "$@"; }
 alias lol='echo "hahahaha"'
 alias f="find"
-alias ws='python -m SimpleHTTPServer'
+alias ws='ruby -run -e httpd . -p 8080'
 
 # RVM Create .ruby-version .ruby-gemset
 function rc() {
