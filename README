@@ -8,6 +8,7 @@ To get started:
 1. ln -s /full/path/to/inputrc ~/.inputrc
 1. chmod 755 ~/.bash/bin/*
 1. Install iTerm2
+1. Configure iTerm2 to use the config in ./iterm2 folder
 1. Install Brew
 1. brew tap Homebrew/brewdler
 1. brew brewdle
