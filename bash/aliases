@@ -4,9 +4,9 @@ source $(brew --prefix nvm)/nvm.sh
 
 # Bash
 alias dotbr="source ~/.bashrc"
-alias dotba="v ~/.bash/aliases && dotbr"
-alias dotbc="v ~/.bash/config && dotbr"
-alias dotbe="v ~/.bash/env && dotbr"
+alias dotba="v -f ~/.bash/aliases && dotbr"
+alias dotbc="v -f ~/.bash/config && dotbr"
+alias dotbe="v -f ~/.bash/env && dotbr"
 alias c=clear
 
 # List files

@@ -10,6 +10,7 @@ export PATH=$PATH:~/android-sdk-macosx/platform-tools
 
 ## Git
 export PATH=$PATH:/usr/local/git/bin
+export GIT_EDITOR='/usr/local/Cellar/macvim/7.4-76/bin/mvim -f'
 
 ## Use brew
 export PATH=/usr/local/bin:$PATH
@@ -27,12 +28,12 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 # Bash shell options
-shopt -s globstar 
-shopt -s autocd 
-shopt -s cdspell 
-shopt -s dirspell 
-shopt -s dotglob 
-shopt -s expand_aliases 
+shopt -s globstar
+shopt -s autocd
+shopt -s cdspell
+shopt -s dirspell
+shopt -s dotglob
+shopt -s expand_aliases
 
 # Fasd
 fasd_cache="$HOME/.fasd-init-bash"
