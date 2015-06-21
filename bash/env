@@ -56,3 +56,4 @@ export PATH=$PATH:/usr/local/opt/go/libexec/bin
 # NVM
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
+

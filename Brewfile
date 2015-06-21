@@ -27,3 +27,5 @@ brew 'ctags'
 brew 'libxml2'
 brew 'qt'
 brew 'qt5'
+brew 'htmlcompressor', args: ['with-yuicompressor']
+brew 'mmv'

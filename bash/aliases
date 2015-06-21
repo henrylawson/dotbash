@@ -3,10 +3,12 @@ export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
 # Bash
-alias dotbr="source ~/.bashrc"
+alias dotbr="source ~/.bashrc && source ~/.inputrc"
 alias dotba="v -f ~/.bash/aliases && dotbr"
 alias dotbc="v -f ~/.bash/config && dotbr"
 alias dotbe="v -f ~/.bash/env && dotbr"
+alias dotbashrc="v -f ~/.bashrc && dotbr"
+alias dotinputrc="v -f ~/.inputrc && dotbr"
 alias c=clear
 
 # List files
