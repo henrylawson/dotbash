@@ -32,7 +32,6 @@ alias o="open"
 alias v="mvim"
 alias vi="mvim"
 alias vim="mvim"
-alias vc="rm -r **/*.swo; rm -r **/*.swp"
 
 # Utility
 alias t="take"
