@@ -1,8 +1,8 @@
 . ~/.bash/env
 . ~/.bash/config
 . ~/.bash/aliases
-custom="~/.bash/custom"
-if [ -b "$custom" ]
+CUSTOM=~/.bash/custom
+if [ -f "$CUSTOM" ]
 then
-  . $custom
+  . $CUSTOM
 fi
