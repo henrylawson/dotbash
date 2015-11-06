@@ -79,10 +79,6 @@ alias cat=ccat
 alias rs="rspec --colour --format d"
 alias rt="ruby -rminitest/pride"
 
-# rails dev
-alias rp="bundle exec rake parallel:migrate parallel:spec"
-alias rdbm="RAILS_ENV=development bundle exec rake db:migrate && RAILS_ENV=test bundle exec rake db:migrate"
-
 # fasd
 fasd_cache="$HOME/.fasd-init-bash"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
