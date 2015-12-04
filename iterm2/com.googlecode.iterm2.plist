@@ -710,7 +710,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>0</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Scrollback in Alternate Screen</key>
@@ -878,7 +878,7 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>453519671.54647499</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>468042274.460657</real>
+	<real>468609067.68727797</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
