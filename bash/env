@@ -8,10 +8,6 @@ HISTFILE=~/.bash_history
 export PATH=$PATH:~/android-sdk-macosx/tools
 export PATH=$PATH:~/android-sdk-macosx/platform-tools
 
-## Git
-export PATH=$PATH:/usr/local/git/bin
-export GIT_EDITOR='/usr/local/Cellar/macvim/7.4-76/bin/mvim -f'
-
 ## Use brew
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
