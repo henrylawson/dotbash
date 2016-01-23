@@ -18,6 +18,9 @@ export PATH=$PATH:~/.bash/bin
 ## Composer PHP Phars
 export PATH=$PATH:~/.composer/vendor/bin
 
+## GNU Tar
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+
 # Bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 	. $(brew --prefix)/etc/bash_completion
