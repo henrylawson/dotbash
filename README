@@ -18,3 +18,10 @@ To get started:
 After running brew install bash, you can change the default shell safely by:
 1. Add /usr/local/bin/bash to /etc/shells
 2. Running chsh -s /usr/local/bin/bash.
+
+Refresh the Brewfile
+1. `brew bundle dump --force`
+1. Add only the new dependencies
+1. `cat Brewfile | sort -u > Brewfile.tmp && mv Brewfile.tmp Brewfile`
+1. Move tap lines to the top
+1. Check it in
