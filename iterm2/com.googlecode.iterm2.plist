@@ -142,9 +142,11 @@
 	<key>NSWindow Frame com.apple.typography_panel_SauceCodePowerline-Light</key>
 	<string>479 629 260 136 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>168 106 1344 818 0 0 1680 1027 </string>
+	<string>0 4 1680 1023 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>169 332 970 596 0 0 1680 1027 </string>
+	<string>183 88 1290 876 0 0 1680 1027 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>224 118 1172 810 0 0 1680 1027 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -873,12 +875,14 @@
 			<string>/Users/hlawson</string>
 		</dict>
 	</array>
+	<key>NoSyncHaveShownPromoWithId_4</key>
+	<true/>
 	<key>NoSyncNeverRemindPrefsChangesCopy</key>
 	<true/>
 	<key>NoSyncTimeOfLastPromo</key>
-	<real>453519671.54647499</real>
+	<real>477634037.38423699</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>468609067.68727797</real>
+	<real>485075341.67844498</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -945,8 +949,10 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-11-06T14:00:47Z</date>
+	<date>2016-05-16T07:08:59Z</date>
 	<key>SavePasteHistory</key>
+	<false/>
+	<key>Secure Input</key>
 	<false/>
 	<key>ShowBookmarkName</key>
 	<false/>
