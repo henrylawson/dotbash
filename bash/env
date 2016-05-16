@@ -58,4 +58,4 @@ source $(brew --prefix nvm)/nvm.sh
 
 # go
 export GOPATH=~/go
-export PATH="$PATH:$GOPATH/bin"
+export PATH=$PATH:$GOPATH/bin/
