@@ -158,6 +158,6 @@ pp "Configuring dotgit"        && configure_dotgit
 pp "Downloading dotslate"      && clone_app dotslate
 pp "Configuring dotslate"      && configure_dotslate
 pp "Configuring tunnelblick"   && configure_tunnelblick
-pp "Manually configure apps"   && manually_configure_apps
 pp "Symlink Dropbox files"     && symlink_dropbox
 pp "Update all applications"   && update_all_apps
+pp "Manually configure apps"   && manually_configure_apps
