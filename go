@@ -7,7 +7,6 @@ pp() {
   echo "====> EXECUTING STEP: $1"
 }
 
-
 wait_for_confirmation() {
   read -p "Have all applications been manually configured? [Yy]" -n 1 -r
   echo ""
@@ -78,7 +77,6 @@ manually_configure_apps() {
   echo "- iStat Menus (license)"
   echo "- Docker (beta) (manually download, install)"
   echo "- Amphetamine (mac store install)"
-  wait_for_confirmation
 }
 
 configure_dotvim() {
