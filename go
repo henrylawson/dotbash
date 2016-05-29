@@ -97,7 +97,7 @@ configure_dotvim() {
     cd $WORKSPACE_PATH/powerline-fonts
     git pull --rebase
   else
-    git clone https://github.com/powerline/fonts.git powerline-fonts
+    git clone https://github.com/powerline/fonts.git "$WORKSPACE_PATH/powerline-fonts"
   fi
   cd $WORKSPACE_PATH/powerline-fonts && ./install.sh
 }
