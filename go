@@ -31,6 +31,8 @@ configure_dotbash() {
   ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
   ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
   chmod 755 ~/.bash/bin/*
+  echo "/usr/local/bin/bash" >> /etc/shells
+  chsh -s /usr/local/bin/bash
 }
 
 install_brew() {
