@@ -105,8 +105,8 @@ configure_dotslate() {
 configure_tunnelblick() {
   cd /tmp
   curl -O https://torguard.net/downloads/OpenVPN-UDP.zip
-  unzip "OpenVPN-UDP.zip"
-  open "OpenVPN -UDP"
+  unzip -u "OpenVPN-UDP.zip" -d "openvpn"
+  open "openvpn"
 }
 
 update_all_apps() {
