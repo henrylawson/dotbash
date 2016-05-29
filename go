@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -euo pipefail
 
 WORKSPACE_PATH=~/Workspace
@@ -16,13 +16,13 @@ clone_app() {
 
   if [ -d "$WORKSPACE_PATH/$APP" ]
   then
-    cd $WORKSPACE_PATH/$APP
+    cd "$WORKSPACE_PATH/$APP"
     git pull --rebase
     return 0
   fi
 
   cd $WORKSPACE_PATH
-  git clone https://github.com/henrylawson/$APP.git
+  git clone "https://github.com/henrylawson/$APP.git"
 }
 
 configure_dotbash() {

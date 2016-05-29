@@ -3,7 +3,6 @@ My bash configuration.
 To get started:
 1. `./go`
 1. Install JRE and JDK
-1. Install rbenv-gem-rehash, rbenv-bundle-exec
 
 To configure iTerm2:
 1. Apply settings/simple.theme
