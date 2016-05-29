@@ -123,8 +123,8 @@ wait_for_confirmation() {
 
 pp "Creating workspace folder" && create_workspace_folder
 pp "Installing brew"           && install_brew
-pp "Installing applications"   && install_brew_apps
 pp "Downloading dotbash"       && clone_app dotbash
+pp "Installing applications"   && install_brew_apps
 pp "Configuring dotbash"       && configure_dotbash
 pp "Downloading dotvim"        && clone_app dotvim
 pp "Configuring dotvim"        && configure_dotvim
