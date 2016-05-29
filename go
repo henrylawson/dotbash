@@ -86,6 +86,10 @@ configure_dotvim() {
   ln -sfn $WORKSPACE_PATH/dotvim/vimrc ~/.vimrc
   ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
 
+  if [ ! -d ~/.vim/bundle/neobundle.vim ]
+  then
+    git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+  fi
   ~/.vim/bundle/neobundle.vim/bin/neoinstall
 
   if [ -d "$WORKSPACE_PATH/powerline-fonts" ]
