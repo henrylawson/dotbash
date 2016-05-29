@@ -34,7 +34,6 @@ configure_dotbash() {
   sudo bash -c "echo '/usr/local/bin/bash' >> /etc/shells"
   sudo chsh -s /usr/local/bin/bash
   chsh -s /usr/local/bin/bash
-  source ~/.bashrc && source ~/.inputrc
 }
 
 install_brew() {
@@ -124,11 +123,11 @@ wait_for_confirmation() {
 }
 
 setup_ruby() {
-  if [ ! -d "~/.rbenv/plugins/rbenv-bundle-exec" ]
+  eval "$(rbenv init -)"
+  if [ ! -d ~/.rbenv/plugins/rbenv-bundle-exec ]
   then
     git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
   fi
-
   rbenv install 2.3.1
   rbenv global 2.3.1
 }
