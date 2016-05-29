@@ -130,7 +130,7 @@ setup_ruby() {
   then
     git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
   fi
-  rbenv install 2.3.1
+  rbenv install 2.3.1 --skip-existing
   rbenv global 2.3.1
 }
 
