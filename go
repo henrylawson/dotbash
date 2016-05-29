@@ -69,6 +69,7 @@ manually_configure_apps() {
   echo "- iStat Menus (license)"
   echo "- Docker (beta) (manually download, install)"
   echo "- Amphetamine (mac store install)"
+  echo "- Java JDK (Oracle website)"
 }
 
 configure_dotvim() {

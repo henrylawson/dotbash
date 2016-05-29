@@ -1,12 +1,11 @@
 My bash configuration.
 
 To get started:
-1. `./go`
-1. Install JRE and JDK
+1. `./go` or `source <(curl -s https://raw.githubusercontent.com/henrylawson/dotbash/master/go)`
+
+Refresh the Brewfile
+1. `./refresh`
 
 To configure iTerm2:
 1. Apply settings/simple.theme
 1. Configure to use the config in ./iterm2 folder
-
-Refresh the Brewfile
-1. `./refresh`
