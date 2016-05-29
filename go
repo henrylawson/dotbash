@@ -7,6 +7,15 @@ pp() {
   echo "====> EXECUTING STEP: $1"
 }
 
+
+wait_for_confirmation() {
+  read -p "Have all applications been manually configured? [Yy]" -n 1 -r
+  echo ""
+  if [[ ! $REPLY =~ ^[Yy]$ ]]
+  then
+      exit 1
+  fi
+}
 create_workspace_folder() {
   mkdir -p $WORKSPACE_PATH
 }
@@ -30,6 +39,7 @@ configure_dotbash() {
   ln -sfn $WORKSPACE_PATH/dotbash/bash_profile ~/.bash_profile
   ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
   ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
+  ln -sfn $WORKSPACE_PATH/dotbash/mackuo.cfg ~/.mackup.cfg
   chmod 755 ~/.bash/bin/*
   sudo bash -c "echo '/usr/local/bin/bash' >> /etc/shells"
   sudo chsh -s /usr/local/bin/bash
@@ -69,7 +79,7 @@ manually_configure_apps() {
   echo "- iStat Menus (license)"
   echo "- Docker (beta) (manually download, install)"
   echo "- Amphetamine (mac store install)"
-  echo "- Java JDK (Oracle website)"
+  wait_for_confirmation
 }
 
 configure_dotvim() {
@@ -114,15 +124,6 @@ update_all_apps() {
   $WORKSPACE_PATH/dotbash/bash/bin/updateall
 }
 
-wait_for_confirmation() {
-  read -p "Have all applications been manually configured? [Yy]" -n 1 -r
-  echo ""
-  if [[ ! $REPLY =~ ^[Yy]$ ]]
-  then
-      exit 1
-  fi
-}
-
 setup_ruby() {
   eval "$(rbenv init -)"
   if [ ! -d ~/.rbenv/plugins/rbenv-bundle-exec ]
@@ -133,7 +134,15 @@ setup_ruby() {
   rbenv global 2.3.1
 }
 
+prereq_apps() {
+  echo "The below applications will require manual install:"
+  echo "- Xcode"
+  echo "- Java Development Kit (JDK)"
+  wait_for_confirmation
+}
+
 pp "Creating workspace folder" && create_workspace_folder
+pp "Prerequisites"             && prereq_apps
 pp "Installing brew"           && install_brew
 pp "Downloading dotbash"       && clone_app dotbash
 pp "Installing applications"   && install_brew_apps
@@ -147,6 +156,5 @@ pp "Downloading dotslate"      && clone_app dotslate
 pp "Configuring dotslate"      && configure_dotslate
 pp "Configuring tunnelblick"   && configure_tunnelblick
 pp "Manually configure apps"   && manually_configure_apps
-pp "Waiting for confirmation"  && wait_for_confirmation
 pp "Symlink Dropbox files"     && symlink_dropbox
 pp "Update all applications"   && update_all_apps
