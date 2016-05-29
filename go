@@ -33,6 +33,7 @@ configure_dotbash() {
   chmod 755 ~/.bash/bin/*
   sudo bash -c "echo '/usr/local/bin/bash' >> /etc/shells"
   sudo chsh -s /usr/local/bin/bash
+  chsh -s /usr/local/bin/bash
 }
 
 install_brew() {
@@ -102,10 +103,10 @@ configure_dotslate() {
 }
 
 configure_tunnelblick() {
+  cd /tmp
   curl -O https://torguard.net/downloads/OpenVPN-UDP.zip
   unzip "OpenVPN-UDP.zip"
-  cd "OpenVPN -UDP"
-  open *.ovpn
+  open "OpenVPN -UDP"
 }
 
 update_all_apps() {
