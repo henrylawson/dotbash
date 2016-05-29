@@ -1,10 +1,10 @@
-# My bash configuration.
+# dotbash
 
 ## To get started
-1. `./go` or `curl -s https://raw.githubusercontent.com/henrylawson/dotbash/master/go | bash`
+`./go` or `curl -s https://raw.githubusercontent.com/henrylawson/dotbash/master/go | bash`
 
 ## Refresh the Brewfile
-1. `./refresh`
+`./refresh`
 
 ## To configure iTerm2
 1. Apply settings/simple.theme
