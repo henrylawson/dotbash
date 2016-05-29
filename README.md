@@ -1,7 +1,7 @@
 # dotbash
 
 ## To get started
-`./go` or `curl -s https://raw.githubusercontent.com/henrylawson/dotbash/master/go | bash`
+`./go` or `curl https://raw.githubusercontent.com/henrylawson/dotbash/master/go > go && bash ./go`
 
 ## Refresh the Brewfile
 `./refresh`
