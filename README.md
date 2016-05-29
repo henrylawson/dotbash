@@ -1,7 +1,7 @@
 My bash configuration.
 
 To get started:
-1. `./go` or `source <(curl -s https://raw.githubusercontent.com/henrylawson/dotbash/master/go)`
+1. `./go` or `curl -s https://raw.githubusercontent.com/henrylawson/dotbash/master/go | bash`
 
 Refresh the Brewfile
 1. `./refresh`
