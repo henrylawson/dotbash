@@ -34,6 +34,7 @@ configure_dotbash() {
   sudo bash -c "echo '/usr/local/bin/bash' >> /etc/shells"
   sudo chsh -s /usr/local/bin/bash
   chsh -s /usr/local/bin/bash
+  source ~/.bashrc && source ~/.inputrc
 }
 
 install_brew() {
@@ -122,11 +123,22 @@ wait_for_confirmation() {
   fi
 }
 
+setup_ruby() {
+  if [ ! -d "~/.rbenv/plugins/rbenv-bundle-exec" ]
+  then
+    git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
+  fi
+
+  rbenv install 2.3.1
+  rbenv global 2.3.1
+}
+
 pp "Creating workspace folder" && create_workspace_folder
 pp "Installing brew"           && install_brew
 pp "Downloading dotbash"       && clone_app dotbash
 pp "Installing applications"   && install_brew_apps
 pp "Configuring dotbash"       && configure_dotbash
+pp "Setup Ruby"                && setup_ruby
 pp "Downloading dotvim"        && clone_app dotvim
 pp "Configuring dotvim"        && configure_dotvim
 pp "Downloading dotgit"        && clone_app dotgit
