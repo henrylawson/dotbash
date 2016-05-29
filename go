@@ -46,6 +46,7 @@ configure_dotbash() {
 }
 
 install_brew() {
+  xcode-select --install
   if hash brew 2>/dev/null
   then
     return 0
