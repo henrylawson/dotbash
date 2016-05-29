@@ -1,0 +1,4 @@
+#!/bin/sh
+set -euxo pipefail
+
+brew bundle dump --force
