@@ -1,5 +1,5 @@
 #!/bin/sh
-set -euxo pipefail
+set -euo pipefail
 
 WORKSPACE_PATH=~/Workspace
 
@@ -8,7 +8,7 @@ create_workspace_folder() {
 }
 
 clone_app() {
-  $APP=$1
+  APP=$1
 
   if [ -d "$WORKSPACE_PATH/$APP" ]
   then
@@ -22,10 +22,10 @@ clone_app() {
 }
 
 configure_dotbash() {
-  ln -s $WORKSPACE_PATH/dotbash/bashrc ~/.bashrc
-  ln -s $WORKSPACE_PATH/dotbash/bash_profile ~/.bash_profile
-  ln -s $WORKSPACE_PATH/dotbash/bash ~/.bash
-  ln -s $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
+  ln -sfn $WORKSPACE_PATH/dotbash/bashrc ~/.bashrc
+  ln -sfn $WORKSPACE_PATH/dotbash/bash_profile ~/.bash_profile
+  ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
+  ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
   chmod 755 ~/.bash/bin/*
 }
 
@@ -65,29 +65,34 @@ manually_configure_apps() {
 }
 
 configure_dotvim() {
-  ln -s $WORKSPACE_PATH/dotvim/gvimrc ~/.gvimrc
-  ln -s $WORKSPACE_PATH/dotvim/vimrc ~/.vimrc
-  ln -s $WORKSPACE_PATH/dotvim/vim ~/.vim
+  ln -sfn $WORKSPACE_PATH/dotvim/gvimrc ~/.gvimrc
+  ln -sfn $WORKSPACE_PATH/dotvim/vimrc ~/.vimrc
+  ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
+
   ~/.vim/bundle/neobundle.vim/bin/neoinstall
-  cd $WORKSPACE_PATH
-  rm -rf powerline-fonts
-  git clone https://github.com/powerline/fonts.git powerline-fonts
-  cd powerline-fonts
-  ./install.sh
+
+  if [ -d "$WORKSPACE_PATH/powerline-fonts" ]
+  then
+    cd $WORKSPACE_PATH/powerline-fonts
+    git pull --rebase
+  else
+    git clone https://github.com/powerline/fonts.git powerline-fonts
+  fi
+  cd $WORKSPACE_PATH/powerline-fonts && ./install.sh
 }
 
 configure_dotgit() {
-  ln -s $WORKSPACE_PATH/dotgit/gitconfig ~/.gitconfig
-  ln -s $WORKSPACE_PATH/dotgit/gitignore ~/.gitignore
+  ln -sfn $WORKSPACE_PATH/dotgit/gitconfig ~/.gitconfig
+  ln -sfn $WORKSPACE_PATH/dotgit/gitignore ~/.gitignore
 }
 
 symlink_dropbox() {
-  ln -s ~/Dropbox/GnuPG ~/.gnupg
-  ln -s ~/Dropbox/SSH ~/.ssh
+  ln -sfn ~/Dropbox/GnuPG ~/.gnupg
+  ln -sfn ~/Dropbox/SSH ~/.ssh
 }
 
 configure_dotslate() {
-  ln -s $WORKSPACE_PATH/dotslate/slate ~/.slate
+  ln -sfn $WORKSPACE_PATH/dotslate/slate ~/.slate
 }
 
 configure_tunnelblick() {
@@ -98,11 +103,11 @@ configure_tunnelblick() {
 }
 
 update_all_apps() {
-  $WORSPACE_PATH/dotbash/bash/bin/updateall
+  $WORKSPACE_PATH/dotbash/bash/bin/updateall
 }
 
 wait_for_confirmation() {
-  read -p "Are you ready to proceed? [Yy]" -n 1 -r
+  read -p "Have all applications been manually configured? [Yy]" -n 1 -r
   echo ""
   if [[ ! $REPLY =~ ^[Yy]$ ]]
   then
