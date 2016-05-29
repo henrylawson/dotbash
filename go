@@ -3,6 +3,10 @@ set -euo pipefail
 
 WORKSPACE_PATH=~/Workspace
 
+pp() {
+  echo "\n\n====> EXECUTING STEP: $1"
+}
+
 create_workspace_folder() {
   mkdir -p $WORKSPACE_PATH
 }
@@ -115,19 +119,19 @@ wait_for_confirmation() {
   fi
 }
 
-create_workspace_folder
-install_brew
-install_brew_apps
-clone_app dotbash
-configure_dotbash
-clone_app dotvim
-configure_dotvim
-clone_app dotgit
-configure_dotgit
-clone_app dotslate
-configure_dotslate
-configure_tunnelblick
-manually_configure_apps
-wait_for_confirmation
-symlink_dropbox
-update_all_apps
+pp "Creating workspace folder" && create_workspace_folder
+pp "Installing brew"           && install_brew
+pp "Installing applications"   && install_brew_apps
+pp "Downloading dotbash"       && clone_app dotbash
+pp "Configuring dotbash"       && configure_dotbash
+pp "Downloading dotvim"        && clone_app dotvim
+pp "Configuring dotvim"        && configure_dotvim
+pp "Downloading dotgit"        && clone_app dotgit
+pp "Configuring dotgit"        && configure_dotgit
+pp "Downloading dotslate"      && clone_app dotslate
+pp "Configuring dotslate"      && configure_dotslate
+pp "Configuring tunnelblick"   && configure_tunnelblick
+pp "Manually configure apps"   && manually_configure_apps
+pp "Waiting for confirmation"  && wait_for_confirmation
+pp "Symlink Dropbox files"     && symlink_dropbox
+pp "Update all applications"   && update_all_apps
