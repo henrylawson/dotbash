@@ -77,6 +77,7 @@ manually_configure_apps() {
   echo "- iStat Menus (license)"
   echo "- Docker (beta) (manually download, install)"
   echo "- Amphetamine (mac store install)"
+  echo "- Slate (config, permissions)"
 }
 
 configure_dotvim() {
