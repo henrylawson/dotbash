@@ -4,7 +4,7 @@ NO_COLOR='\e[0m'
 GREEN='\e[0;32m'
 
 brew="brew update --verbose && brew upgrade --all --verbose && brew cleanup --verbose"
-cask="brew update --verbose && brew upgrade cask --verbose && brew cask list | xargs brew cask install --force --verbose"
+cask="brew update --verbose && brew cask update --verbose && brew cask list | xargs brew cask install --force --verbose"
 gem="gem update -V && gem cleanup -V"
 pip="pip install --upgrade pip && pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
 macosx="softwareupdate -iav"
