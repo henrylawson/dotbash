@@ -146,6 +146,7 @@ prereq_apps() {
 pp "Creating workspace folder" && create_workspace_folder
 pp "Prerequisites"             && prereq_apps
 pp "Installing brew"           && install_brew
+pp "Downloading apple scripts" && clone_app apple-scripts
 pp "Downloading dotbash"       && clone_app dotbash
 pp "Installing applications"   && install_brew_apps
 pp "Configuring dotbash"       && configure_dotbash
