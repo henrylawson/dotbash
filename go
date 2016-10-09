@@ -77,7 +77,6 @@ manually_configure_apps() {
   echo "- Docker (beta) (manually download, install)"
   echo "- Amphetamine (mac store install)"
   echo "- Slate (config, permissions)"
-  echo "- xcode (mac store install)"
 }
 
 configure_dotvim() {
