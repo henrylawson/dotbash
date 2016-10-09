@@ -23,7 +23,7 @@ export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
 # Bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
-	. $(brew --prefix)/etc/bash_completion
+  . $(brew --prefix)/etc/bash_completion
 fi
 
 # Bash shell options
@@ -59,3 +59,7 @@ source $(brew --prefix nvm)/nvm.sh
 # go
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
+
+# iterm colors
+export CLICOLOR=1
+export TERM=xterm-256color

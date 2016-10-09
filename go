@@ -74,10 +74,10 @@ manually_configure_apps() {
   echo "- MindNode (license)"
   echo "- Adobe Create Cloud (login, Photoshop, Lightroom)"
   echo "- Alfred (license, config in Dropbox)"
-  echo "- iStat Menus (license)"
   echo "- Docker (beta) (manually download, install)"
   echo "- Amphetamine (mac store install)"
   echo "- Slate (config, permissions)"
+  echo "- xcode (mac store install)"
 }
 
 configure_dotvim() {

@@ -29,9 +29,9 @@ alias postgres_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias o="open"
 
 # Vim
-alias v="mvim"
-alias vi="mvim"
-alias vim="mvim"
+alias v="vim"
+alias vi="vim"
+alias vim="vim"
 
 # Utility
 alias t="take"
@@ -39,13 +39,6 @@ function take() { mkdir -p "$@" && cd "$@"; }
 alias lol='echo "hahahaha"'
 alias f="find"
 alias ws='ruby -run -e httpd . -p 8080'
-
-# RVM Create .ruby-version .ruby-gemset
-function rc() {
-  echo $1 > .ruby-version
-  echo $2 > .ruby-gemset
-  cd ./
-}
 
 # Virtual Box
 alias vbx="VBoxManage"
