@@ -83,6 +83,7 @@ configure_dotvim() {
   ln -sfn $WORKSPACE_PATH/dotvim/gvimrc ~/.gvimrc
   ln -sfn $WORKSPACE_PATH/dotvim/vimrc ~/.vimrc
   ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
+  ln -sfn $WORKSPACE_PATH/dotvim/ctags ~/.ctags
 
   if [ -d "$WORKSPACE_PATH/powerline-fonts" ]
   then
