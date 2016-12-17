@@ -65,7 +65,7 @@ install_pip_apps() {
 }
 
 manually_configure_apps() {
-  echo "The below applications will require manual setup:"
+  echo "The below applications will require manual login:"
   echo "- Dropbox (login)"
   echo "- 1Password (login)"
   echo "- Google Drive (login)"
@@ -75,6 +75,8 @@ manually_configure_apps() {
   echo "- Skype (login)"
   echo "- Torguard - (login)"
   echo "- Tunnelblick (login)"
+
+  echo "The below applications will require manual setup:"
   echo "- MindNode (license)"
   echo "- iTerm (config in dotbash)"
   echo "- Adobe Create Cloud (login, Photoshop, Lightroom)"
