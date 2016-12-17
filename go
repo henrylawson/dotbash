@@ -61,7 +61,7 @@ install_brew_apps() {
 
 install_pip_apps() {
   cd $WORKSPACE_PATH/dotbash
-  pip install -r requirements.txt
+  pip install --user -r requirements.txt
 }
 
 manually_configure_apps() {
