@@ -127,7 +127,8 @@ update_all_apps() {
 }
 
 refresh_all_apps() {
-  $WORKSPACE_PATH/dotbash/refresh
+  cd $WORKSPACE_PATH/dotbash
+  ./refresh
 }
 
 setup_ruby() {
