@@ -2,3 +2,4 @@
 set -euxo pipefail
 
 brew bundle dump --force
+pip freeze > requirements.txt
