@@ -124,6 +124,10 @@ update_all_apps() {
   $WORKSPACE_PATH/dotbash/bash/bin/updateall
 }
 
+refresh_all_apps() {
+  $WORKSPACE_PATH/refresh
+}
+
 setup_ruby() {
   eval "$(rbenv init -)"
   if [ ! -d ~/.rbenv/plugins/rbenv-bundle-exec ]
@@ -159,4 +163,5 @@ pp "Configuring dotslate"           && configure_dotslate
 pp "Configuring tunnelblick"        && configure_tunnelblick
 pp "Symlink Dropbox files"          && symlink_dropbox
 pp "Update all applications"        && update_all_apps
+pp "Refresh packages"               && refresh_all_apps
 pp "Manually configure apps"        && manually_configure_apps
