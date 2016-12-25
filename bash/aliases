@@ -45,7 +45,7 @@ alias vbx="VBoxManage"
 # Time
 alias epoch='date +"%s"'
 
-alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
+alias subl='/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl'
 
 # Junos
 alias junos_on='launchctl load -w /Library/LaunchAgents/net.juniper.pulsetray.plist'

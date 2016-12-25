@@ -115,13 +115,6 @@ configure_dotslate() {
   ln -sfn $WORKSPACE_PATH/dotslate/slate ~/.slate
 }
 
-configure_tunnelblick() {
-  cd /tmp
-  curl -O https://torguard.net/downloads/OpenVPN-UDP.zip
-  unzip -u "OpenVPN-UDP.zip" -d "openvpn"
-  open "openvpn"
-}
-
 update_all_apps() {
   $WORKSPACE_PATH/dotbash/bash/bin/updateall
 }
@@ -163,7 +156,6 @@ pp "Downloading dotgit"             && clone_app dotgit
 pp "Configuring dotgit"             && configure_dotgit
 pp "Downloading dotslate"           && clone_app dotslate
 pp "Configuring dotslate"           && configure_dotslate
-pp "Configuring tunnelblick"        && configure_tunnelblick
 pp "Symlink Dropbox files"          && symlink_dropbox
 pp "Update all applications"        && update_all_apps
 pp "Refresh packages"               && refresh_all_apps
