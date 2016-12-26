@@ -81,7 +81,6 @@ manually_configure_apps() {
   echo "- iTerm (config in dotbash)"
   echo "- Adobe Create Cloud (login, Photoshop, Lightroom)"
   echo "- Alfred (license, config in Dropbox)"
-  echo "- Amphetamine (mac store install)"
   echo "- Slate (config, permissions)"
 }
 
