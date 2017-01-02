@@ -73,7 +73,7 @@ manually_configure_apps() {
   echo "- Evernote (login)"
   echo "- Spotify (login)"
   echo "- Skype (login)"
-  echo "- Torguard - (login)"
+  echo "- NordVPN (login)"
   echo "- Tunnelblick (login)"
 
   echo "The below applications will require manual setup:"
