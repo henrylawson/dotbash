@@ -82,6 +82,7 @@ manually_configure_apps() {
   echo "- Adobe Creative Cloud (login, Photoshop, Lightroom)"
   echo "- Alfred (license, config in Dropbox)"
   echo "- Slate (config, permissions)"
+  echo "- Amphetamine (app store, config)"
 }
 
 configure_dotvim() {
