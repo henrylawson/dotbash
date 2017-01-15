@@ -68,7 +68,7 @@ manually_configure_apps() {
   echo "The below applications will require manual login:"
   echo "- Dropbox (login)"
   echo "- 1Password (login)"
-  echo "- Google Drive (login)"
+  echo "- Google Drive (login, setup shortcuts)"
   echo "- Google Chrome (login)"
   echo "- Evernote (login)"
   echo "- Spotify (login)"
