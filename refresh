@@ -1,5 +1,8 @@
 #!/bin/sh
 set -euxo pipefail
 
+HOSTNAME=$(hostname)
+
+cd $HOSTNAME
 brew bundle dump --force
 pip freeze > requirements.txt

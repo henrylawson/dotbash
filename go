@@ -2,6 +2,7 @@
 set -euo pipefail
 
 WORKSPACE_PATH=~/Workspace
+HOSTNAME=$(hostname)
 
 pp() {
   echo "====> EXECUTING STEP: $1"
@@ -56,12 +57,12 @@ install_brew() {
 }
 
 install_brew_apps() {
-  cd $WORKSPACE_PATH/dotbash
+  cd $WORKSPACE_PATH/dotbash/$HOSTNAME
   brew bundle
 }
 
 install_pip_apps() {
-  cd $WORKSPACE_PATH/dotbash
+  cd $WORKSPACE_PATH/dotbash/$HOSTNAME
   pip install --user -r requirements.txt
 }
 
