@@ -15,6 +15,7 @@ wait_for_confirmation() {
       exit 1
   fi
 }
+
 create_workspace_folder() {
   mkdir -p $WORKSPACE_PATH
 }
