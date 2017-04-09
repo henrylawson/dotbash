@@ -1,8 +1,9 @@
 #!/bin/sh
 set -euxo pipefail
 
+WORKSPACE_PATH=~/Workspace
 HOSTNAME=$(hostname)
 
-cd $HOSTNAME
+cd $WORKSPACE_PATH/dotbash/configs/$HOSTNAME
 brew bundle dump --force
 pip freeze > requirements.txt

@@ -57,12 +57,12 @@ install_brew() {
 }
 
 install_brew_apps() {
-  cd $WORKSPACE_PATH/dotbash/$HOSTNAME
+  cd $WORKSPACE_PATH/dotbash/configs/$HOSTNAME
   brew bundle
 }
 
 install_pip_apps() {
-  cd $WORKSPACE_PATH/dotbash/$HOSTNAME
+  cd $WORKSPACE_PATH/dotbash/configs/$HOSTNAME
   pip install --user -r requirements.txt
 }
 
