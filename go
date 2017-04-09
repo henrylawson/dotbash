@@ -2,7 +2,7 @@
 set -euo pipefail
 
 WORKSPACE_PATH=~/Workspace
-HOSTNAME=$(hostname)
+BOX_HOSTNAME=$(hostname)
 
 source ./lib/utility
 
@@ -21,7 +21,7 @@ pp "Configuring dotgit"             && configure_dotgit
 pp "Downloading dotslate"           && clone_app dotslate
 pp "Configuring dotslate"           && configure_dotslate
 
-if [ "$HOSTNAME" == "Picolo.local" ]
+if [ "$BOX_HOSTNAME" == "Picolo.local" ]
 then
   pp "Downloading apple scripts"      && clone_app apple-scripts
   pp "Symlink Dropbox files"          && symlink_dropbox
@@ -30,7 +30,7 @@ fi
 pp "Update all applications"        && update_all_apps
 pp "Refresh packages"               && refresh_all_apps
 
-if [ "$HOSTNAME" == "Picolo.local" ]
+if [ "$BOX_HOSTNAME" == "Picolo.local" ]
 then
   pp "Manually configure apps"        && manually_configure_apps
 fi
