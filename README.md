@@ -2,6 +2,7 @@
 
 ## To get started
 `./go` or `curl https://raw.githubusercontent.com/henrylawson/dotbash/master/go > go && bash ./go`
+Note, some steps are only run on certain hosts, check ./go for details
 
 ## Refresh the Brewfile
 `./refresh`
