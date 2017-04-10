@@ -9,6 +9,7 @@ export PATH=$PATH:~/android-sdk-macosx/tools
 export PATH=$PATH:~/android-sdk-macosx/platform-tools
 
 ## Use brew
+export PATH=$HOME/brew/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 
@@ -68,5 +69,5 @@ export TERM=xterm-256color
 export PATH=~/Library/Python/2.7/bin:$PATH
 
 # gogole cloud
-source '/Users/hlawson/google-cloud-sdk/path.bash.inc'
-source '/Users/hlawson/google-cloud-sdk/completion.bash.inc'
+source ~/google-cloud-sdk/path.bash.inc
+source ~/google-cloud-sdk/completion.bash.inc

@@ -2,8 +2,16 @@
 set -euxo pipefail
 
 WORKSPACE_PATH=~/Workspace
-HOSTNAME=$(hostname)
+HOSTNAME=`cat $WORKSPACE_PATH/dotbash/.hostname`
 
 cd $WORKSPACE_PATH/dotbash/configs/$HOSTNAME
-brew bundle dump --force
-pip freeze > requirements.txt
+
+if hash brew 2>/dev/null
+then
+  brew bundle dump --force
+fi
+
+if hash pip 2>/dev/null
+then
+  pip freeze > requirements.txt
+fi

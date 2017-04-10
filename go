@@ -1,8 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+HOMEDIR=~
 WORKSPACE_PATH=~/Workspace
-BOX_HOSTNAME=$(hostname)
+BOX_HOSTNAME=`cat .hostname`
 
 pp() {
   echo "====> EXECUTING STEP: $1"
@@ -41,9 +42,9 @@ configure_dotbash() {
   ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
   ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
   chmod 755 ~/.bash/bin/*
-  sudo bash -c "echo '/usr/local/bin/bash' >> /etc/shells"
-  sudo chsh -s /usr/local/bin/bash
-  chsh -s /usr/local/bin/bash
+  sudo bash -c "echo '$HOMEDIR/brew/bin/bash' >> /etc/shells"
+  sudo chsh -s "$HOMEDIR/brew/bin/bash"
+  chsh -s "$HOMEDIR/brew/bin/bash"
 }
 
 install_brew() {
@@ -52,17 +53,18 @@ install_brew() {
     return 0
   fi
 
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  cd ~
+  git clone https://github.com/Homebrew/brew.git
   brew tap Homebrew/bundle
 }
 
 install_brew_apps() {
-  cd $WORKSPACE_PATH/dotbash/configs/$HOSTNAME
+  cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
   brew bundle
 }
 
 install_pip_apps() {
-  cd $WORKSPACE_PATH/dotbash/configs/$HOSTNAME
+  cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
   pip install --user -r requirements.txt
 }
 
@@ -149,8 +151,8 @@ pp "Installing brew"                && install_brew
 pp "Downloading dotbash"            && clone_app dotbash
 pp "Installing brew applications"   && install_brew_apps
 pp "Installing pip applications"    && install_pip_apps
-pp "Configuring dotbash"            && configure_dotbash
 pp "Setup Ruby"                     && setup_ruby
+pp "Configuring dotbash"            && configure_dotbash
 pp "Downloading dotvim"             && clone_app dotvim
 pp "Configuring dotvim"             && configure_dotvim
 pp "Downloading dotgit"             && clone_app dotgit
@@ -158,7 +160,7 @@ pp "Configuring dotgit"             && configure_dotgit
 pp "Downloading dotslate"           && clone_app dotslate
 pp "Configuring dotslate"           && configure_dotslate
 
-if [ "$BOX_HOSTNAME" == "Picolo.local" ]
+if [ "$BOX_HOSTNAME" == "Picolo" ]
 then
   pp "Downloading apple scripts"      && clone_app apple-scripts
   pp "Symlink Dropbox files"          && symlink_dropbox
@@ -167,7 +169,7 @@ fi
 pp "Update all applications"        && update_all_apps
 pp "Refresh packages"               && refresh_all_apps
 
-if [ "$BOX_HOSTNAME" == "Picolo.local" ]
+if [ "$BOX_HOSTNAME" == "Picolo" ]
 then
   pp "Manually configure apps"        && manually_configure_apps
 fi
