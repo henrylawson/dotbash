@@ -83,7 +83,6 @@ manually_configure_apps() {
   echo "The below applications will require manual setup:"
   echo "- MindNode (license)"
   echo "- iTerm (config in dotbash)"
-  echo "- Adobe Creative Cloud (login, Photoshop, Lightroom)"
   echo "- Alfred (license, config in Dropbox)"
   echo "- Slate (config, permissions)"
   echo "- Amphetamine (app store, config)"
