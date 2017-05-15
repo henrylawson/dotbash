@@ -68,6 +68,12 @@ export TERM=xterm-256color
 # user pip
 export PATH=~/Library/Python/2.7/bin:$PATH
 
-# gogole cloud
+# google cloud
 source ~/google-cloud-sdk/path.bash.inc
 source ~/google-cloud-sdk/completion.bash.inc
+
+# JAVA
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+# Google App Engine
+export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
