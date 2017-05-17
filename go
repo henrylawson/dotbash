@@ -64,7 +64,7 @@ install_brew() {
 }
 
 install_native_apps() {
-  if [ "$OSTYPE" == "darwin"* ]
+  if [[ "$OSTYPE" == "darwin"* ]]
   then
     install_brew
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
