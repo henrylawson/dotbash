@@ -44,7 +44,7 @@ configure_dotbash() {
   chmod 755 ~/.bash/bin/*
 
   echo $BOX_HOSTNAME > $WORKSPACE_PATH/dotbash/.hostname
-  mkdir -f $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+  mkdir -p $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
 
   if [[ "$OSTYPE" == "darwin"* ]]
   then
