@@ -102,6 +102,7 @@ manually_configure_apps() {
 configure_dotvim() {
   ln -sfn $WORKSPACE_PATH/dotvim/gvimrc ~/.gvimrc
   ln -sfn $WORKSPACE_PATH/dotvim/vimrc ~/.vimrc
+  [[ -L ~/.vim  ]] || rm -rf ~/.vim
   ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
   ln -sfn $WORKSPACE_PATH/dotvim/ctags ~/.ctags
 
