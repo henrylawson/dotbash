@@ -1,3 +1,2 @@
 python-pip
 google-cloud-sdk
-fasd
