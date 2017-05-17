@@ -60,7 +60,7 @@ export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
 # Travis CI
 [ -f ~/.travis/travis.sh ] && source /Users/hlawson/.travis/travis.sh
 
-if [ "$OSTYPE" == "darwin"*  ]
+if [[ "$OSTYPE" == "darwin"*  ]]
 then
   # Java
   JAVA_HOME=$(/usr/libexec/java_home)

@@ -48,7 +48,7 @@ alias be="bundle exec"
 alias rs="rspec --colour --format d"
 alias rt="ruby -rminitest/pride"
 
-if [ "$OSTYPE" == "darwin"*  ]
+if [[ "$OSTYPE" == "darwin"*  ]]
 then
   # ccat
   alias cat=ccat

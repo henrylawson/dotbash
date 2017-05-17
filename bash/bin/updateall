@@ -37,7 +37,7 @@ then
   bash -c "$pip"
 fi
 
-if [ "$OSTYPE" == "darwin"*  ]
+if [[ "$OSTYPE" == "darwin"*  ]]
 then
   printf "\n${GREEN}## Update MacOSX${NO_COLOR}\n"
   sudo bash -c "$macosx"

@@ -44,7 +44,7 @@ configure_dotbash() {
   chmod 755 ~/.bash/bin/*
   echo $BOX_HOSTNAME > $WORKSPACE_PATH/dotbash/.hostname
 
-  if [ "$OSTYPE" == "darwin"* ]
+  if [[ "$OSTYPE" == "darwin"* ]]
   then
     sudo bash -c "echo '$HOMEDIR/brew/bin/bash' >> /etc/shells"
     sudo chsh -s "$HOMEDIR/brew/bin/bash"
@@ -106,7 +106,7 @@ configure_dotvim() {
   ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
   ln -sfn $WORKSPACE_PATH/dotvim/ctags ~/.ctags
 
-  if [ "$OSTYPE" == "darwin"* ]
+  if [[ "$OSTYPE" == "darwin"* ]]
   then
     if [ -d "$WORKSPACE_PATH/powerline-fonts" ]
     then
@@ -143,7 +143,7 @@ refresh_all_apps() {
 }
 
 setup_ruby() {
-  if [ "$OSTYPE" == "darwin"* ]
+  if [[ "$OSTYPE" == "darwin"* ]]
   then
     eval "$(rbenv init -)"
     if [ ! -d ~/.rbenv/plugins/rbenv-bundle-exec ]
@@ -189,7 +189,7 @@ pp "Configuring dotvim"               && configure_dotvim
 pp "Downloading dotgit"               && clone_app dotgit
 pp "Configuring dotgit"               && configure_dotgit
 
-if [ "$OSTYPE" == "darwin"* ]
+if [[ "$OSTYPE" == "darwin"* ]]
 then
   pp "Downloading dotslate" && clone_app dotslate
   pp "Configuring dotslate" && configure_dotslate
@@ -204,7 +204,7 @@ fi
 pp "Update all applications" && update_all_apps
 pp "Refresh packages"        && refresh_all_apps
 
-if [ "$OSTYPE" == "darwin"* ]
+if [[ "$OSTYPE" == "darwin"* ]]
 then
   if [ "$BOX_HOSTNAME" == "Picolo" ]
   then
