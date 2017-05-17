@@ -196,10 +196,13 @@ then
     pp "Downloading apple scripts" && clone_app apple-scripts
     pp "Symlink Dropbox files"     && symlink_dropbox
   fi
+fi
 
-  pp "Update all applications" && update_all_apps
-  pp "Refresh packages"        && refresh_all_apps
+pp "Update all applications" && update_all_apps
+pp "Refresh packages"        && refresh_all_apps
 
+if [ "$OSTYPE" == "darwin"* ]
+then
   if [ "$BOX_HOSTNAME" == "Picolo" ]
   then
     pp "Manually configure apps" && manually_configure_apps
