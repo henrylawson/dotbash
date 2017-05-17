@@ -61,6 +61,7 @@ install_brew() {
 install_native_apps() {
   if [ "$OSTYPE" == "darwin"* ]
   then
+    install_brew
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
     brew bundle
   else
@@ -144,14 +145,14 @@ setup_ruby() {
 
 prereq_apps() {
   echo "The below applications will require manual install:"
-  echo "- Xcode"
+  echo "- git"
+  echo "- Xcode (if on MacOS)"
   echo "- Java Development Kit (JDK)"
   wait_for_confirmation
 }
 
 pp "Creating workspace folder"        && create_workspace_folder
 pp "Prerequisites"                    && prereq_apps
-pp "Installing brew"                  && install_brew
 pp "Downloading dotbash"              && clone_app dotbash
 pp "Installing native applications"   && install_native_apps
 pp "Installing pip applications"      && install_pip_apps
