@@ -44,15 +44,15 @@ alias uall=updateall
 # ruby/rails dev
 alias be="bundle exec"
 
-# ccat
-alias cat=ccat
-
 # rspec
 alias rs="rspec --colour --format d"
 alias rt="ruby -rminitest/pride"
 
 if [ "$OSTYPE" == "darwin"*  ]
 then
+  # ccat
+  alias cat=ccat
+
   # fasd
   fasd_cache="$HOME/.fasd-init-bash"
   if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
