@@ -109,18 +109,6 @@ configure_dotvim() {
   [[ -L ~/.vim  ]] || rm -rf ~/.vim
   ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
   ln -sfn $WORKSPACE_PATH/dotvim/ctags ~/.ctags
-
-  if [[ "$OSTYPE" == "darwin"* ]]
-  then
-    if [ -d "$WORKSPACE_PATH/powerline-fonts" ]
-    then
-      cd $WORKSPACE_PATH/powerline-fonts
-      git pull --rebase
-    else
-      git clone https://github.com/powerline/fonts.git "$WORKSPACE_PATH/powerline-fonts"
-    fi
-    cd $WORKSPACE_PATH/powerline-fonts && ./install.sh
-  fi
 }
 
 configure_dotgit() {
