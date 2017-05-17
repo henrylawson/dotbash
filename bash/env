@@ -22,11 +22,6 @@ export PATH=$PATH:~/.composer/vendor/bin
 ## GNU Tar
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
-# Bash completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
-fi
-
 # Bash shell options
 shopt -s globstar
 shopt -s autocd
@@ -35,16 +30,7 @@ shopt -s dirspell
 shopt -s dotglob
 shopt -s expand_aliases
 
-# Fasd
-fasd_cache="$HOME/.fasd-init-bash"
-if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-  fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
-fi
-source "$fasd_cache"
-unset fasd_cache
-
 # Java
-JAVA_HOME=$(/usr/libexec/java_home)
 export PATH=$JAVA_HOME/bin:$PATH
 
 # Tunnelblick Script
@@ -52,10 +38,6 @@ export PATH=~/Workspace/tunnelblick-script:$PATH
 
 # ccat
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
-
-# NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
 
 # go
 export GOPATH=~/go
@@ -72,11 +54,23 @@ export PATH=~/Library/Python/2.7/bin:$PATH
 source ~/google-cloud-sdk/path.bash.inc
 source ~/google-cloud-sdk/completion.bash.inc
 
-# JAVA
-export JAVA_HOME=$(/usr/libexec/java_home)
-
 # Google App Engine
 export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
 
 # Travis CI
 [ -f ~/.travis/travis.sh ] && source /Users/hlawson/.travis/travis.sh
+
+if [ "$OSTYPE" == "darwin"*  ]
+then
+  # Java
+  JAVA_HOME=$(/usr/libexec/java_home)
+
+  # NVM
+  export NVM_DIR=~/.nvm
+  source $(brew --prefix nvm)/nvm.sh
+
+  # Bash completion
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
+fi

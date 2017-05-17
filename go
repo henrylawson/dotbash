@@ -42,9 +42,12 @@ configure_dotbash() {
   ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
   ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
   chmod 755 ~/.bash/bin/*
-  sudo bash -c "echo '$HOMEDIR/brew/bin/bash' >> /etc/shells"
-  sudo chsh -s "$HOMEDIR/brew/bin/bash"
-  chsh -s "$HOMEDIR/brew/bin/bash"
+  if [ "$OSTYPE" == "darwin"* ]
+  then
+    sudo bash -c "echo '$HOMEDIR/brew/bin/bash' >> /etc/shells"
+    sudo chsh -s "$HOMEDIR/brew/bin/bash"
+    chsh -s "$HOMEDIR/brew/bin/bash"
+  fi
 }
 
 install_brew() {
@@ -65,7 +68,7 @@ install_native_apps() {
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
     brew bundle
   else
-    xargs sudo apt-get install < $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME/packages.txt
+    xargs sudo apt-get --yes --force-yes install < $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME/packages.txt
   fi
 }
 
@@ -100,14 +103,17 @@ configure_dotvim() {
   ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
   ln -sfn $WORKSPACE_PATH/dotvim/ctags ~/.ctags
 
-  if [ -d "$WORKSPACE_PATH/powerline-fonts" ]
+  if [ "$OSTYPE" == "darwin"* ]
   then
-    cd $WORKSPACE_PATH/powerline-fonts
-    git pull --rebase
-  else
-    git clone https://github.com/powerline/fonts.git "$WORKSPACE_PATH/powerline-fonts"
+    if [ -d "$WORKSPACE_PATH/powerline-fonts" ]
+    then
+      cd $WORKSPACE_PATH/powerline-fonts
+      git pull --rebase
+    else
+      git clone https://github.com/powerline/fonts.git "$WORKSPACE_PATH/powerline-fonts"
+    fi
+    cd $WORKSPACE_PATH/powerline-fonts && ./install.sh
   fi
-  cd $WORKSPACE_PATH/powerline-fonts && ./install.sh
 }
 
 configure_dotgit() {
@@ -134,13 +140,29 @@ refresh_all_apps() {
 }
 
 setup_ruby() {
-  eval "$(rbenv init -)"
-  if [ ! -d ~/.rbenv/plugins/rbenv-bundle-exec ]
+  if [ "$OSTYPE" == "darwin"* ]
   then
-    git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
+    eval "$(rbenv init -)"
+    if [ ! -d ~/.rbenv/plugins/rbenv-bundle-exec ]
+    then
+      git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
+    fi
+    rbenv install 2.3.1 --skip-existing
+    rbenv global 2.3.1
+  else
+    sudo apt-get --yes --force-yes install ruby-full
   fi
-  rbenv install 2.3.1 --skip-existing
-  rbenv global 2.3.1
+}
+
+install_gcloud_sdk() {
+  if hash gcloud 2>/dev/null
+  then
+    return 0
+  fi
+
+  curl -H 'Cache-Control: no-cache' https://sdk.cloud.google.com > /tmp/gcpsdk
+  bash /tmp/gcpsdk --disable-prompts
+  rm /tmp/gcpsdk
 }
 
 prereq_apps() {
@@ -156,25 +178,30 @@ pp "Prerequisites"                    && prereq_apps
 pp "Downloading dotbash"              && clone_app dotbash
 pp "Installing native applications"   && install_native_apps
 pp "Installing pip applications"      && install_pip_apps
+pp "Installing gcloud sdk"            && install_gcloud_sdk
 pp "Setup Ruby"                       && setup_ruby
 pp "Configuring dotbash"              && configure_dotbash
 pp "Downloading dotvim"               && clone_app dotvim
 pp "Configuring dotvim"               && configure_dotvim
 pp "Downloading dotgit"               && clone_app dotgit
 pp "Configuring dotgit"               && configure_dotgit
-pp "Downloading dotslate"             && clone_app dotslate
-pp "Configuring dotslate"             && configure_dotslate
 
-if [ "$BOX_HOSTNAME" == "Picolo" ]
+if [ "$OSTYPE" == "darwin"* ]
 then
-  pp "Downloading apple scripts"      && clone_app apple-scripts
-  pp "Symlink Dropbox files"          && symlink_dropbox
-fi
+  pp "Downloading dotslate" && clone_app dotslate
+  pp "Configuring dotslate" && configure_dotslate
 
-pp "Update all applications"        && update_all_apps
-pp "Refresh packages"               && refresh_all_apps
+  if [ "$BOX_HOSTNAME" == "Picolo" ]
+  then
+    pp "Downloading apple scripts" && clone_app apple-scripts
+    pp "Symlink Dropbox files"     && symlink_dropbox
+  fi
 
-if [ "$BOX_HOSTNAME" == "Picolo" ]
-then
-  pp "Manually configure apps"        && manually_configure_apps
+  pp "Update all applications" && update_all_apps
+  pp "Refresh packages"        && refresh_all_apps
+
+  if [ "$BOX_HOSTNAME" == "Picolo" ]
+  then
+    pp "Manually configure apps" && manually_configure_apps
+  fi
 fi
