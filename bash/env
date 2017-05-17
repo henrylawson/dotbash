@@ -77,3 +77,6 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 
 # Google App Engine
 export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
+
+# Travis CI
+[ -f ~/.travis/travis.sh ] && source /Users/hlawson/.travis/travis.sh

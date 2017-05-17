@@ -6,6 +6,3 @@ if [ -f "$CUSTOM" ]
 then
   . $CUSTOM
 fi
-
-# added by travis gem
-[ -f /Users/hlawson/.travis/travis.sh ] && source /Users/hlawson/.travis/travis.sh
