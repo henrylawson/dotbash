@@ -42,7 +42,7 @@ configure_dotbash() {
   ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
   ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
   chmod 755 ~/.bash/bin/*
-  echo $HOSTNAME > $WORKSPACE_PATH/dotbash/.hostname
+  echo $BOX_HOSTNAME > $WORKSPACE_PATH/dotbash/.hostname
 
   if [ "$OSTYPE" == "darwin"* ]
   then
