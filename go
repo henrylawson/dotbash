@@ -74,7 +74,9 @@ install_native_apps() {
     brew bundle
   else
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+    touch repositories.txt
     touch packages.txt
+    xargs sudo add-apt-repository -y < repositories.txt
     xargs sudo apt-get --yes --force-yes install < packages.txt
   fi
 }
