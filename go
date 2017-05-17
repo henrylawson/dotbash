@@ -68,14 +68,18 @@ install_native_apps() {
   then
     install_brew
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+    touch Brewfile
     brew bundle
   else
-    xargs sudo apt-get --yes --force-yes install < $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME/packages.txt
+    cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+    touch packages.txt
+    xargs sudo apt-get --yes --force-yes install < packages.txt
   fi
 }
 
 install_pip_apps() {
   cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+  touch requirements.txt
   pip install --user -r requirements.txt
 }
 
