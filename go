@@ -33,7 +33,7 @@ clone_app() {
   fi
 
   cd $WORKSPACE_PATH
-  git clone "https://github.com/henrylawson/$APP.git"
+  git clone "git@github.com:henrylawson/$APP.git"
 }
 
 configure_dotbash() {
