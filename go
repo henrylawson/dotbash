@@ -58,9 +58,14 @@ install_brew() {
   brew tap Homebrew/bundle
 }
 
-install_brew_apps() {
-  cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
-  brew bundle
+install_native_apps() {
+  if [ "$OSTYPE" == "darwin"* ]
+  then
+    cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+    brew bundle
+  else
+    xargs sudo apt-get install < $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME/packages.txt
+  fi
 }
 
 install_pip_apps() {
@@ -144,20 +149,20 @@ prereq_apps() {
   wait_for_confirmation
 }
 
-pp "Creating workspace folder"      && create_workspace_folder
-pp "Prerequisites"                  && prereq_apps
-pp "Installing brew"                && install_brew
-pp "Downloading dotbash"            && clone_app dotbash
-pp "Installing brew applications"   && install_brew_apps
-pp "Installing pip applications"    && install_pip_apps
-pp "Setup Ruby"                     && setup_ruby
-pp "Configuring dotbash"            && configure_dotbash
-pp "Downloading dotvim"             && clone_app dotvim
-pp "Configuring dotvim"             && configure_dotvim
-pp "Downloading dotgit"             && clone_app dotgit
-pp "Configuring dotgit"             && configure_dotgit
-pp "Downloading dotslate"           && clone_app dotslate
-pp "Configuring dotslate"           && configure_dotslate
+pp "Creating workspace folder"        && create_workspace_folder
+pp "Prerequisites"                    && prereq_apps
+pp "Installing brew"                  && install_brew
+pp "Downloading dotbash"              && clone_app dotbash
+pp "Installing native applications"   && install_native_apps
+pp "Installing pip applications"      && install_pip_apps
+pp "Setup Ruby"                       && setup_ruby
+pp "Configuring dotbash"              && configure_dotbash
+pp "Downloading dotvim"               && clone_app dotvim
+pp "Configuring dotvim"               && configure_dotvim
+pp "Downloading dotgit"               && clone_app dotgit
+pp "Configuring dotgit"               && configure_dotgit
+pp "Downloading dotslate"             && clone_app dotslate
+pp "Configuring dotslate"             && configure_dotslate
 
 if [ "$BOX_HOSTNAME" == "Picolo" ]
 then
