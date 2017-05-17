@@ -51,8 +51,8 @@ export TERM=xterm-256color
 export PATH=~/Library/Python/2.7/bin:$PATH
 
 # google cloud
-[[ -d ~/google-cloud-sdk ]] && source ~/google-cloud-sdk/path.bash.inc
-[[ -d ~/google-cloud-sdk ]] && source ~/google-cloud-sdk/completion.bash.inc
+[[ -f ~/google-cloud-sdk/path.bash.inc ]] && source ~/google-cloud-sdk/path.bash.inc
+[[ -f ~/google-cloud-sdk/completion.bash.inc ]] && source ~/google-cloud-sdk/completion.bash.inc
 
 # Google App Engine
 export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
