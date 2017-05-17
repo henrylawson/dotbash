@@ -1,1 +1,2 @@
 python-pip
+google-cloud-sdk
