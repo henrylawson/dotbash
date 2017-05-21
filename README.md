@@ -25,4 +25,5 @@
 1. `CTRL+B z` toggle pane to full view
 1. `CTRL+B c` new window
 1. `CTRL+B <window number>` change window
+1. `CTRL+B [` scroll mode
 1. `CTRL+B d` detach from session
