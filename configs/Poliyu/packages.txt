@@ -2,3 +2,5 @@ python-pip
 google-cloud-sdk
 silversearcher-ag
 tmux
+postgresql-client-common
+mysql-client
