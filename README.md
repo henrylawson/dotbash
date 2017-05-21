@@ -16,14 +16,13 @@
 1. Setup Google Cloud SDK in home
 
 ## tmux shortcuts
-`tmux ls` view open sessions
-`tmux attach -t <session name>` attach to session
-`tmux kill-session -t <session name>` kill the session
-
-`CTRL+B %` split vertical
-`CTRL+B "` split horizontal
-`CTRL+B <ARROW>` change pane
-`CTRL+B z` toggle pane to full view
-`CTRL+B c` new window
-`CTRL+B <window number>` change window
-`CTRL+B d` detach from session
+1. `tmux ls` view open sessions
+1. `tmux attach -t <session name>` attach to session
+1. `tmux kill-session -t <session name>` kill the session
+1. `CTRL+B %` split vertical
+1. `CTRL+B "` split horizontal
+1. `CTRL+B <ARROW>` change pane
+1. `CTRL+B z` toggle pane to full view
+1. `CTRL+B c` new window
+1. `CTRL+B <window number>` change window
+1. `CTRL+B d` detach from session
