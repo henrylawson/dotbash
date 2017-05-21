@@ -3,5 +3,5 @@ google-cloud-sdk
 silversearcher-ag
 tmux
 postgresql-client-common
-postgresql-client-9.6
+postgresql-client-9.3
 mysql-client
