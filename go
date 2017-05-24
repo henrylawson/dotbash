@@ -41,6 +41,7 @@ configure_dotbash() {
   ln -sfn $WORKSPACE_PATH/dotbash/bash_profile ~/.bash_profile
   ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
   ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
+  ln -sfn $WORKSPACE_PATH/dotbash/tmux.conf ~/.tmux.conf
   chmod 755 ~/.bash/bin/*
 
   echo $BOX_HOSTNAME > $WORKSPACE_PATH/dotbash/.hostname
