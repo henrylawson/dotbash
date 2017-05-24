@@ -25,9 +25,22 @@ install_endpoints_frameworks_tools() {
   fi
 }
 
+install_appcfg() {
+  local SUCCESS="/opt/user/google_appengine_1.9.54-SUCCESS"
+  if [ ! -f $SUCCESS ]
+  then
+    cd /opt/user
+    wget -O package.zip https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.54.zip
+    unzip package.zip
+    rm package.zip
+    touch $SUCCESS
+  fi
+}
+
 main() {
   install_maven
   install_endpoints_frameworks_tools
+  install_appcfg
 }
 
 main "$@"
