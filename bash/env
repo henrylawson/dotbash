@@ -53,6 +53,9 @@ export PATH=~/Library/Python/2.7/bin:$PATH
 # Google App Engine
 export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
 
+# Possible ubuntu specific path items
+export PATH=/opt/user/apache-maven-3.5.0/bin:$PATH
+
 # Travis CI
 [ -f ~/.travis/travis.sh ] && source /Users/hlawson/.travis/travis.sh
 
