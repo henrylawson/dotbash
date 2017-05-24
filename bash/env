@@ -43,10 +43,6 @@ export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
-# iterm colors
-export CLICOLOR=1
-export TERM=xterm-256color
-
 # user pip
 export PATH=~/Library/Python/2.7/bin:$PATH
 
