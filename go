@@ -76,8 +76,13 @@ install_native_apps() {
     brew bundle
   else
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+
     touch packages.txt
     xargs sudo apt-get --yes --force-yes install < packages.txt
+ 
+    sudo mkdir -p /opt/user
+    sudo chown hgl /opt/user
+    [[ -f manual.sh ]] && ./manual.sh
   fi
 }
 
