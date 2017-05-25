@@ -17,10 +17,6 @@ alias grep="grep --color --line-number"
 # History
 alias th=bash_top_history
 
-# Postgress
-alias postgres_start="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/log/postgres/postgres.log start"
-alias postgres_stop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
-
 # Open
 alias o="open"
 
@@ -76,19 +72,5 @@ then
 
   alias rdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder;echo "Done"'
 
-  # rbenv
-  eval "$(rbenv init -)"
-  export PATH="$HOME/.rbenv/bin:$PATH"
-
   alias subl='/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl'
-
-  # Virtual Box
-  alias vbx="VBoxManage"
-
-  # Junos
-  alias junos_on='launchctl load -w /Library/LaunchAgents/net.juniper.pulsetray.plist'
-  alias junos_off='launchctl unload -w /Library/LaunchAgents/net.juniper.pulsetray.plist'
-
-  # openvpnstart
-  alias openvpnstart=/Applications/Tunnelblick.app/Contents/Resources/openvpnstart
 fi
