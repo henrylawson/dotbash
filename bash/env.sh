@@ -18,6 +18,10 @@ export PATH=$JAVA_HOME/bin:$PATH
 
 if [[ "$OSTYPE" == "darwin"*  ]]
 then
+  # gcloud
+  source ~/google-cloud-sdk/completion.bash.inc
+  source ~/google-cloud-sdk/path.bash.inc
+
   # Use brew
   export PATH=$HOME/brew/bin:$PATH
   export PATH=/usr/local/bin:$PATH
