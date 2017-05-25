@@ -54,7 +54,7 @@ install_gradle() {
   if [ ! -f $SUCCESS ]
   then
     cd /opt/user
-    wget -O package.tar.gz https://services.gradle.org/distributions/gradle-3.5-bin.zip
+    wget -O package.zip https://services.gradle.org/distributions/gradle-3.5-bin.zip
     unzip package.zip
     rm package.zip
     touch $SUCCESS
