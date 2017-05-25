@@ -14,11 +14,11 @@ install_maven() {
 }
 
 install_endpoints_frameworks_tools() {
-  local SUCCESS="/opt/user/endpoints-framework-tools-2.0.0-beta.7-SUCCESS"
+  local SUCCESS="/opt/user/endpoints-framework-tools-2.0.0-beta.12-SUCCESS"
   if [ ! -f $SUCCESS ]
   then
     cd /opt/user
-    wget -O package.zip http://search.maven.org/remotecontent?filepath=com/google/endpoints/endpoints-framework-tools/2.0.0-beta.7/endpoints-framework-tools-2.0.0-beta.7.zip
+    wget -O package.zip http://search.maven.org/remotecontent?filepath=com/google/endpoints/endpoints-framework-tools/2.0.0-beta.12/endpoints-framework-tools-2.0.0-beta.12.zip
     unzip package.zip
     rm package.zip
     touch $SUCCESS
