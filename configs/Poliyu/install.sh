@@ -55,8 +55,8 @@ install_gradle() {
   then
     cd /opt/user
     wget -O package.tar.gz https://services.gradle.org/distributions/gradle-3.5-bin.zip
-    tar xzvf package.tar.gz
-    rm package.tar.gz
+    unzip package.zip
+    rm package.zip
     touch $SUCCESS
   fi
 }
