@@ -56,11 +56,6 @@ export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
 # Travis CI
 [ -f ~/.travis/travis.sh ] && source /Users/hlawson/.travis/travis.sh
 
-# Box manual paths from installs
-BOX_HOSTNAME=`cat ~/Workspace/dotbash/.hostname`
-BOX_HOSTNAME_ENV=~/Workspace/dotbash/configs/$BOX_HOSTNAME/env.sh
-[ -f $BOX_HOSTNAME_ENV ] && source $BOX_HOSTNAME_ENV
-
 if [[ "$OSTYPE" == "darwin"*  ]]
 then
   # Java
