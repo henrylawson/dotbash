@@ -53,14 +53,13 @@ export PATH=~/Library/Python/2.7/bin:$PATH
 # Google App Engine
 export PATH=$PATH:~/appengine-java-sdk-1.9.53/bin/
 
-# Possible ubuntu specific path items
-export PATH=/opt/user/apache-maven-3.5.0/bin:$PATH
-export PATH=/opt/user/endpoints-framework-tools-2.0.0-beta.7/bin:$PATH
-export PATH=$PATH:/opt/user/google_appengine
-export PATH=$PATH:/opt/user/clvv-fasd-4822024
-
 # Travis CI
 [ -f ~/.travis/travis.sh ] && source /Users/hlawson/.travis/travis.sh
+
+# Box manual paths from installs
+BOX_HOSTNAME=`cat ~/Workspace/dotbash/.hostname`
+BOX_HOSTNAME_ENV=~/Workspace/dotbash/configs/$BOX_HOSTNAME/env.sh
+[ -f $BOX_HOSTNAME_ENV ] && source $BOX_HOSTNAME_ENV
 
 if [[ "$OSTYPE" == "darwin"*  ]]
 then

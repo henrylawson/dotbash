@@ -82,7 +82,7 @@ install_native_apps() {
  
     sudo mkdir -p /opt/user
     sudo chown hgl /opt/user
-    [[ -f manual.sh ]] && ./manual.sh
+    [[ -f install.sh ]] && ./install.sh
   fi
 }
 
