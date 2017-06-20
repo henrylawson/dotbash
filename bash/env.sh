@@ -24,6 +24,7 @@ then
 
   # Use brew
   export PATH=$HOME/brew/bin:$PATH
+  export PATH=$HOME/brew/sbin:$PATH
   export PATH=/usr/local/bin:$PATH
   export PATH=/usr/local/sbin:$PATH
 
