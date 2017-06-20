@@ -94,7 +94,6 @@ install_pip_apps() {
 
 manually_configure_apps() {
   echo "The below applications will require manual login:"
-  echo "- Dropbox (login)"
   echo "- 1Password (login)"
   echo "- Google Drive (login, setup shortcuts)"
   echo "- Google Chrome (login)"
@@ -107,7 +106,7 @@ manually_configure_apps() {
   echo "The below applications will require manual setup:"
   echo "- MindNode (license)"
   echo "- iTerm (config in dotbash)"
-  echo "- Alfred (license, config in Dropbox)"
+  echo "- Alfred (license, config in Drive)"
   echo "- Slate (config, permissions)"
   echo "- Amphetamine (app store, config)"
 }
@@ -125,9 +124,9 @@ configure_dotgit() {
   ln -sfn $WORKSPACE_PATH/dotgit/gitignore ~/.gitignore
 }
 
-symlink_dropbox() {
-  ln -sfn ~/Dropbox/GnuPG ~/.gnupg
-  ln -sfn ~/Dropbox/SSH ~/.ssh
+symlink_drive() {
+  ln -sfn ~/Google\ Drive/Dotfiles/GnuPG ~/.gnupg
+  ln -sfn ~/Google\ Drive/Dotfiles/SSH ~/.ssh
 }
 
 configure_dotslate() {
@@ -198,7 +197,7 @@ then
   if [ "$BOX_HOSTNAME" == "Picolo" ]
   then
     pp "Downloading apple scripts" && clone_app apple-scripts
-    pp "Symlink Dropbox files"     && symlink_dropbox
+    pp "Symlink Drive files"       && symlink_drive
   fi
 fi
 
