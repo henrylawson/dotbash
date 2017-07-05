@@ -1,13 +1,4 @@
 python-pip
-google-cloud-sdk
-google-cloud-sdk-app-engine-python
-google-cloud-sdk-app-engine-java
-google-cloud-sdk-app-engine-go
-google-cloud-sdk-datalab
-google-cloud-sdk-datastore-emulator
-google-cloud-sdk-pubsub-emulator
-google-cloud-sdk-bigtable-emulator
-kubectl
 silversearcher-ag
 tmux
 postgresql-client-common
