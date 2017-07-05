@@ -10,6 +10,7 @@ pip="pip install --user --upgrade pip && pip freeze --local | grep -v '^\-e' | c
 macosx="softwareupdate -i -a --verbose"
 npm="npm update --verbose"
 aptget="sudo apt-get update && sudo apt-get -y upgrade"
+gcloud="gcloud components update"
 
 if hash brew 2>/dev/null
 then
@@ -23,6 +24,12 @@ if hash npm 2>/dev/null
 then
   printf "\n${GREEN}## Update NPM packages${NO_COLOR}\n"
   bash -c "$npm"
+fi
+
+if hash gcloud 2>/dev/null
+then
+  printf "\n${GREEN}## Update Google Cloud SDK${NO_COLOR}\n"
+  bash -c "$gcloud"
 fi
 
 if hash ruby 2>/dev/null

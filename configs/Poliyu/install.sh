@@ -25,18 +25,6 @@ install_endpoints_frameworks_tools() {
   fi
 }
 
-install_appcfg() {
-  local SUCCESS="/opt/user/google_appengine_1.9.54-SUCCESS"
-  if [ ! -f $SUCCESS ]
-  then
-    cd /opt/user
-    wget -O package.zip https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.54.zip
-    unzip package.zip
-    rm package.zip
-    touch $SUCCESS
-  fi
-}
-
 install_fasd() {
   local SUCCESS="/opt/user/fasd-1.0.1-SUCCESS"
   if [ ! -f $SUCCESS ]

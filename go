@@ -166,6 +166,21 @@ install_gcloud_sdk() {
   curl -H 'Cache-Control: no-cache' https://sdk.cloud.google.com > /tmp/gcpsdk
   bash /tmp/gcpsdk --disable-prompts
   rm /tmp/gcpsdk
+  gcloud components install app-engine-go \
+    cbt \
+    bigtable \
+    datalab \
+    cloud-datastore-emulator \
+    gcd-emulator \
+    pubsub-emulator \
+    emulator-reverse-proxy \
+    docker-credential-gcr \
+    alpha \
+    beta \
+    app-engine-java \
+    app-engine-python \
+    kubectl \
+    --quiet
 }
 
 prereq_apps() {

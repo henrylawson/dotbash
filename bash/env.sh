@@ -16,12 +16,12 @@ shopt -s expand_aliases
 # Java
 export PATH=$JAVA_HOME/bin:$PATH
 
+# gcloud
+source ~/google-cloud-sdk/completion.bash.inc
+source ~/google-cloud-sdk/path.bash.inc
+
 if [[ "$OSTYPE" == "darwin"*  ]]
 then
-  # gcloud
-  source ~/google-cloud-sdk/completion.bash.inc
-  source ~/google-cloud-sdk/path.bash.inc
-
   # Use brew
   export PATH=$HOME/brew/bin:$PATH
   export PATH=$HOME/brew/sbin:$PATH
