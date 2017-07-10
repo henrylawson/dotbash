@@ -19,7 +19,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 [ -f ~/google-cloud-sdk/path.bash.inc ] && source ~/google-cloud-sdk/path.bash.inc
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
+export FZF_DEFAULT_COMMAND='ag -l --nocolor -g ""'
 
 if [[ "$OSTYPE" == "darwin"*  ]]
 then
