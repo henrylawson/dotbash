@@ -1,8 +1,8 @@
 # Bash
 alias dotbr="source ~/.bashrc && source ~/.inputrc"
-alias dotba="v -f ~/.bash/aliases && dotbr"
-alias dotbc="v -f ~/.bash/config && dotbr"
-alias dotbe="v -f ~/.bash/env && dotbr"
+alias dotba="v -f ~/.bash/aliases.sh && dotbr"
+alias dotbc="v -f ~/.bash/config.sh && dotbr"
+alias dotbe="v -f ~/.bash/env.sh && dotbr"
 alias dotbashrc="v -f ~/.bashrc && dotbr"
 alias dotinputrc="v -f ~/.inputrc && dotbr"
 alias c=clear
