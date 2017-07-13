@@ -53,7 +53,6 @@ main() {
   install_maven
   install_gradle
   install_endpoints_frameworks_tools
-  install_appcfg
   install_fasd
 }
 
