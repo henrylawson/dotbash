@@ -62,7 +62,16 @@ install_brew() {
 
   cd ~
   git clone https://github.com/Homebrew/brew.git
+
+  # minimum needed for first run
+  export PATH=$HOME/brew/bin:$PATH
+  export PATH=$HOME/brew/sbin:$PATH
+  export PATH=/usr/local/bin:$PATH
+  export PATH=/usr/local/sbin:$PATH
+
   brew tap Homebrew/bundle
+  brew tap caskroom/cask
+  brew install bash fast cat nvm rbenv
 }
 
 install_native_apps() {
@@ -87,6 +96,11 @@ install_native_apps() {
 }
 
 install_pip_apps() {
+  if [[ "$OSTYPE" == "darwin"* ]]
+  then
+    sudo easy_install pip
+  fi
+
   cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
   touch requirements.txt
   pip install --user -r requirements.txt
@@ -166,6 +180,7 @@ install_gcloud_sdk() {
   curl -H 'Cache-Control: no-cache' https://sdk.cloud.google.com > /tmp/gcpsdk
   bash /tmp/gcpsdk --disable-prompts
   rm /tmp/gcpsdk
+  source ~/google-cloud-sdk/path.bash.inc
   gcloud components install app-engine-go \
     cbt \
     bigtable \
