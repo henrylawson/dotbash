@@ -44,9 +44,12 @@ then
   export PATH=~/Library/Python/2.7/bin:$PATH
 
   # Java
-  JAVA_HOME=$(/usr/libexec/java_home)
+  export JAVA_HOME=$(/usr/libexec/java_home)
 
   # NVM
   export NVM_DIR=~/.nvm
   source $(brew --prefix nvm)/nvm.sh
+
+  # GPG
+  export GPG_TTY=$(tty)
 fi
