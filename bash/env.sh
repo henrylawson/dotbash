@@ -52,4 +52,6 @@ then
 
   # GPG
   export GPG_TTY=$(tty)
+else
+  export TERM=xterm-256color
 fi
