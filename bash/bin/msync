@@ -1,0 +1,8 @@
+#!/bin/bash
+filebot -script fn:amc \
+  --output "/Users/smarthome/Media" \
+  --action copy -non-strict "/Users/smarthome/Seeding" \
+  --log-file amc.log \
+  --def subtitles=en \
+  --def artwork=n \
+  --def clean=y
