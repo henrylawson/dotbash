@@ -1,7 +1,7 @@
 #!/bin/bash
 filebot -script fn:amc \
-  --output "~/Media" \
-  --action copy -non-strict "~/Seeding" \
+  --output ~/Media \
+  --action copy -non-strict ~/Seeding \
   --log-file amc.log \
   --def subtitles=en \
   --def artwork=n \
