@@ -54,20 +54,28 @@ configure_dotbash() {
   fi
 }
 
+configure_brew_paths() {
+  # minimum needed for first run
+  export PATH=$HOME/brew/bin:$PATH
+  export PATH=$HOME/brew/sbin:$PATH
+  export PATH=/usr/local/bin:$PATH
+  export PATH=/usr/local/sbin:$PATH
+}
+
 install_brew() {
   if hash brew 2>/dev/null
   then
+    return 0
+  elif [ -d ~/brew ]
+  then
+    configure_brew_paths
     return 0
   fi
 
   cd ~
   git clone https://github.com/Homebrew/brew.git
 
-  # minimum needed for first run
-  export PATH=$HOME/brew/bin:$PATH
-  export PATH=$HOME/brew/sbin:$PATH
-  export PATH=/usr/local/bin:$PATH
-  export PATH=/usr/local/sbin:$PATH
+  configure_brew_paths
 
   brew tap Homebrew/bundle
   brew tap caskroom/cask
@@ -82,7 +90,7 @@ install_native_apps() {
     install_brew
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
     touch Brewfile
-    brew bundle
+    brew bundle || true
   else
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
 
