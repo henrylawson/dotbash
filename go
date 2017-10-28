@@ -71,7 +71,7 @@ install_brew() {
 
   brew tap Homebrew/bundle
   brew tap caskroom/cask
-  brew install bash cat nvm rbenv
+  brew install bash nvm rbenv
 }
 
 install_native_apps() {
