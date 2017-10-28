@@ -24,6 +24,7 @@ brew "gnu-sed"
 brew "gnu-tar"
 brew "gradle"
 brew "lame"
+brew "mas"
 brew "mmv"
 brew "mr"
 brew "node"
@@ -58,3 +59,5 @@ cask "sublime-text"
 cask "transmission"
 cask "vlc"
 cask "caskroom/fonts/font-hack"
+mas "Amphetamine", id: 937984704
+mas "Xcode", id: 497799835
