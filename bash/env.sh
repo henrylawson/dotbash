@@ -15,15 +15,6 @@ shopt -s expand_aliases
 
 export PATH=$JAVA_HOME/bin:$PATH
 
-# google cloud
-[ -f ~/google-cloud-sdk/completion.bash.inc ] && source ~/google-cloud-sdk/completion.bash.inc
-[ -f ~/google-cloud-sdk/path.bash.inc ] && source ~/google-cloud-sdk/path.bash.inc
-
-# fzf
-export FZF_DEFAULT_COMMAND='ag -l --nocolor -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
 if [[ "$OSTYPE" == "darwin"*  ]]
 then
   # Use brew
@@ -55,3 +46,12 @@ then
 else
   export TERM=xterm-256color
 fi
+
+# google cloud
+[ -f ~/google-cloud-sdk/completion.bash.inc ] && source ~/google-cloud-sdk/completion.bash.inc
+[ -f ~/google-cloud-sdk/path.bash.inc ] && source ~/google-cloud-sdk/path.bash.inc
+
+# fzf
+export FZF_DEFAULT_COMMAND='ag -l --nocolor -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
