@@ -45,7 +45,6 @@ brew "tree"
 brew "bramstein/webfonttools/sfnt2woff-zopfli"
 brew "bramstein/webfonttools/woff2"
 cask '1password'
-cask 'alfred'
 cask 'android-file-transfer'
 cask 'docker'
 cask 'evernote'
@@ -54,7 +53,6 @@ cask 'google-chrome'
 cask 'google-backup-and-sync'
 cask 'iterm2'
 cask 'keka'
-cask 'mindnode-pro'
 cask 'nordvpn'
 cask 'skype'
 cask 'slate'

@@ -24,16 +24,20 @@ create_workspace_folder() {
 
 clone_app() {
   APP=$1
+  HTTPS_URL="https://github.com/henrylawson/$APP.git"
+  GIT_URL=git@github.com:henrylawson/$APP.git
 
   if [ -d "$WORKSPACE_PATH/$APP" ]
   then
     cd "$WORKSPACE_PATH/$APP"
+    git remote set-url origin $GIT_URL
     git pull --rebase
     return 0
   fi
 
   cd $WORKSPACE_PATH
-  git clone "https://github.com/henrylawson/$APP.git"
+  git clone $HTTPS_URL
+  git remote set-url origin $GIT_URL
 }
 
 configure_dotbash() {
@@ -90,7 +94,7 @@ install_native_apps() {
     install_brew
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
     touch Brewfile
-    brew bundle || true
+    brew bundle install --force || true
   else
     cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
 
@@ -126,9 +130,7 @@ manually_configure_apps() {
   echo "- Tunnelblick (login)"
 
   echo "The below applications will require manual setup:"
-  echo "- MindNode (license)"
   echo "- iTerm (config in dotbash)"
-  echo "- Alfred (license, config in Drive)"
   echo "- Slate (config, permissions)"
   echo "- Amphetamine (app store, config)"
 }
@@ -165,6 +167,8 @@ refresh_all_apps() {
 }
 
 setup_ruby() {
+  RUBY_VER=2.4.2
+
   if [[ "$OSTYPE" == "darwin"* ]]
   then
     eval "$(rbenv init -)"
@@ -172,8 +176,8 @@ setup_ruby() {
     then
       git clone https://github.com/maljub01/rbenv-bundle-exec.git ~/.rbenv/plugins/rbenv-bundle-exec
     fi
-    rbenv install 2.3.1 --skip-existing
-    rbenv global 2.3.1
+    rbenv install $RUBY_VER --skip-existing
+    rbenv global $RUBY_VER
   else
     sudo apt-get --yes --force-yes install ruby-full
   fi
