@@ -132,7 +132,7 @@ manually_configure_apps() {
   echo "The below applications will require manual setup:"
   echo "- iTerm (config in dotbash)"
   echo "- Slate (config, permissions)"
-  echo "- Amphetamine (app store, config)"
+  echo "- Amphetamine (config)"
 }
 
 configure_dotvim() {
