@@ -33,7 +33,7 @@ clone_app() {
   fi
 
   cd $WORKSPACE_PATH
-  git clone "git@github.com:henrylawson/$APP.git"
+  git clone "https://github.com/henrylawson/$APP.git"
 }
 
 configure_dotbash() {
@@ -71,7 +71,7 @@ install_brew() {
 
   brew tap Homebrew/bundle
   brew tap caskroom/cask
-  brew install bash fast cat nvm rbenv
+  brew install bash cat nvm rbenv
 }
 
 install_native_apps() {
