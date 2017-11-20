@@ -6,7 +6,7 @@ install_maven() {
   if [ ! -f $SUCCESS ]
   then
     cd /opt/user
-    wget -O package.tar.gz http://www-us.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
+    wget -O package.tar.gz http://apache.osuosl.org/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz
     tar xzvf package.tar.gz
     rm package.tar.gz
     touch $SUCCESS
