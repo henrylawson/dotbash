@@ -37,6 +37,7 @@ clone_app() {
 
   cd $WORKSPACE_PATH
   git clone $HTTPS_URL
+  cd $APP
   git remote set-url origin $GIT_URL
 }
 
