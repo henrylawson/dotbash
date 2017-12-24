@@ -26,5 +26,6 @@
 1. `CTRL+B c` new window
 1. `CTRL+B <window number>` change window
 1. `CTRL+B [` scroll mode
+1. `CTRL+B ]` paste highlighted text
 1. `CTRL+B d` detach from session
 1. `CTRL+B :` change settings, such as `set synchronize-panes`
