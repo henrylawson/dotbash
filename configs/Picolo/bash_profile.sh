@@ -22,5 +22,5 @@ alias vbx="VBoxManage"
 alias openvpnstart=/Applications/Tunnelblick.app/Contents/Resources/openvpnstart
 
 # rbenv
-eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(/Users/hlawson/brew/bin/rbenv init -)"
