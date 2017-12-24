@@ -27,3 +27,4 @@
 1. `CTRL+B <window number>` change window
 1. `CTRL+B [` scroll mode
 1. `CTRL+B d` detach from session
+1. `CTRL+B :` change settings, such as `set synchronize-panes`
