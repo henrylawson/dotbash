@@ -60,6 +60,7 @@ cask "slate"
 cask "spotify"
 cask "sublime-text"
 cask "transmission"
+cask "virtualbox"
 cask "vlc"
 cask "caskroom/fonts/font-hack"
 mas "Amphetamine", id: 937984704
