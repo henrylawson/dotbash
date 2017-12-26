@@ -50,6 +50,7 @@ fi
 # google cloud
 [ -f ~/google-cloud-sdk/completion.bash.inc ] && source ~/google-cloud-sdk/completion.bash.inc
 [ -f ~/google-cloud-sdk/path.bash.inc ] && source ~/google-cloud-sdk/path.bash.inc
+source <(kubectl completion bash)
 
 # fzf
 export FZF_DEFAULT_COMMAND='ag -l --nocolor -g ""'
