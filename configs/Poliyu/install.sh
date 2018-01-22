@@ -49,6 +49,18 @@ install_gradle() {
   fi
 }
 
+install_helm() {
+  local SUCCESS="/opt/user/helm-v2.7.2-SUCCESS"
+  if [ ! -f $SUCCESS ]
+  then
+    cd /opt/user
+    wget -O package.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.7.2-linux-amd64.tar.gz
+    tar xzvf package.tar.gz
+    rm package.tar.gz
+    touch $SUCCESS
+  fi
+}
+
 main() {
   install_maven
   install_gradle
