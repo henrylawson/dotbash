@@ -65,6 +65,7 @@ main() {
   install_maven
   install_gradle
   install_endpoints_frameworks_tools
+  install_helm
   install_fasd
 }
 
