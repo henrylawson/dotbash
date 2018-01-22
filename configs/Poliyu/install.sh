@@ -54,6 +54,8 @@ install_helm() {
   if [ ! -f $SUCCESS ]
   then
     cd /opt/user
+    mkdir helm
+    cd helm
     wget -O package.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.7.2-linux-amd64.tar.gz
     tar xzvf package.tar.gz
     rm package.tar.gz
