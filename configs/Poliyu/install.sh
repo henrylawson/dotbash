@@ -49,6 +49,20 @@ install_gradle() {
   fi
 }
 
+install_terraform() {
+  local SUCCESS="/opt/user/terraform-0.11.2-SUCCESS"
+  if [ ! -f $SUCCESS ]
+  then
+    cd /opt/user
+    mkdir terraform
+    cd terraform
+    wget -O package.zip https://releases.hashicorp.com/terraform/0.11.2/terraform_0.11.2_linux_amd64.zip
+    unzip package.zip
+    rm package.zip
+    touch $SUCCESS
+  fi
+}
+
 install_helm() {
   local SUCCESS="/opt/user/helm-v2.7.2-SUCCESS"
   if [ ! -f $SUCCESS ]
