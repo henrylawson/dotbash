@@ -83,6 +83,7 @@ main() {
   install_endpoints_frameworks_tools
   install_helm
   install_fasd
+  install_terraform
 }
 
 main "$@"
