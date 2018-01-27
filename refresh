@@ -6,12 +6,12 @@ HOSTNAME=`cat $WORKSPACE_PATH/dotbash/.hostname`
 
 cd $WORKSPACE_PATH/dotbash/configs/$HOSTNAME
 
-if hash brew 2>/dev/null
+if hash brew 2>/dev/null && [[ -f Brewfile ]]
 then
   brew bundle dump --force
 fi
 
-if hash pip 2>/dev/null
+if hash pip 2>/dev/null && [[ -f requirements.txt ]]
 then
   pip freeze > requirements.txt
 fi
