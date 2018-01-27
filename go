@@ -164,11 +164,6 @@ update_all_apps() {
   $WORKSPACE_PATH/dotbash/bash/bin/updateall
 }
 
-refresh_all_apps() {
-  cd $WORKSPACE_PATH/dotbash
-  ./refresh
-}
-
 setup_ruby() {
   RUBY_VER=2.4.2
 
@@ -247,7 +242,6 @@ then
 fi
 
 pp "Update all applications" && update_all_apps
-pp "Refresh packages"        && refresh_all_apps
 
 if [[ "$OSTYPE" == "darwin"* ]]
 then
