@@ -104,8 +104,9 @@ install_native_apps() {
  
     sudo mkdir -p /opt/user
     sudo chown hgl /opt/user
-    [[ -f ./install.sh ]] && ./install.sh
   fi
+
+  [[ -f ./install.sh ]] && ./install.sh
 }
 
 install_pip_apps() {
