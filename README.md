@@ -5,6 +5,9 @@
 1. `curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/henrylawson/dotbash/master/go > go && bash ./go`
 1. Note, some steps are only run on certain hosts, check ./go for details
 
+## Refresh the Brewfile
+`./refresh`
+
 ## Reconfigure all
 `./go`
 
