@@ -24,3 +24,5 @@ alias openvpnstart=/Applications/Tunnelblick.app/Contents/Resources/openvpnstart
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(/Users/hlawson/brew/bin/rbenv init -)"
+
+export PATH=$PATH:~/utils/helm/darwin-amd64
