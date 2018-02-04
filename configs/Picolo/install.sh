@@ -15,3 +15,5 @@ install_helm() {
     touch $SUCCESS
   fi
 }
+
+install_helm
