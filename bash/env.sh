@@ -43,6 +43,9 @@ then
 
   # GPG
   export GPG_TTY=$(tty)
+
+  # gettext
+  export PATH=~/brew/opt/gettext/bin:$PATH
 else
   export TERM=xterm-256color
 fi
