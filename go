@@ -173,7 +173,7 @@ refresh_all_apps() {
 }
 
 setup_ruby() {
-  RUBY_VER=2.4.2
+  RUBY_VER=2.5.0
 
   if [[ "$OSTYPE" == "darwin"* ]]
   then
