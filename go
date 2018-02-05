@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -xeuo pipefail
 
 HOMEDIR=~
 WORKSPACE_PATH=~/Workspace
@@ -106,7 +106,10 @@ install_native_apps() {
     sudo chown hgl /opt/user
   fi
 
-  [[ -f ./install.sh ]] && ./install.sh
+  if [[ -f ./install.sh ]]
+  then
+    ./install.sh
+  fi
 }
 
 install_pip_apps() {
