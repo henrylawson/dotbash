@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xeuo pipefail
+set -euo pipefail
 
 HOMEDIR=~
 WORKSPACE_PATH=~/Workspace
