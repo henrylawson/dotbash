@@ -23,6 +23,10 @@ then
   export PATH=/usr/local/bin:$PATH
   export PATH=/usr/local/sbin:$PATH
 
+  # rbenv
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+
   # Brew bash completion
   if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
