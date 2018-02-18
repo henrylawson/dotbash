@@ -105,10 +105,9 @@ install_native_apps() {
     sudo chown hgl /opt/user
   fi
 
-  if [[ -f ./$WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME/install.sh ]]
+  if [[ -f "./${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh" ]]
   then
-    cd
-    ./$WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME/install.sh
+    bash -c "./${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh"
   fi
 }
 
