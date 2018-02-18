@@ -10,7 +10,7 @@ install_helm() {
   then
     mkdir -p "${UTILS_PATH}/helm"
     cd "${UTILS_PATH}/helm"
-    curl -L -o package.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-${version}-darwin-amd64.tar.gz
+    curl -L -o package.tar.gz "https://kubernetes-helm.storage.googleapis.com/helm-${version}-darwin-amd64.tar.gz"
     tar xzvf package.tar.gz
     rm package.tar.gz
     touch "${success}"
