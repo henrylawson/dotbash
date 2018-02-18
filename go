@@ -245,7 +245,6 @@ pp "Downloading dotvim"               && clone_app dotvim
 pp "Configuring dotvim"               && configure_dotvim
 pp "Downloading dotgit"               && clone_app dotgit
 pp "Configuring dotgit"               && configure_dotgit
-pp "Cleanup"                          && clean_up
 
 if [[ "$OSTYPE" == "darwin"* ]]
 then
@@ -269,3 +268,5 @@ then
     pp "Manually configure apps" && manually_configure_apps
   fi
 fi
+
+pp "Cleanup" && clean_up
