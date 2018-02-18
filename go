@@ -108,6 +108,7 @@ install_native_apps() {
 }
 
 install_manual_apps() {
+  echo "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh"
   if [[ -f "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh" ]]
   then
     bash -c "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh"
