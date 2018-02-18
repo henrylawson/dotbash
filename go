@@ -97,6 +97,7 @@ install_native_apps() {
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch Brewfile
     brew bundle
+    rm -rf "*.profraw"
   else
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch packages.txt
@@ -125,7 +126,6 @@ install_pip_apps() {
   cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
   touch requirements.txt
   pip install --user -r requirements.txt
-  rm -rf "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/*.profraw"
 }
 
 manually_configure_apps() {
