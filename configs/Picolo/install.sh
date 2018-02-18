@@ -16,4 +16,18 @@ install_helm() {
   fi
 }
 
+install_go() {
+  local VERSION="go1.10"
+  local SUCCESS="${UTILS_PATH}/%{VERSION}-SUCCESS"
+  if [ ! -f $SUCCESS ]
+  then
+    mkdir -p "${UTILS_PATH}/go"
+    cd "${UTILS_PATH}/go"
+    curl -L -o package.tar.gz "https://dl.google.com/go/${VERSION}.darwin-amd64.tar.gz"
+    tar xzvf package.tar.gz
+    rm package.tar.gz
+    touch $SUCCESS
+  fi
+}
+
 install_helm
