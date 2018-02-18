@@ -89,16 +89,14 @@ install_brew() {
 
 install_native_apps() {
   mkdir -p $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+  cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
 
   if [[ "$OSTYPE" == "darwin"* ]]
   then
     install_brew
-    cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
     touch Brewfile
     brew bundle
   else
-    cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
-
     touch packages.txt
     xargs sudo apt-get --yes --force-yes install < packages.txt
  
@@ -106,7 +104,7 @@ install_native_apps() {
     sudo chown hgl /opt/user
   fi
 
-  if [[ -f ./install.sh ]]
+  if [[ -f install.sh ]]
   then
     ./install.sh
   fi
