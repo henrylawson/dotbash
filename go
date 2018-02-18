@@ -97,7 +97,7 @@ install_native_apps() {
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch Brewfile
     brew bundle
-    rm -rf "*.profraw"
+    rm -rf "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/default.profraw"
   else
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch packages.txt
