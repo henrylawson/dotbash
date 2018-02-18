@@ -31,3 +31,4 @@ install_go() {
 }
 
 install_helm
+install_go

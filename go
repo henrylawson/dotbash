@@ -108,7 +108,6 @@ install_native_apps() {
 }
 
 install_manual_apps() {
-  echo "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh"
   if [[ -f "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh" ]]
   then
     bash -c "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh"
@@ -123,9 +122,10 @@ install_pip_apps() {
     sudo easy_install pip
   fi
 
-  cd $WORKSPACE_PATH/dotbash/configs/$BOX_HOSTNAME
+  cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
   touch requirements.txt
   pip install --user -r requirements.txt
+  rm -rf "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/*.profraw"
 }
 
 manually_configure_apps() {
