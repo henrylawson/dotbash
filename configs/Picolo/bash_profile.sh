@@ -23,3 +23,6 @@ alias openvpnstart=/Applications/Tunnelblick.app/Contents/Resources/openvpnstart
 
 # helm
 export PATH=$PATH:~/utils/helm/darwin-amd64
+
+# golang
+export PATH=$PATH:~/utils/golang/go/bin
