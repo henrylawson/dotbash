@@ -96,7 +96,7 @@ install_native_apps() {
     install_brew
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch Brewfile
-    brew bundle
+    bash -c "brew bundle"
   else
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch packages.txt
