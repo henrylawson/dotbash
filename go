@@ -97,7 +97,6 @@ install_native_apps() {
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch Brewfile
     brew bundle
-    rm -rf "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/default.profraw"
   else
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch packages.txt
@@ -229,6 +228,10 @@ prereq_apps() {
   wait_for_confirmation
 }
 
+clean_up() {
+  rm -rf "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/default.profraw"
+}
+
 pp "Creating workspace folder"        && create_workspace_folder
 pp "Prerequisites"                    && prereq_apps
 pp "Downloading dotbash"              && clone_app dotbash
@@ -242,6 +245,7 @@ pp "Downloading dotvim"               && clone_app dotvim
 pp "Configuring dotvim"               && configure_dotvim
 pp "Downloading dotgit"               && clone_app dotgit
 pp "Configuring dotgit"               && configure_dotgit
+pp "Cleanup"                          && clean_up
 
 if [[ "$OSTYPE" == "darwin"* ]]
 then
