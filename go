@@ -96,7 +96,7 @@ install_native_apps() {
     install_brew
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch Brewfile
-    bash -c "brew bundle"
+    brew bundle
   else
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch packages.txt
@@ -105,7 +105,9 @@ install_native_apps() {
     sudo mkdir -p /opt/user
     sudo chown hgl /opt/user
   fi
+}
 
+install_manual_apps() {
   if [[ -f "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh" ]]
   then
     bash -c "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh"
@@ -230,6 +232,7 @@ pp "Creating workspace folder"        && create_workspace_folder
 pp "Prerequisites"                    && prereq_apps
 pp "Downloading dotbash"              && clone_app dotbash
 pp "Installing native applications"   && install_native_apps
+pp "Installing manual applications"   && install_manual_apps
 pp "Installing pip applications"      && install_pip_apps
 pp "Installing gcloud sdk"            && install_gcloud_sdk
 pp "Setup Ruby"                       && setup_ruby
