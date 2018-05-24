@@ -29,7 +29,3 @@
 1. `CTRL+B ]` paste highlighted text
 1. `CTRL+B d` detach from session
 1. `CTRL+B :` change settings, such as `set synchronize-panes`
-
-
-
-tes
