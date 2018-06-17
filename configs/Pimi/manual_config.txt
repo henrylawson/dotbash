@@ -1,0 +1,12 @@
+The below applications will require manual login:
+- 1Password (login)
+- Google Drive (login, setup shortcuts)
+- Google Chrome (login)
+- Spotify (login)
+- NordVPN (login)
+- Plex (login, config)
+
+The below applications will require manual setup:
+- Slate (config, permissions)
+- Amphetamine (config)
+- Transmission (config)

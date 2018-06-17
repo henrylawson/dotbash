@@ -128,20 +128,13 @@ install_pip_apps() {
 }
 
 manually_configure_apps() {
-  echo "The below applications will require manual login:"
-  echo "- 1Password (login)"
-  echo "- Google Drive (login, setup shortcuts)"
-  echo "- Google Chrome (login)"
-  echo "- Evernote (login)"
-  echo "- Spotify (login)"
-  echo "- Skype (login)"
-  echo "- NordVPN (login)"
-  echo "- Tunnelblick (login)"
-
-  echo "The below applications will require manual setup:"
-  echo "- iTerm (config in dotbash)"
-  echo "- Slate (config, permissions)"
-  echo "- Amphetamine (config)"
+  local manual_config="${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/manual_config.txt"
+  if [[ -f "${manual_config}" ]]
+  then
+    cat "${manual_config}"
+  else
+    echo "No steps to perform"
+  fi
 }
 
 configure_dotvim() {
@@ -260,13 +253,5 @@ fi
 
 pp "Update all applications" && update_all_apps
 pp "Refresh packages"        && refresh_all_apps
-
-if [[ "$OSTYPE" == "darwin"* ]]
-then
-  if [ "$BOX_HOSTNAME" == "Picolo" ]
-  then
-    pp "Manually configure apps" && manually_configure_apps
-  fi
-fi
-
+pp "Manually configure apps" && manually_configure_apps
 pp "Cleanup" && clean_up
