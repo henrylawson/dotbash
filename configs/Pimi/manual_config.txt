@@ -11,3 +11,5 @@ The below applications will require manual setup:
 - Amphetamine (config)
 - Transmission (config)
 - Kodi (config)
+- NordVPN IKE (app store, install, config)
+- Popcorn
