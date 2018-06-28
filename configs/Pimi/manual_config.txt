@@ -10,3 +10,4 @@ The below applications will require manual setup:
 - Slate (config, permissions)
 - Amphetamine (config)
 - Transmission (config)
+- Kodi (config)
