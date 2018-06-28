@@ -12,4 +12,4 @@ The below applications will require manual setup:
 - Transmission (config)
 - Kodi (config)
 - NordVPN IKE (app store, install, config)
-- Popcorn
+- Popcorn (install, config)
