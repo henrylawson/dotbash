@@ -1,5 +1,6 @@
 altgraph==0.15
 ansible==2.4.3.0
+apache-libcloud==2.3.0
 appdirs==1.4.3
 asn1crypto==0.24.0
 aws==0.2.5
@@ -15,11 +16,11 @@ cached-property==1.3.1
 certifi==2018.1.18
 cffi==1.11.4
 chardet==3.0.4
-colorama==0.3.9
+colorama==0.3.7
 cryptography==2.1.4
 cssselect==1.0.3
 cycler==0.10.0
-docker==3.0.1
+docker==2.7.0
 docker-compose==1.19.0
 docker-pycreds==0.2.2
 dockerpty==0.4.1
@@ -99,7 +100,7 @@ s3transfer==0.1.13
 scipy==1.0.0
 six==1.11.0
 subprocess32==3.2.7
-texttable==1.2.1
+texttable==0.9.1
 urllib3==1.22
 vboxapi==1.0
 virtualenv==15.1.0
