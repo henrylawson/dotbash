@@ -8,8 +8,8 @@ The below applications will require manual login:
 
 The below applications will require manual setup:
 - Slate (config, permissions)
-- Amphetamine (config)
 - Transmission (config)
 - Kodi (config)
+- Amphetamine (app store, config)
 - NordVPN IKE (app store, install, config)
 - Popcorn (install, config)
