@@ -90,8 +90,21 @@ EOF"
   fi
 }
 
+install_fasd() {
+  local SUCCESS="/opt/user/fasd-1.0.1-SUCCESS"
+  if [ ! -f $SUCCESS ]
+  then
+    cd /opt/user
+    wget -O package.tar.gz https://github.com/clvv/fasd/tarball/1.0.1
+    tar xzvf package.tar.gz
+    rm package.tar.gz
+    touch $SUCCESS
+  fi
+}
+
 main() {
   setup_raspberry_pi
+  install_fasd
 }
 
 main "${@}"
