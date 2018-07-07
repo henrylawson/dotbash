@@ -211,7 +211,7 @@ install_gcloud_sdk() {
     app-engine-java \
     app-engine-python \
     kubectl \
-    --quiet
+    --quiet || true
 }
 
 prereq_apps() {
