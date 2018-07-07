@@ -1,0 +1,6 @@
+vim
+python-pip
+silversearcher-ag
+tmux
+jq
+myrepos

@@ -196,7 +196,8 @@ install_gcloud_sdk() {
   bash /tmp/gcpsdk --disable-prompts
   rm /tmp/gcpsdk
   source ~/google-cloud-sdk/path.bash.inc
-  gcloud components install app-engine-go \
+  gcloud components install \
+    app-engine-go \
     cbt \
     bigtable \
     datalab \
