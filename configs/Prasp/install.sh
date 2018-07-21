@@ -77,7 +77,7 @@ EOF"
   backup_file /etc/hostname
   sudo sh -c "echo "Prasp" > /etc/hostname"
   backup_file /etc/hosts
-  sudo sed -i "/127.0.1.1=/c\127.0.0.1\tPrasp" /etc/hosts
+  sudo sed -i "/127.0.0.1/c\127.0.0.1\tPrasp" /etc/hosts
   
   log "Disable autologin"
   backup_file /etc/lightdm/lightdm.conf
