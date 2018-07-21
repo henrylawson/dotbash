@@ -103,7 +103,7 @@ install_native_apps() {
     xargs sudo apt-get --yes --force-yes install < packages.txt
  
     sudo mkdir -p /opt/user
-    sudo chown hgl /opt/user
+    sudo chown "${USER}" /opt/user
   fi
 }
 
