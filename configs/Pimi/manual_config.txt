@@ -1,6 +1,7 @@
 The below applications will require manual login:
 - 1Password (login)
-- Google Drive (login, setup shortcuts)
+- Google Backup & Sync (login, setup shortcuts)
+- Google Drive File Stream (login, setup shortcuts)
 - Google Chrome (login)
 - Spotify (login)
 - NordVPN (login)
@@ -9,7 +10,6 @@ The below applications will require manual login:
 The below applications will require manual setup:
 - Slate (config, permissions)
 - Transmission (config)
-- Kodi (config)
 - Amphetamine (app store, config)
 - NordVPN IKE (app store, install, config)
 - Popcorn (install, config)
