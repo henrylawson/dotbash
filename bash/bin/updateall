@@ -3,8 +3,8 @@
 NO_COLOR='\e[0m'
 GREEN='\e[0;32m'
 
-brew="brew update --verbose && brew cleanup --verbose"
-cask="brew update --verbose && brew cask list | xargs brew cask install --verbose"
+brew="brew update && brew cleanup"
+cask="brew update && brew cask list | xargs brew cask install"
 macosx="softwareupdate -i -a --verbose"
 npm="npm update --verbose"
 aptget="sudo apt-get update && sudo apt-get -y upgrade"
