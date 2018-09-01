@@ -1,7 +1,6 @@
 The below applications will require manual login:
 - 1Password (login)
 - Adobe Creative Cloud (install, login, config)
-- Google Backup & Sync (login, setup shortcuts)
 - Google Drive File Stream (login, setup shortcuts)
 - Google Chrome (login)
 - Spotify (login)
