@@ -2,11 +2,23 @@
 
 KEY_PATH="${HOME}/.camstash.key"
 WORKING_DIR="/tmp"
-NOW="$(date -u +%Y-%m-%dT%H%M%S%N)"
-IMAGE_NAME="${NOW}-image.txt"
 BUCKET_NAME="fq-smarthome-cam"
 
-touch "${WORKING_DIR}/${IMAGE_NAME}"
+take_pic_and_stash() {
+  local NOW="$(date -u +%Y-%m-%dT%H%M%S%N)"
+  local IMAGE_NAME="${NOW}-image.txt"
 
-gcloud auth activate-service-account --key-file "${KEY_PATH}"
-gsutil cp "${WORKING_DIR}/${IMAGE_NAME}" "gs://${BUCKET_NAME}/${IMAGE_NAME}"
+  touch "${WORKING_DIR}/${IMAGE_NAME}"
+  gsutil cp "${WORKING_DIR}/${IMAGE_NAME}" "gs://${BUCKET_NAME}/${IMAGE_NAME}"
+}
+
+authenticate() {
+  gcloud auth activate-service-account --key-file "${KEY_PATH}"
+}
+
+authenticate
+
+while true; do
+  take_pic_and_stash
+  test $? -gt 128 && break
+done
