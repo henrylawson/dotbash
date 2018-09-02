@@ -1,0 +1,15 @@
+#!/bin/sh -xu
+
+ARG_PATH="$TR_TORRENT_DIR/$TR_TORRENT_NAME"
+ARG_NAME="$TR_TORRENT_NAME"
+ARG_LABEL="N/A"
+
+/Users/smarthome/brew/bin/filebot -script fn:amc \
+  --output ~/Media \
+  --action copy -non-strict \
+  --log-file amc.log \
+  --def subtitles=en \
+  --def artwork=n \
+  --def clean=y \
+  --def music=y \
+  --def ut_dir="$ARG_PATH" ut_kind="multi" ut_title="$ARG_NAME" ut_label="$ARG_LABEL"

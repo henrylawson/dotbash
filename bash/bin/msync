@@ -5,4 +5,5 @@ filebot -script fn:amc \
   --log-file amc.log \
   --def subtitles=en \
   --def artwork=n \
-  --def clean=y
+  --def clean=y \
+  --def music=y
