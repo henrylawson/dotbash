@@ -7,7 +7,7 @@ filebot -script fn:amc \
   --action move -non-strict ~/Seeding \
   --log-file amc.log \
   --def subtitles=en \
-  --def artwork=n \
+  --def artwork=y \
   --def clean=y \
   --def music=y
 
