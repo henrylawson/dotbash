@@ -1,9 +1,19 @@
 #!/bin/bash
+
+MEDIA_DIR="${HOME}/Media"
+
 filebot -script fn:amc \
-  --output ~/Media \
+  --output "${MEDIA_DIR}" \
   --action move -non-strict ~/Seeding \
   --log-file amc.log \
   --def subtitles=en \
   --def artwork=n \
   --def clean=y \
   --def music=y
+
+cat >~/.config/beets/config.yaml <<EOF
+directory: ${MEDIA_DIR}/Music
+library: ${MEDIA_DIR}/Music/musiclibrary.db
+EOF
+
+beet import -q "${MEDIA_DIR}/Music"
