@@ -2,6 +2,7 @@ altgraph==0.15
 asn1crypto==0.24.0
 backports.functools-lru-cache==1.5
 bdist-mpkg==0.5.0
+beets==1.4.7
 bonjour-py==0.3
 cffi==1.11.5
 cryptography==2.2.2
@@ -10,10 +11,14 @@ enum34==1.1.6
 functools32==3.2.3.post2
 idna==2.7
 ipaddress==1.0.22
+jellyfish==0.6.1
 kiwisolver==1.0.1
 macholib==1.9
 matplotlib==2.2.2
 modulegraph==0.16
+munkres==1.0.12
+musicbrainzngs==0.6
+mutagen==1.41.1
 numpy==1.14.5
 py2app==0.14
 pycparser==2.18
@@ -56,8 +61,10 @@ pyOpenSSL==18.0.0
 pyparsing==2.2.0
 python-dateutil==2.7.3
 pytz==2018.4
+PyYAML==3.13
 scipy==1.1.0
 six==1.11.0
 subprocess32==3.5.2
+Unidecode==1.0.22
 xattr==0.9.3
 zope.interface==4.5.0

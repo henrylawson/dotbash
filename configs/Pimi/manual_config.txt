@@ -12,4 +12,4 @@ The below applications will require manual setup:
 - Transmission (config)
 - Amphetamine (app store, config)
 - NordVPN IKE (app store, install, config)
-- Popcorn (install, config)
+- NZBGet, Radarr, Sonarr (install, config)
