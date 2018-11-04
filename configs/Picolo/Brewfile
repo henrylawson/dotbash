@@ -75,5 +75,4 @@ cask "virtualbox"
 cask "vlc"
 cask "homebrew/cask-fonts/font-hack"
 mas "Amphetamine", id: 937984704
-mas "macOS High Sierra", id: Install
 mas "Xcode", id: 497799835
