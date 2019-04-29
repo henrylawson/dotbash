@@ -122,9 +122,12 @@ install_pip_apps() {
     sudo easy_install pip
   fi
 
-  cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
-  touch requirements.txt
-  pip install --user -r requirements.txt
+  if hash pip 2>/dev/null
+  then
+    cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
+    touch requirements.txt
+    pip install --user -r requirements.txt
+  fi
 }
 
 manually_configure_apps() {
