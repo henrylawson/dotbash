@@ -1,5 +1,5 @@
 altgraph==0.15
-ansible==2.4.3.0
+ansible==2.8.0
 apache-libcloud==2.3.0
 appdirs==1.4.3
 asn1crypto==0.24.0
@@ -31,6 +31,7 @@ ecdsa==0.13
 enum34==1.1.6
 Fabric==1.14.0
 functools32==3.2.3.post2
+future==0.17.1
 futures==3.2.0
 idna==2.6
 ipaddress==1.0.19
@@ -100,6 +101,7 @@ rsa==3.4.2
 s3transfer==0.1.13
 scipy==1.0.0
 six==1.11.0
+sshuttle==0.78.4
 subprocess32==3.2.7
 texttable==0.9.1
 urllib3==1.22
