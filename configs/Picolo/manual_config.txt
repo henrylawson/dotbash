@@ -6,7 +6,6 @@ The below applications will require manual login:
 - Spotify (login)
 - Skype (login)
 - NordVPN (login)
-- Tunnelblick (login)
 
 The below applications will require manual setup:
 - iTerm (config in dotbash)
