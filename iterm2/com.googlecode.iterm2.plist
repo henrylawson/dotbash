@@ -14,6 +14,8 @@
 	<false/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
+	<key>ApplePressAndHoldEnabled</key>
+	<false/>
 	<key>AppleScrollAnimationEnabled</key>
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
@@ -132,9 +134,9 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>2389 157 796 486 1920 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 -1 1920 1057 0 0 1920 1057 </string>
+	<string>-1080 -480 1080 1897 -1080 -480 1080 1897 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>960 0 954 1057 0 0 1920 1057 </string>
+	<string>339 244 1290 730 0 0 1680 1027 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -869,12 +871,15 @@
 	</array>
 	<key>NoSyncAllAppVersions</key>
 	<array>
-		<string>3.3.2</string>
-		<string>3.2.9</string>
-		<string>3.3.4</string>
-		<string>3.3.0</string>
-		<string>3.3.3</string>
 		<string>3.3.6</string>
+		<string>3.3.8</string>
+		<string>3.3.4</string>
+		<string>3.3.3</string>
+		<string>3.3.7</string>
+		<string>3.3.9</string>
+		<string>3.2.9</string>
+		<string>3.3.2</string>
+		<string>3.3.0</string>
 	</array>
 	<key>NoSyncHaveRequestedFullDiskAccess</key>
 	<true/>
@@ -883,7 +888,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>E4BD0527-00AF-499B-9919-2FFC35574EFA</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>10</integer>
+	<integer>57</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1608,24 +1613,6 @@
 			</dict>
 		</array>
 	</dict>
-	<key>NoSyncSearchHistory</key>
-	<array>
-		<string>change</string>
-		<string>process</string>
-	</array>
-	<key>NoSyncSearchHistory2</key>
-	<array>
-		<string>UserExportMailer</string>
-		<string>UserExpr</string>
-		<string>export</string>
-		<string>size</string>
-		<string>20191112T170930</string>
-		<string>asset_files</string>
-		<string>google_compute_url_map</string>
-		<string>gcp_cdn_ip_address</string>
-		<string>download</string>
-		<string>error</string>
-	</array>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>530908310.98857701</real>
 	<key>OnlyWhenMoreTabs</key>
@@ -1700,7 +1687,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-11-15T19:51:40Z</date>
+	<date>2020-04-26T19:28:57Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -1756,7 +1743,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.6</string>
+	<string>3.3.9</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
