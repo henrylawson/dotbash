@@ -94,7 +94,7 @@ pyOpenSSL==17.5.0
 pyparsing==2.2.0
 python-dateutil==2.6.1
 pytz==2018.3
-PyYAML==3.12
+PyYAML==5.1
 readability==0.2
 requests==2.18.4
 rsa==3.4.2
