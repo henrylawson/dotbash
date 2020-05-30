@@ -82,4 +82,3 @@ cask "vlc"
 cask "adobe-creative-cloud"
 mas "Amphetamine", id: 937984704
 mas "NordVPN IKE", id: 1116599239
-mas "Xcode", id: 497799835
