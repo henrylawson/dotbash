@@ -11,7 +11,7 @@
         "revision": "ab9ae286111f167c6de710609adb23d8a3630f75"
       },
       "homebrew/cask": {
-        "revision": "f014d81b1a4edd7076557ef5e116a582cb6c72fe"
+        "revision": "4e7e48a37a3f70daff9c1c4799903d527418033a"
       },
       "homebrew/cask-fonts": {
         "revision": "6eb6e91304c84ee060b41636f49d58c5a7ae6091"
@@ -159,9 +159,6 @@
               "sha256": "4a999c75dcc53cbc711e3ac6545db69ab3aeca6c29c1cb6b21c353f237342457"
             }
           }
-        },
-        "options": {
-          "link": true
         }
       },
       "autojump": {
@@ -1406,6 +1403,30 @@
       "NordVPN IKE": {
         "id": "1116599239",
         "version": "5.5.4"
+      },
+      "GarageBand": {
+        "id": "682658836",
+        "version": "10.3.4"
+      },
+      "iMovie": {
+        "id": "408981434",
+        "version": "10.1.14"
+      },
+      "Keynote": {
+        "id": "409183694",
+        "version": "9.2.1"
+      },
+      "Numbers": {
+        "id": "409203825",
+        "version": "6.2.1"
+      },
+      "Pages": {
+        "id": "409201541",
+        "version": "8.2.1"
+      },
+      "Xcode": {
+        "id": "497799835",
+        "version": "11.5"
       }
     }
   },
@@ -1415,7 +1436,7 @@
         "HOMEBREW_VERSION": "2.3.0",
         "HOMEBREW_PREFIX": "/Users/hgl/brew",
         "Homebrew/homebrew-core": "2adae504630253ca5c01e9b1152030d0d6a05941",
-        "CLT": "11.0.0.0.1.1567737322",
+        "CLT": "11.5.0.0.1.1588476445",
         "Xcode": "11.5",
         "macOS": "10.15.5"
       }
