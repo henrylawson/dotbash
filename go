@@ -201,19 +201,6 @@ install_gcloud_sdk() {
   rm /tmp/gcpsdk
   source ~/google-cloud-sdk/path.bash.inc
   gcloud components install \
-    app-engine-go \
-    cbt \
-    bigtable \
-    datalab \
-    cloud-datastore-emulator \
-    gcd-emulator \
-    pubsub-emulator \
-    emulator-reverse-proxy \
-    docker-credential-gcr \
-    alpha \
-    beta \
-    app-engine-java \
-    app-engine-python \
     kubectl \
     --quiet || true
 }
