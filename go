@@ -119,7 +119,7 @@ install_manual_apps() {
 install_pip_apps() {
   if [[ "$OSTYPE" == "darwin"* ]]
   then
-    pyenv install 3.7.3
+    pyenv install 3.7.3 --skip-existing
     pyenv global 3.7.3
   fi
 
