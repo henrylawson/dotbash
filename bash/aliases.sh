@@ -28,21 +28,9 @@ alias vi="vim"
 alias t="take"
 function take() { mkdir -p "$@" && cd "$@"; }
 alias lol='echo "hahahaha"'
-alias f="find"
-alias ws='ruby -run -e httpd . -p 8080'
-
-# Time
-alias epoch='date +"%s"'
 
 # Update them all!
 alias uall=updateall
-
-# ruby/rails dev
-alias be="bundle exec"
-
-# rspec
-alias rs="rspec --colour --format d"
-alias rt="ruby -rminitest/pride"
 
 # fasd
 fasd_cache="$HOME/.fasd-init-bash"
@@ -67,9 +55,6 @@ _fasd_bash_hook_cmd_complete a s d f sd sf z j zz
 
 if [[ "$OSTYPE" == "darwin"*  ]]
 then
-  # ccat
-  alias cat=ccat
-
   alias rdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder;echo "Done"'
 
   alias subl='/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl'

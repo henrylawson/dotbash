@@ -119,7 +119,8 @@ install_manual_apps() {
 install_pip_apps() {
   if [[ "$OSTYPE" == "darwin"* ]]
   then
-    sudo easy_install pip
+    pyenv install 3.8.3
+    pyenv global 3.8.3
   fi
 
   if hash pip 2>/dev/null

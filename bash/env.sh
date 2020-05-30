@@ -32,11 +32,13 @@ then
     . $(brew --prefix)/etc/bash_completion
   fi
 
+  # enable pyenv
+  if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+  fi
+
   # GNU Tar
   export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-
-  # user pip
-  export PATH=~/Library/Python/2.7/bin:$PATH
 
   # Java
   export JAVA_HOME=$(/usr/libexec/java_home)
