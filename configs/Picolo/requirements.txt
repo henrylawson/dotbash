@@ -39,7 +39,7 @@ Jinja2==2.10
 jmespath==0.9.3
 jsonschema==2.6.0
 LinkChecker==9.3
-lxml==4.1.1
+lxml==4.6.2
 macholib==1.9
 MarkupSafe==1.0
 matplotlib==2.1.2
