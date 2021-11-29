@@ -62,7 +62,6 @@ brew "pyenv", link: false
 brew "python@3.8"
 brew "rbenv"
 brew "ssed", link: false
-brew "sshfs"
 brew "sysbench", link: false
 brew "terraform"
 brew "terraform@0.13"
