@@ -20,7 +20,7 @@
         "revision": "4ff6801350f4a9c777bfda1fcdd7286b8da9eda5"
       },
       "homebrew/core": {
-        "revision": "0fa35ab10f3e76da1dbe5b593e0b4e83b1976f5d"
+        "revision": "7e1d5046945620245be075f23caf2d23646ee3e3"
       },
       "stripe/stripe-cli": {
         "revision": "2464ec72ac5121d00b578adfdb52cbe9d0c1bb8f"
@@ -3080,7 +3080,7 @@
       "monterey": {
         "HOMEBREW_VERSION": "3.3.6",
         "HOMEBREW_PREFIX": "/Users/hgl/brew",
-        "Homebrew/homebrew-core": "0fa35ab10f3e76da1dbe5b593e0b4e83b1976f5d",
+        "Homebrew/homebrew-core": "7e1d5046945620245be075f23caf2d23646ee3e3",
         "CLT": "13.1.0.0.1.1633545042",
         "Xcode": "13.1",
         "macOS": "12.0.1"

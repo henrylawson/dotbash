@@ -53,9 +53,9 @@ configure_dotbash() {
 
   if [[ "$OSTYPE" == "darwin"* ]]
   then
-    sudo bash -c "echo '$HOMEDIR/brew/bin/bash' >> /etc/shells"
-    sudo chsh -s "$HOMEDIR/brew/bin/bash"
-    chsh -s "$HOMEDIR/brew/bin/bash"
+    sudo bash -c "echo '/bin/bash' >> /etc/shells"
+    sudo chsh -s "/bin/bash"
+    chsh -s "/bin/bash"
   fi
 }
 
