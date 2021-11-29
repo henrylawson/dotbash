@@ -58,7 +58,7 @@ brew "optipng"
 brew "packer"
 brew "parallel"
 brew "pth"
-brew "pyenv", link: false
+brew "pyenv"
 brew "python@3.8"
 brew "rbenv"
 brew "ssed", link: false
