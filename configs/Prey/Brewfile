@@ -13,7 +13,7 @@ brew "sqlite"
 brew "xz"
 brew "autojump", link: false
 brew "automake"
-brew "bash", link: false
+brew "bash"
 brew "bash-completion"
 brew "bazel"
 brew "cfssl"
