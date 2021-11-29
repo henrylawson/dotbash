@@ -155,9 +155,9 @@ configure_dotgit() {
 }
 
 symlink_drive() {
-  ln -sfn ~/Google\ Drive/Dotfiles/GnuPG ~/.gnupg
+  ln -sfn /Volumes/GoogleDrive/My\ Drive/Dotfiles/GnuPG ~/.gnupg
   rm -rf ~/.ssh
-  ln -sfn ~/Google\ Drive/Dotfiles/SSH ~/.ssh
+  ln -sfn /Volumes/GoogleDrive/My\ Drive/Dotfiles/SSH ~/.ssh
 }
 
 configure_dotslate() {
