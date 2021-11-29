@@ -51,7 +51,7 @@ brew "mmv"
 brew "mr"
 brew "mysql-client"
 brew "nmap"
-brew "node", link: false
+brew "node"
 brew "nvm"
 brew "openssh", link: false
 brew "optipng"
