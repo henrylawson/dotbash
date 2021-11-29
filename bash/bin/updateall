@@ -14,8 +14,6 @@ if hash brew 2>/dev/null
 then
   printf "${GREEN}## Update Brew and Brew packages${NO_COLOR}\n"
   bash -c "$brew"
-  printf "${GREEN}## Update Brew and Brew Cask packages${NO_COLOR}\n"
-  bash -c "$cask"
 fi
 
 if hash npm 2>/dev/null

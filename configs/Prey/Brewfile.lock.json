@@ -2508,9 +2508,6 @@
               "sha256": "0ae14f48574b7d5372870dfd55df6720fabf1e7cf45ac1f0fbaa76282abbb9dc"
             }
           }
-        },
-        "options": {
-          "link": false
         }
       },
       "wget": {
