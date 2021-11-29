@@ -320,9 +320,6 @@
               "sha256": "3a35a24d20656cccd23624e2ca1c8241ef4725a73d31aef91d73dc824eb22f23"
             }
           }
-        },
-        "options": {
-          "link": false
         }
       },
       "bash-completion": {
