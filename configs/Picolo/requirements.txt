@@ -46,7 +46,7 @@ matplotlib==2.1.2
 modulegraph==0.16
 numpy==1.14.0
 packaging==16.8
-paramiko==2.4.2
+paramiko==2.10.1
 passlib==1.7.1
 powerline-status==2.6
 prettytable==0.7.2
