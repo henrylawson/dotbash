@@ -11,7 +11,7 @@
         "revision": "9bb10e7c1032abc2e15bf72002a58232d8c072dc"
       },
       "homebrew/cask": {
-        "revision": "68fbd391165f5e113a190eb1f071d025d6f6b12a"
+        "revision": "eea96a93248ed0524b10af233cd01754778cdaa4"
       },
       "homebrew/cask-fonts": {
         "revision": "5e352b0070c210ec898ee151380076478ec35fea"
@@ -20,7 +20,7 @@
         "revision": "cdb5478be084e793cb9a7ff2dbb5b9ded214b9c0"
       },
       "homebrew/core": {
-        "revision": "58d6b9c7e54f88db4754abbb345cee539e024494"
+        "revision": "834a291dbbef61af371def69a0990fbb490167d2"
       },
       "stripe/stripe-cli": {
         "revision": "6db57428c85c1d02c1dbe1868205d73ef71a0df2"
@@ -1104,9 +1104,6 @@
               "sha256": "b501ef3afcfbeb8626d438446609d5c65f8d36749cda7f6c04d183e0017fa822"
             }
           }
-        },
-        "options": {
-          "link": false
         }
       },
       "gradle": {
@@ -1527,9 +1524,6 @@
               "sha256": "9a72e30a88de8a164a4b249e181747639b9b2e2fc2b089f0e1cbaf850d6a0acb"
             }
           }
-        },
-        "options": {
-          "link": false
         }
       },
       "mas": {
@@ -1793,9 +1787,6 @@
               "sha256": "8bb34a70ffa4b5235215ee756495939bb2ea835074928d7f50c9188e4622142d"
             }
           }
-        },
-        "options": {
-          "link": false
         }
       },
       "optipng": {
@@ -2094,9 +2085,6 @@
               "sha256": "66d8aad04cd69ea97d38693e07231aba70312c269bf4687cd47f3d5dd3c98b8c"
             }
           }
-        },
-        "options": {
-          "link": false
         }
       },
       "terraform": {
@@ -2234,9 +2222,6 @@
               "sha256": "40710fd6865425f2d9fc8333fd08ac7705ad32b0d0686dcf57a3f4a9e53c4ead"
             }
           }
-        },
-        "options": {
-          "link": false
         }
       },
       "tree": {
@@ -3318,7 +3303,7 @@
       },
       "NordVPN": {
         "id": "905953485",
-        "version": "7.5.0"
+        "version": "7.6.0"
       }
     }
   },
@@ -3335,7 +3320,7 @@
       "monterey": {
         "HOMEBREW_VERSION": "3.4.11",
         "HOMEBREW_PREFIX": "/Users/hgl/brew",
-        "Homebrew/homebrew-core": "58d6b9c7e54f88db4754abbb345cee539e024494",
+        "Homebrew/homebrew-core": "834a291dbbef61af371def69a0990fbb490167d2",
         "CLT": "13.4.0.0.1.1651278267",
         "Xcode": "13.4",
         "macOS": "12.4"
