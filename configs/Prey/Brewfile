@@ -12,10 +12,10 @@ brew "webp"
 brew "gdbm"
 brew "gettext"
 brew "ossp-uuid"
-brew "sqlite"
 brew "xz"
 brew "autojump", link: false
 brew "automake"
+brew "b2-tools"
 brew "bash"
 brew "bash-completion"
 brew "bazel"
@@ -33,7 +33,6 @@ brew "openjpeg"
 brew "git-crypt"
 brew "pcre"
 brew "python@3.9"
-brew "glib", link: false
 brew "gnu-sed"
 brew "gnu-tar"
 brew "libevent"
@@ -44,7 +43,7 @@ brew "gradle"
 brew "httrack"
 brew "tcl-tk"
 brew "libheif"
-brew "imagemagick", link: false
+brew "imagemagick"
 brew "iperf"
 brew "jq"
 brew "lame"
@@ -66,7 +65,6 @@ brew "packer"
 brew "parallel"
 brew "pth"
 brew "pyenv"
-brew "python@3.8"
 brew "rbenv"
 brew "ssed", link: false
 brew "sysbench", link: false
@@ -76,8 +74,8 @@ brew "the_silver_searcher"
 brew "tmux", link: false
 brew "tree"
 brew "ttf2eot"
-brew "watch", link: false
-brew "wget", link: false
+brew "watch"
+brew "wget"
 brew "bramstein/webfonttools/sfnt2woff-zopfli"
 brew "bramstein/webfonttools/woff2"
 brew "stripe/stripe-cli/stripe"
@@ -86,9 +84,10 @@ cask "adobe-creative-cloud"
 cask "android-file-transfer"
 cask "docker"
 cask "evernote"
+cask "firefox"
 cask "font-hack"
-cask "google-backup-and-sync"
 cask "google-chrome"
+cask "google-drive"
 cask "intellij-idea"
 cask "iterm2"
 cask "keka"
@@ -104,7 +103,7 @@ mas "Amphetamine", id: 937984704
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
-mas "NordVPN IKE", id: 1116599239
+mas "NordVPN", id: 905953485
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Xcode", id: 497799835
