@@ -6,7 +6,6 @@ The below applications will require manual login:
 - Skype (login)
 - NordVPN (login)
 - Intellij IDEA (login, license)
-- Adobe Creative Cloud (login, installs)
 
 The below applications will require manual setup:
 - iTerm (config in dotbash)

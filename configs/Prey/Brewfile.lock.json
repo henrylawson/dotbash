@@ -135,12 +135,6 @@
           "full_name": "vlc"
         }
       },
-      "adobe-creative-cloud": {
-        "version": "5.7.0.1307",
-        "options": {
-          "full_name": "adobe-creative-cloud"
-        }
-      },
       "firefox": {
         "version": "100.0.2",
         "options": {
