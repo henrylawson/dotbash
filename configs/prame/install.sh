@@ -60,6 +60,7 @@ install_google_chrome() {
 
   sudo apt update
   sudo apt install google-chrome-stable -y
+  sudo systemctl daemon-reload
 }
 
 remove_snapd
