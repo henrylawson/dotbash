@@ -15,10 +15,12 @@ install_rclone() {
 remove_snapd() {
   MAX_TRIES=30
 
-  for try in $(seq 1 $MAX_TRIES); do
+  for try in $(seq 1 $MAX_TRIES)
+  do
     INSTALLED_SNAPS=$(snap list 2> /dev/null | grep -c  ^Name || true)
 
-    if (( $INSTALLED_SNAPS == 0 )); then
+    if (( $INSTALLED_SNAPS == 0 ))
+    then
       echo "all snaps removed"
       exit 0
     fi
