@@ -7,7 +7,7 @@ brew="brew update && brew cleanup"
 cask="brew update && brew cask list | xargs brew cask install"
 macosx="softwareupdate -i -a --verbose"
 npm="npm update --verbose"
-aptget="sudo apt-get update && sudo apt-get -y upgrade"
+aptget="sudo apt update && sudo apt -y upgrade && sudo apt autoremove -y"
 gcloud="gcloud components update"
 
 if hash brew 2>/dev/null
