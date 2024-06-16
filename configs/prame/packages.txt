@@ -1,0 +1,4 @@
+fasd
+vim
+gnome-tweaks
+curl
