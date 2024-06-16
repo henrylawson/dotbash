@@ -53,5 +53,15 @@ EOF
   sudo chown root:root /etc/apt/preferences.d/no-snap.pref
 }
 
+install_google_chrome() {
+  wget https://dl-ssl.google.com/linux/linux_signing_key.pub -O /tmp/google.pub
+  gpg --no-default-keyring --keyring /etc/apt/keyrings/google-chrome.gpg --import /tmp/google.pub
+  echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg]  https://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+
+  sudo apt update
+  sudo apt install google-chrome-stable -y
+}
+
 remove_snapd
 install_rclone
+install_google_chrome

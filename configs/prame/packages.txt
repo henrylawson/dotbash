@@ -3,3 +3,5 @@ vim
 gnome-tweaks
 curl
 python3
+wget
+gpg
