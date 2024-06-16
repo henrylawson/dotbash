@@ -100,7 +100,7 @@ install_native_apps() {
   else
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch packages.txt
-    xargs sudo apt-get --yes --force-yes install < packages.txt
+    xargs sudo apt --yes --force-yes install < packages.txt
  
     sudo mkdir -p /opt/user
     sudo chown "${USER}" /opt/user
