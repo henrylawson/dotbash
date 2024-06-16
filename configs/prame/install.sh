@@ -22,7 +22,7 @@ remove_snapd() {
     if (( $INSTALLED_SNAPS == 0 ))
     then
       echo "all snaps removed"
-      exit 0
+      break
     fi
 
     echo "Attempt $try of $MAX_TRIES to remove $INSTALLED_SNAPS snaps."
