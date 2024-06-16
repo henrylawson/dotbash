@@ -100,7 +100,7 @@ install_native_apps() {
   else
     cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
     touch packages.txt
-    xargs sudo apt --yes --force-yes install < packages.txt
+    xargs sudo apt --yes install < packages.txt
  
     sudo mkdir -p /opt/user
     sudo chown "${USER}" /opt/user
@@ -186,7 +186,7 @@ setup_ruby() {
     rbenv install $RUBY_VER --skip-existing
     rbenv global $RUBY_VER
   else
-    sudo apt-get --yes --force-yes install ruby-full
+    sudo apt --yes install ruby-full
   fi
 }
 
@@ -208,8 +208,6 @@ install_gcloud_sdk() {
 prereq_apps() {
   echo "The below applications will require manual install:"
   echo "- git"
-  echo "- Xcode (if on MacOS)"
-  echo "- Java Development Kit (JDK)"
   wait_for_confirmation
 }
 
