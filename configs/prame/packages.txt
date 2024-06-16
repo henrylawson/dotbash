@@ -2,4 +2,4 @@ fasd
 vim
 gnome-tweaks
 curl
-python
+python3
