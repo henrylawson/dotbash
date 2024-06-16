@@ -13,7 +13,20 @@ install_rclone() {
 }
 
 remove_snapd() {
-  sudo snap remove $(snap list | awk '!/^Name|^core/ {print $1}')
+  MAX_TRIES=30
+
+  for try in $(seq 1 $MAX_TRIES); do
+    INSTALLED_SNAPS=$(snap list 2> /dev/null | grep -c  ^Name || true)
+
+    if (( $INSTALLED_SNAPS == 0 )); then
+      echo "all snaps removed"
+      exit 0
+    fi
+
+    echo "Attempt $try of $MAX_TRIES to remove $INSTALLED_SNAPS snaps."
+
+    snap list 2> /dev/null | grep -v ^Name |  awk '{ print $1 }'  | xargs -r -n1  snap remove || true
+  done
 
   sudo systemctl disable --now snapd
 
