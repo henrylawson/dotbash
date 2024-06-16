@@ -30,7 +30,7 @@ remove_snapd() {
     snap list 2> /dev/null | grep -v ^Name |  awk '{ print $1 }'  | xargs -r -n1 sudo snap remove || true
   done
 
-  sudo systemctl disable --now snapd
+  sudo systemctl disable --now snapd || true
 
   sudo apt remove --purge -y \
     snapd \
