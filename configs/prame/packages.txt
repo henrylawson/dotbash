@@ -3,5 +3,9 @@ vim
 gnome-tweaks
 curl
 python3
+python3-pyudev
+python3-packaging
 wget
 gpg
+acpica-tools
+powerstat
