@@ -10,3 +10,4 @@ gpg
 acpica-tools
 powerstat
 tofrodos
+gthumb
