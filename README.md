@@ -11,10 +11,6 @@
 ## Reconfigure all
 `./go`
 
-## To configure iTerm2
-1. Configure to use the config in ./iterm2 folder
-1. Setup Google Cloud SDK in home
-
 ## tmux shortcuts
 1. `tmux ls` view open sessions
 1. `tmux attach -t <session name>` attach to session

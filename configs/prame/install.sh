@@ -125,6 +125,9 @@ install_vscode() {
 
 install_nordvpn() {
   sh <(wget -qO - https://downloads.nordcdn.com/apps/linux/install.sh)
+
+  sudo groupadd --force nordvpn || true
+  sudo usermod -aG nordvpn $USER || true
 }
 
 remove_snapd
