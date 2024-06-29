@@ -123,6 +123,10 @@ install_vscode() {
   sudo apt install -y apt-transport-https code 
 }
 
+install_nordvpn() {
+  sh <(wget -qO - https://downloads.nordcdn.com/apps/linux/install.sh)
+}
+
 remove_snapd
 install_rclone
 install_google_chrome
@@ -130,3 +134,4 @@ install_1password
 install_terraform
 install_docker
 install_vscode
+install_nordvpn
