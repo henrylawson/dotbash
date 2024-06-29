@@ -9,4 +9,4 @@ wget
 gpg
 acpica-tools
 powerstat
-tofrodos
+sshfs
