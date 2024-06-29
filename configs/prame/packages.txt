@@ -11,3 +11,4 @@ acpica-tools
 powerstat
 sshfs
 vlc
+ffmpegthumbnailer
