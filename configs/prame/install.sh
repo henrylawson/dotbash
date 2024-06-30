@@ -137,6 +137,20 @@ install_spotify() {
   sudo apt-get install -y spotify-client
 }
 
+install_golang() {
+  local go_version=1.22.4
+
+  if hash go 2>/dev/null
+  then
+    echo "go already installed"
+  else
+    curl -OL "https://golang.org/dl/go${go_version}.linux-amd64.tar.gz"
+    rm -rf /usr/local/go
+    tar -C /usr/local -xzf "go${go_version}.linux-amd64.tar.gz"
+    rm -f "go${go_version}.linux-amd64.tar.gz"
+  fi
+}
+
 remove_snapd
 install_rclone
 install_google_chrome
@@ -146,3 +160,4 @@ install_docker
 install_vscode
 install_nordvpn
 install_spotify
+install_golang
