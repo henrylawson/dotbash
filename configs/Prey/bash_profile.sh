@@ -26,8 +26,3 @@ have()
     unset -v have
     _have $1 && have=yes
 }
-
-# Virtual Box
-BOX_HOSTNAME=`cat ~/Workspace/dotbash/.hostname`
-BOX_HOSTNAME_BASH_PROFILE=~/Workspace/dotbash/configs/$BOX_HOSTNAME/bash_profile.sh
-[ -f $BOX_HOSTNAME_BASH_PROFILE ] && source $BOX_HOSTNAME_BASH_PROFILE

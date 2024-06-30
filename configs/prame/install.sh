@@ -138,9 +138,9 @@ install_spotify() {
 }
 
 install_golang() {
-  local go_version=1.22.4
+  local go_version=1.22.3
 
-  if hash go 2>/dev/null
+  if [ hash go 2>/dev/null ] && [ go version | grep "${go_version}" ]
   then
     echo "go already installed"
   else
