@@ -9,15 +9,6 @@ pp() {
   echo "====> EXECUTING STEP: $1"
 }
 
-wait_for_confirmation() {
-  read -p "Have all applications been manually configured? [Yy]" -n 1 -r
-  echo ""
-  if [[ ! $REPLY =~ ^[Yy]$ ]]
-  then
-      exit 1
-  fi
-}
-
 create_workspace_folder() {
   mkdir -p $WORKSPACE_PATH
 }
@@ -205,18 +196,11 @@ install_gcloud_sdk() {
     --quiet || true
 }
 
-prereq_apps() {
-  echo "The below applications will require manual install:"
-  echo "- git"
-  wait_for_confirmation
-}
-
 clean_up() {
   rm -rf "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/default.profraw"
 }
 
 pp "Creating workspace folder"        && create_workspace_folder
-pp "Prerequisites"                    && prereq_apps
 pp "Downloading dotbash"              && clone_app dotbash
 pp "Installing native applications"   && install_native_apps
 pp "Installing manual applications"   && install_manual_apps
