@@ -146,8 +146,8 @@ install_golang() {
   else
     curl -OL "https://golang.org/dl/go${go_version}.linux-amd64.tar.gz"
     rm -rf /usr/local/go
-    tar -C /usr/local -xzf "go${go_version}.linux-amd64.tar.gz"
-    rm -f "go${go_version}.linux-amd64.tar.gz"
+    tar -C /usr/local -xzf "go${go_version}.linux-amd64.tar.gz" || true
+    rm -f "go${go_version}.linux-amd64.tar.gz" || true
   fi
 }
 
