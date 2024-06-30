@@ -9,7 +9,7 @@
 `./refresh`
 
 ## Reconfigure all
-`./go`
+`./bootstrap`
 
 ## tmux shortcuts
 1. `tmux ls` view open sessions
