@@ -151,6 +151,17 @@ install_golang() {
   fi
 }
 
+install_nodejs() {
+  if [ hash go 2>/dev/null ]
+  then
+    curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
+    sudo -E bash nodesource_setup.sh
+    sudo apt-get install -y nodejs
+  else
+    node -v
+  fi
+}
+
 remove_snapd
 install_rclone
 install_google_chrome
@@ -161,3 +172,4 @@ install_vscode
 install_nordvpn
 install_spotify
 install_golang
+install_nodejs
