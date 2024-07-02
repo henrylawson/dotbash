@@ -158,7 +158,7 @@ install_nodejs() {
   then
     node -v
   else
-    sudo apt install -y nodejs || true
+    sudo apt remove -y nodejs || true
     sudo apt autoremove -y || true
 
     curl -fsSL "https://deb.nodesource.com/setup_${node_version}.x" -o /tmp/nodesource_setup.sh
