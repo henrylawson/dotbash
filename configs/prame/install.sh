@@ -156,6 +156,8 @@ install_nodejs() {
 
   if [ hash node 2>/dev/null ] && [ node -v | grep "${node_version}" ]
   then
+    node -v
+  else
     sudo apt install -y nodejs || true
     sudo apt autoremove -y || true
 
@@ -163,8 +165,6 @@ install_nodejs() {
     sudo -E bash /tmp/nodesource_setup.sh
     sudo apt install -y nodejs
     rm -f /tmp/nodesource_setup.sh
-  else
-    node -v
   fi
 }
 
