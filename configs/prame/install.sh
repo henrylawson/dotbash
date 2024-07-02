@@ -152,7 +152,7 @@ install_golang() {
 }
 
 install_nodejs() {
-  local node_version=21
+  local node_version=22
 
   if [ hash node 2>/dev/null ] && [ node -v | grep "${node_version}" ]
   then
