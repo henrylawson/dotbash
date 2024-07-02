@@ -152,13 +152,19 @@ install_golang() {
 }
 
 install_nodejs() {
-  if [ hash node 2>/dev/null ]
+  local node_version=21
+
+  if [ hash node 2>/dev/null ] && [ node -v | grep "${node_version}" ]
   then
-    node -v
+    sudo apt install -y nodejs || true
+    sudo apt autoremove -y || true
+
+    curl -fsSL "https://deb.nodesource.com/setup_${node_version}.x" -o /tmp/nodesource_setup.sh
+    sudo -E bash /tmp/nodesource_setup.sh
+    sudo apt install -y nodejs
+    rm -f /tmp/nodesource_setup.sh
   else
-    curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
-    sudo -E bash nodesource_setup.sh
-    sudo apt-get install -y nodejs
+    node -v
   fi
 }
 
