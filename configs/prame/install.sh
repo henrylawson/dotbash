@@ -152,7 +152,7 @@ install_golang() {
 }
 
 install_nodejs() {
-  if [ hash go 2>/dev/null ]
+  if [ hash node 2>/dev/null ]
   then
     curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
     sudo -E bash nodesource_setup.sh
