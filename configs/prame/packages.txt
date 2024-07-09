@@ -12,3 +12,4 @@ powerstat
 sshfs
 vlc
 ffmpegthumbnailer
+rename
