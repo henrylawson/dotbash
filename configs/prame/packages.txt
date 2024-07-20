@@ -5,6 +5,8 @@ curl
 python3
 python3-pyudev
 python3-packaging
+python3-google-auth
+python3-requests
 wget
 gpg
 acpica-tools
