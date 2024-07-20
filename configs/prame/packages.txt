@@ -13,3 +13,4 @@ sshfs
 vlc
 ffmpegthumbnailer
 rename
+ansible-core
