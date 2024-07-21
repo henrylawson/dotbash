@@ -5,7 +5,7 @@ export PATH=$PATH:/usr/local/go/bin
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
 # ssh agent
-eval `ssh-agent`
-ssh-add ~/.ssh/id_rsa
-ssh-add ~/.ssh/google_compute_engine
-ssh-add ~/.ssh/molotius_id_rsa
+eval `ssh-agent` &> /dev/null
+ssh-add ~/.ssh/id_rsa &> /dev/null
+ssh-add ~/.ssh/google_compute_engine &> /dev/null
+ssh-add ~/.ssh/molotius_id_rsa &> /dev/null
