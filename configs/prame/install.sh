@@ -168,6 +168,10 @@ install_nodejs() {
   fi
 }
 
+install_gcloud_pip() {
+  $(gcloud info --format="value(basic.python_location)") -m pip install numpy
+}
+
 remove_snapd
 install_rclone
 install_google_chrome
@@ -179,3 +183,4 @@ install_nordvpn
 install_spotify
 install_golang
 install_nodejs
+install_gcloud_pip
