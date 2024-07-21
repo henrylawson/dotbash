@@ -16,3 +16,4 @@ vlc
 ffmpegthumbnailer
 rename
 ansible-core
+keychain
