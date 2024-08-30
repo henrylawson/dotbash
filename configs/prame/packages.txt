@@ -17,3 +17,4 @@ ffmpegthumbnailer
 rename
 ansible-core
 keychain
+gnome-shell-extensions
