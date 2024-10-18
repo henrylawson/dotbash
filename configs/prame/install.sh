@@ -178,6 +178,10 @@ install_ruby() {
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
   cd ~/.rbenv 
   git pull --rebase
+
+  git clone https://github.com/rbenv/ruby-build.git "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build || true
+  git -C "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build pull
+
   rbenv install "${ruby_version}"
   rbenv global "${ruby_version}"
   gem install bundler
