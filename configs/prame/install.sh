@@ -175,6 +175,19 @@ install_gcloud_pip() {
 install_ruby() {
   local ruby_version=3.3.5
 
+  sudo apt install -y \
+    libssl-dev \
+    libreadline-dev \
+    zlib1g-dev \
+    autoconf \
+    bison \
+    build-essential \
+    libyaml-dev \
+    libreadline-dev \
+    libncurses5-dev \
+    libffi-dev \
+    libgdbm-dev
+
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
   cd ~/.rbenv 
   git pull --rebase
