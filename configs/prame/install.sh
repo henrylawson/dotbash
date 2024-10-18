@@ -176,6 +176,9 @@ install_ruby() {
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
   cd ~/.rbenv 
   git pull --rebase
+  rbenv install 3.3.5
+  rbenv global 3.3.5
+  gem install bundler
 }
 
 remove_snapd
