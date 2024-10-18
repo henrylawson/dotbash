@@ -18,4 +18,4 @@ rename
 ansible-core
 keychain
 gnome-shell-extensions
-ruby-full
+rbenv
