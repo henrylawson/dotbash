@@ -171,8 +171,6 @@ setup_ruby() {
     fi
     rbenv install $RUBY_VER --skip-existing
     rbenv global $RUBY_VER
-  else
-    sudo apt --yes install ruby-full
   fi
 }
 

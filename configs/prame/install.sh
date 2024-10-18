@@ -190,3 +190,4 @@ install_spotify
 install_golang
 install_nodejs
 install_gcloud_pip
+install_ruby
