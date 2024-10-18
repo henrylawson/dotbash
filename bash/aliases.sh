@@ -52,10 +52,3 @@ alias j=z
 alias zz='fasd_cd -d -i' # cd with interactive selection
 
 _fasd_bash_hook_cmd_complete a s d f sd sf z j zz
-
-if [[ "$OSTYPE" == "darwin"*  ]]
-then
-  alias rdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder;echo "Done"'
-
-  alias subl='/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl'
-fi
