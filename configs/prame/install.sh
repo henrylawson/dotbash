@@ -173,11 +173,13 @@ install_gcloud_pip() {
 }
 
 install_ruby() {
+  local ruby_version=3.3.5
+
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
   cd ~/.rbenv 
   git pull --rebase
-  rbenv install 3.3.5
-  rbenv global 3.3.5
+  rbenv install "${ruby_version}"
+  rbenv global "${ruby_version}"
   gem install bundler
 }
 
