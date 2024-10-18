@@ -172,6 +172,12 @@ install_gcloud_pip() {
   $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 }
 
+install_ruby() {
+  git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
+  cd ~/.rbenv 
+  git pull --rebase
+}
+
 remove_snapd
 install_rclone
 install_google_chrome
