@@ -202,9 +202,9 @@ install_ruby() {
 
 install_framework_firmware() {
   sudo apt install -y fwupd
-  fwupdmgr refresh --force
-  fwupdmgr get-updates
-  fwupdmgr update
+  fwupdmgr refresh --force || true
+  fwupdmgr get-updates || true
+  fwupdmgr update || true
 }
 
 remove_snapd
