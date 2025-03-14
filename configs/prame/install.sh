@@ -200,6 +200,13 @@ install_ruby() {
   gem install bundler
 }
 
+install_framework_firmware() {
+  sudo apt install -y fwupd
+  fwupdmgr refresh --force
+  fwupdmgr get-updates
+  fwupdmgr update
+}
+
 remove_snapd
 install_rclone
 install_google_chrome
@@ -213,3 +220,4 @@ install_golang
 install_nodejs
 install_gcloud_pip
 install_ruby
+install_framework_firmware
