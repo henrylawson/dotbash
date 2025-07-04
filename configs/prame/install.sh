@@ -61,9 +61,9 @@ install_google_chrome() {
     wget https://dl-ssl.google.com/linux/linux_signing_key.pub -O /tmp/google.pub
     sudo gpg --no-default-keyring --keyring /etc/apt/keyrings/google-chrome.gpg --import /tmp/google.pub
     echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg]  https://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+    sudo apt update -y
   fi
 
-  sudo apt update
   sudo apt install google-chrome-stable -y
   sudo systemctl daemon-reload
 }
@@ -79,9 +79,9 @@ install_1password() {
     curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
     sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
     curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --batch --yes --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+    sudo apt update -y
   fi
 
-  sudo apt update
   sudo apt install 1password -y
 }
 
@@ -92,9 +92,9 @@ install_terraform() {
   else
     wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
     echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    sudo apt update -y
   fi
 
-  sudo apt update
   sudo apt install terraform -y
 }
 
@@ -113,9 +113,9 @@ install_docker() {
       "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
       $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
       sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update -y
   fi
 
-  sudo apt update
   sudo apt install -y \
     docker-ce \
     docker-ce-cli \
@@ -137,9 +137,9 @@ install_vscode() {
     sudo install -D -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg
     echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
     rm -f microsoft.gpg
+    sudo apt update
   fi
 
-  sudo apt update
   sudo apt install -y code 
 }
 
@@ -162,9 +162,9 @@ install_spotify() {
   else
     curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
     echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo apt update -y
   fi
 
-  sudo apt update -y
   sudo apt install -y spotify-client
 }
 
