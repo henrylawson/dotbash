@@ -171,7 +171,7 @@ install_spotify() {
 install_golang() {
   local go_version=1.22.4
 
-  if [ hash go 2>/dev/null ] && [ go version | grep "${go_version}" ]
+  if go version | grep "${go_version}"
   then
     echo "go already installed"
   else
@@ -185,7 +185,7 @@ install_golang() {
 install_nodejs() {
   local node_version=22
 
-  if [ hash node 2>/dev/null ] && [ node -v | grep "${node_version}" ]
+  if node -v | grep "${node_version}"
   then
     node -v
   else
@@ -206,7 +206,7 @@ install_gcloud_pip() {
 install_ruby() {
   local ruby_version=3.3.5
 
-  if [ hash ruby 2>/dev/null ] && [ ruby -v | grep "${ruby_version}" ]
+  if ruby -v | grep "${ruby_version}"
   then
     ruby -v
   else
