@@ -151,19 +151,6 @@ install_golang() {
   fi
 }
 
-install_imagemagick() {
-  local magick_version=7.1.1
-
-  if [ hash magick 2>/dev/null ] && [ magick --version | grep "${go_version}" ]
-  then
-    echo "ImageMagick already installed"
-  else
-    curl -OL "https://imagemagick.org/archive/binaries/magick"
-    sudo rm -rf /usr/local/magick
-    sudo mv magick /usr/local/magick
-  fi
-}
-
 install_nodejs() {
   local node_version=22
 
@@ -234,4 +221,3 @@ install_nodejs
 install_gcloud_pip
 install_ruby
 install_framework_firmware
-install_imagemagick
