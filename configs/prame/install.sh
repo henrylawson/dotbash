@@ -206,29 +206,34 @@ install_gcloud_pip() {
 install_ruby() {
   local ruby_version=3.3.5
 
-  sudo apt install -y \
-    libssl-dev \
-    libreadline-dev \
-    zlib1g-dev \
-    autoconf \
-    bison \
-    build-essential \
-    libyaml-dev \
-    libreadline-dev \
-    libncurses5-dev \
-    libffi-dev \
-    libgdbm-dev
+  if [ hash ruby 2>/dev/null ] && [ ruby -v | grep "${ruby_version}" ]
+  then
+    ruby -v
+  else
+    sudo apt install -y \
+      libssl-dev \
+      libreadline-dev \
+      zlib1g-dev \
+      autoconf \
+      bison \
+      build-essential \
+      libyaml-dev \
+      libreadline-dev \
+      libncurses5-dev \
+      libffi-dev \
+      libgdbm-dev
 
-  git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
-  cd ~/.rbenv 
-  git pull --rebase
+    git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
+    cd ~/.rbenv 
+    git pull --rebase
 
-  git clone https://github.com/rbenv/ruby-build.git "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build || true
-  git -C "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build pull
+    git clone https://github.com/rbenv/ruby-build.git "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build || true
+    git -C "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build pull
 
-  rbenv install --skip-existing "${ruby_version}"
-  rbenv global "${ruby_version}"
-  gem install bundler
+    rbenv install --skip-existing "${ruby_version}"
+    rbenv global "${ruby_version}"
+    gem install bundler
+  fi
 }
 
 install_framework_firmware() {
