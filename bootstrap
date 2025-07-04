@@ -59,16 +59,19 @@ install_manual_apps() {
   then
     bash -c "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/install.sh"
   else
-    echo "No custom install script found"
+    echo "Skipping, no custom install script found"
   fi
 }
 
 install_pip_apps() {
   if hash pip 2>/dev/null
   then
-    cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
-    touch requirements.txt
-    pip install --user -r requirements.txt
+    if [[ -f "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/requirements.txt" ]]
+    then
+      pip install --user -r "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}/requirements.txt"
+    else
+      echo "Skippping, no requirements.txt file found"
+    fi
   fi
 }
 
