@@ -6,7 +6,7 @@ GREEN='\e[0;32m'
 brew="brew update && brew cleanup"
 cask="brew update && brew cask list | xargs brew cask install"
 macosx="softwareupdate -i -a --verbose"
-npm="npm update --verbose"
+npm="sudo npm update -g --verbose --no-save"
 aptget="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo systemctl daemon-reload && sudo do-release-upgrade || true"
 gcloud="gcloud components update --quiet"
 
