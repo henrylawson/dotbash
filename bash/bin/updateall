@@ -9,6 +9,7 @@ macosx="softwareupdate -i -a --verbose"
 npm="sudo npm update -g --verbose --no-save"
 aptget="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo systemctl daemon-reload && sudo do-release-upgrade || true"
 gcloud="gcloud components update --quiet"
+snap="snap refresh"
 
 if hash brew 2>/dev/null
 then
@@ -32,4 +33,10 @@ if hash apt 2>/dev/null
 then
   printf "\n${GREEN}## Update apt packages${NO_COLOR}\n"
   bash -c "$aptget"
+fi
+
+if hash snap 2>/dev/null
+then
+  printf "\n${GREEN}## Update snap packages${NO_COLOR}\n"
+  bash -c "$snap"
 fi

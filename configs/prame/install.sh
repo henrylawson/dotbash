@@ -198,6 +198,36 @@ install_framework_firmware() {
   fwupdmgr update || true
 }
 
+customize_ubuntu_and_gnome() {
+  # headphone jack buzzing sound 
+  echo 0 | sudo tee /sys/module/snd_hda_intel/parameters/power_save
+
+  # accidental window dragging
+  gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag false
+
+  # hide ubuntu live patch icon
+  gsettings set com.ubuntu.update-notifier show-livepatch-status-icon false
+
+  # hide accessibility icon
+  echo "Manually install 'Hide Universal Access' gnome extension"
+
+  # set font scaling factor
+  gsettings set org.gnome.desktop.interface text-scaling-factor 1.35
+
+  # prefer light theme
+  gsettings set org.gnome.desktop.interface color-scheme 'default'
+
+  # change background to grey
+  gsettings set org.gnome.desktop.background color-shading-type 'solid'
+  gsettings set org.gnome.desktop.background picture-uri 'none'
+  gsettings set org.gnome.desktop.background picture-uri-dark 'none'
+  gsettings set org.gnome.desktop.background primary-color '#909090'
+
+  # hide the dock
+  gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
+  gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+}
+
 install_rclone
 install_google_chrome
 install_1password
@@ -210,3 +240,4 @@ install_golang
 install_nodejs
 install_ruby
 install_framework_firmware
+customize_ubuntu_and_gnome

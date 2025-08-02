@@ -24,4 +24,3 @@ mtp-tools
 libmtp-common
 libmtp9
 libmtp-runtime
-dconf-editor
