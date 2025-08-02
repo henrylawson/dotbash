@@ -109,7 +109,7 @@ update_all_apps() {
 }
 
 install_gcloud_sdk() {
-  if hash gcloud 2>/dev/null
+  if ls ~/google-cloud-sdk/path.bash.inc 2>/dev/null
   then
     return 0
   fi
@@ -121,6 +121,7 @@ install_gcloud_sdk() {
   gcloud components install \
     kubectl \
     --quiet || true
+  $(gcloud info --format="value(basic.python_location)") -m pip install numpy
 }
 
 clean_up() {

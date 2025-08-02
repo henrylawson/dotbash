@@ -19,3 +19,8 @@ ansible-core
 keychain
 gnome-shell-extensions
 tree
+gvfs-fuse
+mtp-tools
+libmtp-common
+libmtp9
+libmtp-runtime

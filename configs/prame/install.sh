@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -xeuo pipefail
 
 UTILS_PATH=~/utils
 
@@ -12,49 +12,8 @@ install_rclone() {
   fi
 }
 
-remove_snapd() {
-  MAX_TRIES=30
-
-  for try in $(seq 1 $MAX_TRIES)
-  do
-    INSTALLED_SNAPS=$(snap list 2> /dev/null | grep -c  ^Name || true)
-
-    if (( $INSTALLED_SNAPS == 0 ))
-    then
-      echo "all snaps removed"
-      break
-    fi
-
-    echo "Attempt $try of $MAX_TRIES to remove $INSTALLED_SNAPS snaps."
-
-    snap list 2> /dev/null | grep -v ^Name |  awk '{ print $1 }'  | xargs -r -n1 sudo snap remove || true
-  done
-
-  sudo systemctl disable --now snapd || true
-
-  sudo apt remove --purge -y \
-    snapd \
-    gnome-software-plugin-snap
-
-  sudo rm -rf \
-    /snap \
-    /var/snap \
-    /var/lib/snapd \
-    /var/cache/snapd \
-    /usr/lib/snapd \
-    ~/snap
-
-  cat << EOF | sudo tee -a /etc/apt/preferences.d/no-snap.pref
-Package: snapd
-Pin: release a=*
-Pin-Priority: -10
-EOF
-
-  sudo chown root:root /etc/apt/preferences.d/no-snap.pref
-}
-
 install_google_chrome() {
-  if apt policy google-chrome-stable 2>/dev/null
+  if ls /etc/apt/sources.list.d/google-chrome.list 2>/dev/null
   then
     echo 'Repo exists'
   else
@@ -69,7 +28,7 @@ install_google_chrome() {
 }
 
 install_1password() {
-  if apt policy 1password 2>/dev/null
+  if ls /etc/apt/sources.list.d/1password.list 2>/dev/null
   then
     echo 'Repo exists'
   else
@@ -86,7 +45,7 @@ install_1password() {
 }
 
 install_terraform() {
-  if apt policy terraform 2>/dev/null
+  if ls /etc/apt/sources.list.d/hashicorp.list 2>/dev/null
   then
     echo 'Repo exists'
   else
@@ -99,7 +58,7 @@ install_terraform() {
 }
 
 install_docker() {
-  if apt policy docker-ce 2>/dev/null
+  if ls /etc/apt/sources.list.d/docker.list 2>/dev/null
   then
     echo 'Repo exists'
   else
@@ -128,11 +87,11 @@ install_docker() {
 }
 
 install_vscode() {
-  if apt policy code 2>/dev/null
+  if ls /etc/apt/sources.list.d/vscode.list 2>/dev/null
   then
     echo 'Repo exists'
   else
-    sudo apt install wget gpg apt-transport-https 
+    sudo apt install -y wget gpg apt-transport-https
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --batch --yes --dearmor > microsoft.gpg
     sudo install -D -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg
     echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
@@ -144,7 +103,7 @@ install_vscode() {
 }
 
 install_nordvpn() {
-  if apt policy nordvpn 2>/dev/null
+  if ls /etc/apt/sources.list.d/nordvpn-app.list 2>/dev/null
   then
     echo 'Repo exists'
   else
@@ -156,11 +115,11 @@ install_nordvpn() {
 }
 
 install_spotify() {
-  if apt policy spotify-client 2>/dev/null
+  if ls /etc/apt/sources.list.d/spotify.list 2>/dev/null
   then
     echo 'Repo exists'
   else
-    curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+    curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
     echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
     sudo apt update -y
   fi
@@ -199,10 +158,6 @@ install_nodejs() {
   fi
 }
 
-install_gcloud_pip() {
-  $(gcloud info --format="value(basic.python_location)") -m pip install numpy
-}
-
 install_ruby() {
   local ruby_version=3.3.5
 
@@ -230,9 +185,9 @@ install_ruby() {
     git clone https://github.com/rbenv/ruby-build.git "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build || true
     git -C "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build pull
 
-    rbenv install --skip-existing "${ruby_version}"
-    rbenv global "${ruby_version}"
-    gem install bundler
+    bin/rbenv install --skip-existing "${ruby_version}"
+    bin/rbenv global "${ruby_version}"
+    shims/gem install bundler
   fi
 }
 
@@ -243,7 +198,6 @@ install_framework_firmware() {
   fwupdmgr update || true
 }
 
-remove_snapd
 install_rclone
 install_google_chrome
 install_1password
@@ -254,6 +208,5 @@ install_nordvpn
 install_spotify
 install_golang
 install_nodejs
-install_gcloud_pip
 install_ruby
 install_framework_firmware
