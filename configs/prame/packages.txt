@@ -24,3 +24,7 @@ mtp-tools
 libmtp-common
 libmtp9
 libmtp-runtime
+libimobiledevice-utils
+libimobiledevice6
+usbmuxd
+ifuse
