@@ -7,6 +7,7 @@ python3-pyudev
 python3-packaging
 python3-google-auth
 python3-requests
+python3-venv
 wget
 gpg
 acpica-tools
