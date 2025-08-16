@@ -52,3 +52,6 @@ alias j=z
 alias zz='fasd_cd -d -i' # cd with interactive selection
 
 _fasd_bash_hook_cmd_complete a s d f sd sf z j zz
+
+# Gemini CLI
+alias gemini='npx https://github.com/google-gemini/gemini-cli'
