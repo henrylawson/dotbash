@@ -212,6 +212,10 @@ install_bun() {
   curl -fsSL https://bun.com/install | bash
 }
 
+install_flutter() {
+  git clone https://github.com/flutter/flutter.git -b stable ~/.flutter
+}
+
 customize_ubuntu_and_gnome() {
   # headphone jack buzzing sound 
   echo 0 | sudo tee /sys/module/snd_hda_intel/parameters/power_save

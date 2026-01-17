@@ -13,6 +13,10 @@ fi
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# flutter
+export FLUTTER_INSTALL="$HOME/.flutter"
+export PATH="$FLUTTER_INSTALL/bin:$PATH"
+
 # rbenv
 export PATH="/home/hgl/.rbenv/bin:${PATH}"
 export PATH="/home/hgl/.rbenv/shims:${PATH}"
