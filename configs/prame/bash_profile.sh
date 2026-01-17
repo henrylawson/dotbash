@@ -9,6 +9,10 @@ if [ -z "$SSH_AUTH_SOCK" ] ; then
     eval `ssh-agent` &> /dev/null
 fi
 
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 # rbenv
 export PATH="/home/hgl/.rbenv/bin:${PATH}"
 export PATH="/home/hgl/.rbenv/shims:${PATH}"
