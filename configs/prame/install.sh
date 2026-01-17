@@ -260,4 +260,5 @@ install_ruby
 install_framework_firmware
 install_google_antigravity
 install_bun
+install_flutter
 customize_ubuntu_and_gnome
