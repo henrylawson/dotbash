@@ -209,11 +209,21 @@ echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-cent
 }
 
 install_bun() {
-  curl -fsSL https://bun.com/install | bash
+  if hash bun 2>/dev/null
+  then
+    echo "bun already installed"
+  else
+    curl -fsSL https://bun.com/install | bash
+  fi
 }
 
 install_flutter() {
-  git clone https://github.com/flutter/flutter.git -b stable ~/.flutter
+  if hash flutter 2>/dev/null
+  then
+    echo "flutter already installed"
+  else
+    git clone https://github.com/flutter/flutter.git -b stable ~/.flutter
+  fi
 }
 
 customize_ubuntu_and_gnome() {
