@@ -208,6 +208,10 @@ echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-cent
   sudo apt install -y antigravity
 }
 
+install_bun() {
+  curl -fsSL https://bun.com/install | bash
+}
+
 customize_ubuntu_and_gnome() {
   # headphone jack buzzing sound 
   echo 0 | sudo tee /sys/module/snd_hda_intel/parameters/power_save
@@ -251,4 +255,5 @@ install_nodejs
 install_ruby
 install_framework_firmware
 install_google_antigravity
+install_bun
 customize_ubuntu_and_gnome
