@@ -8,3 +8,6 @@ CUSTOM=~/.bash/custom
 BOX_HOSTNAME=`cat ~/Workspace/dotbash/.hostname`
 BOX_HOSTNAME_BASH_PROFILE=~/Workspace/dotbash/configs/$BOX_HOSTNAME/bash_profile.sh
 [ -f $BOX_HOSTNAME_BASH_PROFILE ] && source $BOX_HOSTNAME_BASH_PROFILE
+
+# Added by Antigravity CLI installer
+export PATH="/home/hgl/.local/bin:$PATH"
