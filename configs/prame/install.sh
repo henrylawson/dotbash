@@ -87,19 +87,20 @@ install_docker() {
 }
 
 install_vscode() {
-  if ls /etc/apt/sources.list.d/vscode.list 2>/dev/null
-  then
-    echo 'Repo exists'
-  else
+  if [ ! -f /usr/share/keyrings/microsoft.gpg ]; then
+    echo 'Fetching Microsoft GPG key...'
     sudo apt install -y wget gpg apt-transport-https
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --batch --yes --dearmor > microsoft.gpg
     sudo install -D -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg
-    echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
     rm -f microsoft.gpg
-    sudo apt update
+  else
+    echo 'Microsoft GPG key already exists.'
   fi
 
-  sudo apt install -y code 
+  echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+
+  sudo apt update
+  sudo apt install -y code
 }
 
 install_spotify() {
