@@ -29,3 +29,4 @@ libimobiledevice-utils
 libimobiledevice6
 usbmuxd
 ifuse
+wireguard-tools
