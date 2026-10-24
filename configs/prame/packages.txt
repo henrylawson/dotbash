@@ -30,3 +30,4 @@ libimobiledevice6
 usbmuxd
 ifuse
 wireguard-tools
+iperf
