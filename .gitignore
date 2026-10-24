@@ -2,3 +2,4 @@
 bash/custom
 .hostname
 .idea
+__pycache__/

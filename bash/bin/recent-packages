@@ -1,0 +1,406 @@
+#!/usr/bin/env python3
+"""
+recent-packages: Identify manually installed apt packages from recent history
+and check them against dotfiles packages.txt and install.sh.
+"""
+
+import argparse
+from datetime import datetime, timedelta
+import glob
+import gzip
+import os
+import re
+import shlex
+import socket
+import subprocess
+import sys
+
+
+def get_dotbash_paths(custom_pkg_file=None):
+    """
+    Resolve dotbash repository paths, hostname, and configuration files.
+    """
+    script_path = os.path.realpath(__file__)
+    script_dir = os.path.dirname(script_path)
+    dotbash_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
+
+    hostname_file = os.path.join(dotbash_root, ".hostname")
+    if os.path.isfile(hostname_file):
+        try:
+            with open(hostname_file, "r", encoding="utf-8") as f:
+                hostname = f.read().strip()
+        except OSError:
+            hostname = socket.gethostname()
+    else:
+        hostname = socket.gethostname()
+
+    if custom_pkg_file:
+        pkg_file = os.path.abspath(custom_pkg_file)
+    else:
+        pkg_file = os.path.join(dotbash_root, "configs", hostname, "packages.txt")
+
+    install_sh = os.path.join(dotbash_root, "configs", hostname, "install.sh")
+
+    return {
+        "root": dotbash_root,
+        "hostname": hostname,
+        "pkg_file": pkg_file,
+        "install_sh": install_sh,
+    }
+
+
+def get_installed_packages():
+    """
+    Return a set of package names currently installed on the system via dpkg.
+    """
+    try:
+        out = subprocess.check_output(
+            ["dpkg-query", "-W", "-f=${Package}\t${Status}\n"],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        )
+    except (subprocess.SubprocessError, OSError):
+        return None
+
+    installed = set()
+    for line in out.splitlines():
+        parts = line.split("\t")
+        if len(parts) == 2 and ("ok installed" in parts[1]):
+            installed.add(parts[0])
+    return installed
+
+
+def log_sort_key(filepath):
+    """
+    Sort apt history logs from oldest to newest.
+    e.g. history.log.12.gz, ..., history.log.1.gz, history.log
+    """
+    m = re.search(r"\.log(?:\.(\d+))?(?:\.gz)?$", filepath)
+    if m:
+        num = int(m.group(1)) if m.group(1) else 0
+        return -num
+    return 0
+
+
+def parse_history_content(content):
+    """
+    Parse transactions from an apt history.log content string.
+    Yields dicts with 'date', 'commandline', 'requested_by'.
+    """
+    # Apt history blocks are separated by double newlines or Start-Date/End-Date
+    blocks = re.split(r"\n\s*\n", content.strip())
+    for block in blocks:
+        lines = block.splitlines()
+        start_date = None
+        cmd = None
+        req_by = None
+        for line in lines:
+            line = line.strip()
+            if line.startswith("Start-Date:"):
+                raw = line.split("Start-Date:", 1)[1].strip()
+                parts = raw.split()
+                if len(parts) >= 2:
+                    try:
+                        start_date = datetime.strptime(
+                            f"{parts[0]} {parts[1]}", "%Y-%m-%d %H:%M:%S"
+                        )
+                    except ValueError:
+                        pass
+            elif line.startswith("Commandline:"):
+                cmd = line.split("Commandline:", 1)[1].strip()
+            elif line.startswith("Requested-By:"):
+                req_by = line.split("Requested-By:", 1)[1].strip()
+
+        if start_date and cmd:
+            yield {
+                "date": start_date,
+                "commandline": cmd,
+                "requested_by": req_by,
+            }
+
+
+def extract_packages_from_command(cmd):
+    """
+    Extract explicitly targeted package names from an apt command line.
+    Returns a list of package names.
+    """
+    try:
+        tokens = shlex.split(cmd)
+    except ValueError:
+        tokens = cmd.split()
+
+    # Strip wrappers
+    while tokens and tokens[0] in ("sudo", "env", "pkexec"):
+        tokens.pop(0)
+
+    if not tokens:
+        return []
+
+    prog = os.path.basename(tokens[0])
+    if prog not in ("apt", "apt-get", "aptitude"):
+        return []
+
+    # Check for install / reinstall subcommands
+    install_subcommands = ("install", "reinstall")
+    subcmd_idx = -1
+    for i, token in enumerate(tokens[1:], start=1):
+        if token in install_subcommands:
+            subcmd_idx = i
+            break
+
+    if subcmd_idx == -1:
+        return []
+
+    args = tokens[subcmd_idx + 1 :]
+    packages = []
+    skip_next = False
+    opt_with_arg = ("-t", "--target-release", "-c", "--config-file", "-o", "--option")
+
+    for arg in args:
+        if skip_next:
+            skip_next = False
+            continue
+        if arg in opt_with_arg:
+            skip_next = True
+            continue
+        if arg.startswith("-"):
+            continue
+        # Skip local file paths (.deb or relative/absolute paths)
+        if arg.endswith(".deb") or arg.startswith("./") or arg.startswith("../") or arg.startswith("/"):
+            continue
+
+        # Strip architecture (e.g., pkg:amd64) and version constraints (e.g., pkg=1.2.3, pkg/stable)
+        pkg = arg.split(":")[0].split("=")[0].split("/")[0].strip()
+        if pkg:
+            packages.append(pkg)
+
+    return packages
+
+
+def load_tracked_packages(pkg_file, install_sh):
+    """
+    Load packages tracked in packages.txt and install.sh.
+    """
+    packages_txt = set()
+    if os.path.isfile(pkg_file):
+        try:
+            with open(pkg_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if line and not line.startswith("#"):
+                        packages_txt.add(line)
+        except OSError:
+            pass
+
+    install_sh_text = ""
+    if os.path.isfile(install_sh):
+        try:
+            with open(install_sh, "r", encoding="utf-8") as f:
+                install_sh_text = f.read()
+        except OSError:
+            pass
+
+    return packages_txt, install_sh_text
+
+
+def scan_recent_packages(days=30, scan_all=False, log_pattern="/var/log/apt/history.log*"):
+    """
+    Scan apt history logs and return a dictionary of package -> latest transaction info.
+    """
+    cutoff = None if scan_all else (datetime.now() - timedelta(days=days))
+    log_files = sorted(glob.glob(log_pattern), key=log_sort_key)
+
+    latest_by_pkg = {}
+
+    for log_path in log_files:
+        open_fn = gzip.open if log_path.endswith(".gz") else open
+        try:
+            with open_fn(log_path, "rt", encoding="utf-8", errors="ignore") as f:
+                content = f.read()
+        except OSError:
+            continue
+
+        for tx in parse_history_content(content):
+            tx_date = tx["date"]
+            if cutoff and tx_date < cutoff:
+                continue
+
+            pkgs = extract_packages_from_command(tx["commandline"])
+            for pkg in pkgs:
+                if pkg not in latest_by_pkg or tx_date > latest_by_pkg[pkg]["date"]:
+                    latest_by_pkg[pkg] = {
+                        "date": tx_date,
+                        "commandline": tx["commandline"],
+                        "requested_by": tx["requested_by"],
+                        "log_path": log_path,
+                    }
+
+    return latest_by_pkg
+
+
+def add_packages_to_file(pkg_file, packages_to_add):
+    """
+    Safely append packages to the packages.txt file, ensuring clean newlines.
+    """
+    os.makedirs(os.path.dirname(os.path.abspath(pkg_file)), exist_ok=True)
+    existing_content = ""
+    if os.path.isfile(pkg_file):
+        with open(pkg_file, "r", encoding="utf-8") as f:
+            existing_content = f.read()
+
+    needs_leading_newline = bool(existing_content and not existing_content.endswith("\n"))
+
+    with open(pkg_file, "a", encoding="utf-8") as f:
+        if needs_leading_newline:
+            f.write("\n")
+        for pkg in packages_to_add:
+            f.write(f"{pkg}\n")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Identify manually installed apt packages and cross-check with dotfiles packages.txt."
+    )
+    parser.add_argument(
+        "-d",
+        "--days",
+        type=int,
+        default=30,
+        help="Number of days to look back in apt history (default: 30).",
+    )
+    parser.add_argument(
+        "-a",
+        "--all",
+        action="store_true",
+        help="Scan all available apt history logs (ignores --days).",
+    )
+    parser.add_argument(
+        "-m",
+        "--missing-only",
+        action="store_true",
+        help="Print only missing package names, one per line (suitable for piping).",
+    )
+    parser.add_argument(
+        "--add",
+        action="store_true",
+        help="Append missing packages to the target packages.txt file.",
+    )
+    parser.add_argument(
+        "-f",
+        "--file",
+        type=str,
+        default=None,
+        help="Override path to packages.txt file.",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Show detailed command lines and timestamps.",
+    )
+    parser.add_argument(
+        "--log-pattern",
+        type=str,
+        default="/var/log/apt/history.log*",
+        help=argparse.SUPPRESS,  # Internal/testing use
+    )
+
+    args = parser.parse_args()
+
+    paths = get_dotbash_paths(args.file)
+    pkg_file = paths["pkg_file"]
+    install_sh = paths["install_sh"]
+    hostname = paths["hostname"]
+
+    # Load tracked packages
+    packages_txt, install_sh_text = load_tracked_packages(pkg_file, install_sh)
+
+    # Get currently installed packages
+    installed_set = get_installed_packages()
+
+    # Scan history
+    recent_candidates = scan_recent_packages(
+        days=args.days, scan_all=args.all, log_pattern=args.log_pattern
+    )
+
+    missing_packages = []
+    tracked_packages = []
+    removed_packages = []
+
+    for pkg, info in sorted(recent_candidates.items(), key=lambda x: x[1]["date"]):
+        # Check if currently installed
+        if installed_set is not None and pkg not in installed_set:
+            removed_packages.append((pkg, info))
+            continue
+
+        in_pkg_txt = pkg in packages_txt
+        in_install_sh = bool(
+            install_sh_text and re.search(r"\b" + re.escape(pkg) + r"\b", install_sh_text)
+        )
+
+        if in_pkg_txt:
+            tracked_packages.append((pkg, info, "in packages.txt"))
+        elif in_install_sh:
+            tracked_packages.append((pkg, info, "in install.sh"))
+        else:
+            missing_packages.append((pkg, info))
+
+    # Missing-only mode (clean output for scripts/piping)
+    if args.missing_only:
+        for pkg, _ in missing_packages:
+            print(pkg)
+        sys.exit(0)
+
+    # Regular report mode
+    timeframe_str = "all history" if args.all else f"last {args.days} days"
+    print(f"Target packages file: {pkg_file} (host: {hostname})")
+    print(f"Scanning apt history ({timeframe_str})...\n")
+
+    if missing_packages:
+        print(f"\033[1;33mNewly installed packages (MISSING from {os.path.basename(pkg_file)}):\033[0m")
+        for pkg, info in missing_packages:
+            dt_str = info["date"].strftime("%Y-%m-%d %H:%M")
+            if args.verbose:
+                print(f"  \033[1m{pkg:<25}\033[0m installed {dt_str}  [{info['commandline']}]")
+            else:
+                print(f"  \033[1m{pkg:<25}\033[0m installed {dt_str}")
+        print()
+    else:
+        print("\033[1;32m✓ No untracked packages found. Everything is up to date!\033[0m\n")
+
+    if tracked_packages and args.verbose:
+        print("Already tracked in dotfiles:")
+        for pkg, info, origin in tracked_packages:
+            dt_str = info["date"].strftime("%Y-%m-%d %H:%M")
+            print(f"  [{origin:<15}] {pkg:<25} ({dt_str})")
+        print()
+    elif tracked_packages:
+        print(f"Already tracked in dotfiles: {len(tracked_packages)} package(s)")
+
+    if removed_packages and args.verbose:
+        print("\nPreviously installed but now removed:")
+        for pkg, info in removed_packages:
+            dt_str = info["date"].strftime("%Y-%m-%d %H:%M")
+            print(f"  {pkg:<25} ({dt_str})")
+        print()
+
+    # Handle --add
+    if args.add:
+        if not missing_packages:
+            print("Nothing to add.")
+            sys.exit(0)
+
+        pkgs_to_add = [pkg for pkg, _ in missing_packages]
+        add_packages_to_file(pkg_file, pkgs_to_add)
+        print(f"\n\033[1;32mSuccessfully added {len(pkgs_to_add)} package(s) to {pkg_file}:\033[0m")
+        for pkg in pkgs_to_add:
+            print(f"  + {pkg}")
+    elif missing_packages:
+        print("\n\033[0;36mTo add missing packages to packages.txt, run:\033[0m")
+        print("  recent-packages --add")
+        print("Or copy/pipe directly:")
+        print(f"  recent-packages --missing-only >> {pkg_file}")
+
+
+if __name__ == "__main__":
+    main()
