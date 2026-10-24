@@ -23,11 +23,12 @@ tree
 gvfs-fuse
 mtp-tools
 libmtp-common
-libmtp9
+libmtp9t64
 libmtp-runtime
+mtp-tools
 libimobiledevice-utils
-libimobiledevice6
-usbmuxd
+libimobiledevice-1.0-6
+libusbmuxd6
 ifuse
 wireguard-tools
 iperf
