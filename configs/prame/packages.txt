@@ -31,3 +31,7 @@ usbmuxd
 ifuse
 wireguard-tools
 iperf
+libraw-bin
+gthumb
+net-tools
+edid-decode
