@@ -28,7 +28,7 @@ libmtp-runtime
 mtp-tools
 libimobiledevice-utils
 libimobiledevice-1.0-6
-libusbmuxd6
+usbmuxd
 ifuse
 wireguard-tools
 iperf
