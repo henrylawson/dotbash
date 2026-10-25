@@ -23,7 +23,7 @@ clone_app() {
     (
       cd "$WORKSPACE_PATH/$APP"
       git remote set-url origin $GIT_URL
-      git pull --rebase
+      git pull --rebase --autostash
     )
     return 0
   fi

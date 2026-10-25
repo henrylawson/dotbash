@@ -13,12 +13,20 @@ install_rclone() {
 }
 
 install_google_chrome() {
-  if [ -f /etc/apt/sources.list.d/google-chrome.sources ] || [ -f /etc/apt/sources.list.d/google-chrome.list ]; then
+  sudo rm -f /etc/apt/sources.list.d/google-chrome.list /etc/apt/keyrings/google-chrome.gpg
+  if [ -f /etc/apt/sources.list.d/google-chrome.sources ]; then
     echo 'Repo exists'
   else
-    sudo install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --batch --yes --dearmor -o /etc/apt/keyrings/google-chrome.gpg
-    echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+    sudo install -m 0755 -d /usr/share/keyrings
+    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/google-chrome.gpg
+    cat <<EOF | sudo tee /etc/apt/sources.list.d/google-chrome.sources
+Types: deb
+URIs: https://dl.google.com/linux/chrome-stable/deb/
+Suites: stable
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/google-chrome.gpg
+EOF
     sudo apt update -y
   fi
 
@@ -27,12 +35,20 @@ install_google_chrome() {
 }
 
 install_1password() {
-  if ls /etc/apt/sources.list.d/1password.list 2>/dev/null
-  then
+  sudo rm -f /etc/apt/sources.list.d/1password.list
+  if [ -f /etc/apt/sources.list.d/1password.sources ]; then
     echo 'Repo exists'
   else
+    sudo install -m 0755 -d /usr/share/keyrings
     curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --batch --yes --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
-    echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list
+    cat <<EOF | sudo tee /etc/apt/sources.list.d/1password.sources
+Types: deb
+URIs: https://downloads.1password.com/linux/debian/amd64
+Suites: stable
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/1password-archive-keyring.gpg
+EOF
     sudo mkdir -p /etc/debsig/policies/AC2D62742012EA22/
     curl -sS https://downloads.1password.com/linux/debian/debsig/1password.pol | sudo tee /etc/debsig/policies/AC2D62742012EA22/1password.pol
     sudo mkdir -p /usr/share/debsig/keyrings/AC2D62742012EA22
@@ -44,12 +60,19 @@ install_1password() {
 }
 
 install_terraform() {
-  if ls /etc/apt/sources.list.d/hashicorp.list 2>/dev/null
-  then
+  sudo rm -f /etc/apt/sources.list.d/hashicorp.list
+  if [ -f /etc/apt/sources.list.d/hashicorp.sources ]; then
     echo 'Repo exists'
   else
+    sudo install -m 0755 -d /usr/share/keyrings
     wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-    echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+    cat <<EOF | sudo tee /etc/apt/sources.list.d/hashicorp.sources
+Types: deb
+URIs: https://apt.releases.hashicorp.com
+Suites: $(lsb_release -cs)
+Components: main
+Signed-By: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+EOF
     sudo apt update -y
   fi
 
@@ -57,8 +80,8 @@ install_terraform() {
 }
 
 install_docker() {
-  if ls /etc/apt/sources.list.d/docker.list 2>/dev/null
-  then
+  sudo rm -f /etc/apt/sources.list.d/docker.list
+  if [ -f /etc/apt/sources.list.d/docker.sources ]; then
     echo 'Repo exists'
   else
     sudo apt update
@@ -67,10 +90,14 @@ install_docker() {
     sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
     sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-    echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-      $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    cat <<EOF | sudo tee /etc/apt/sources.list.d/docker.sources
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
     sudo apt update -y
   fi
 
@@ -86,6 +113,7 @@ install_docker() {
 }
 
 install_vscode() {
+  sudo rm -f /etc/apt/sources.list.d/vscode.list
   if [ ! -f /usr/share/keyrings/microsoft.gpg ]; then
     echo 'Fetching Microsoft GPG key...'
     sudo apt install -y wget gpg apt-transport-https
@@ -96,19 +124,37 @@ install_vscode() {
     echo 'Microsoft GPG key already exists.'
   fi
 
-  echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+  if [ -f /etc/apt/sources.list.d/vscode.sources ]; then
+    echo 'Repo exists'
+  else
+    cat <<EOF | sudo tee /etc/apt/sources.list.d/vscode.sources
+Types: deb
+URIs: https://packages.microsoft.com/repos/code
+Suites: stable
+Components: main
+Architectures: amd64 arm64 armhf
+Signed-By: /usr/share/keyrings/microsoft.gpg
+EOF
+    sudo apt update
+  fi
 
-  sudo apt update
   sudo apt install -y code
 }
 
 install_spotify() {
-  if ls /etc/apt/sources.list.d/spotify.list 2>/dev/null
-  then
+  sudo rm -f /etc/apt/sources.list.d/spotify.list
+  if [ -f /etc/apt/sources.list.d/spotify.sources ]; then
     echo 'Repo exists'
   else
-    curl -sS https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
-    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -sS https://download.spotify.com/debian/pubkey_5384CE82BA52C83A.asc | sudo gpg --dearmor --yes -o /etc/apt/keyrings/spotify.gpg
+    cat <<EOF | sudo tee /etc/apt/sources.list.d/spotify.sources
+Types: deb
+URIs: http://repository.spotify.com
+Suites: stable
+Components: non-free
+Signed-By: /etc/apt/keyrings/spotify.gpg
+EOF
     sudo apt update -y
   fi
 
@@ -167,12 +213,12 @@ install_ruby() {
       libgdbm-dev
 
     [ -d ~/.rbenv ] || git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-    git -C ~/.rbenv pull --rebase || true
+    git -C ~/.rbenv pull --rebase --autostash || true
 
     local ruby_build_dir
     ruby_build_dir="$(~/.rbenv/bin/rbenv root 2>/dev/null || echo ~/.rbenv)/plugins/ruby-build"
     [ -d "$ruby_build_dir" ] || git clone https://github.com/rbenv/ruby-build.git "$ruby_build_dir"
-    git -C "$ruby_build_dir" pull || true
+    git -C "$ruby_build_dir" pull --rebase --autostash || true
 
     ~/.rbenv/bin/rbenv install --skip-existing "${ruby_version}"
     ~/.rbenv/bin/rbenv global "${ruby_version}"
@@ -197,9 +243,22 @@ install_google_antigravity() {
 }
 
 install_mullvad_vpn() {
-  sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-  echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable stable main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-  sudo apt update -y
+  sudo rm -f /etc/apt/sources.list.d/mullvad.list
+  if [ -f /etc/apt/sources.list.d/mullvad.sources ]; then
+    echo 'Repo exists'
+  else
+    sudo install -m 0755 -d /usr/share/keyrings
+    sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
+    cat <<EOF | sudo tee /etc/apt/sources.list.d/mullvad.sources
+Types: deb
+URIs: https://repository.mullvad.net/deb/stable/
+Suites: stable
+Components: main
+Architectures: $(dpkg --print-architecture)
+Signed-By: /usr/share/keyrings/mullvad-keyring.asc
+EOF
+    sudo apt update -y
+  fi
   sudo apt install -y mullvad-vpn
 }
 
