@@ -13,13 +13,12 @@ install_rclone() {
 }
 
 install_google_chrome() {
-  if ls /etc/apt/sources.list.d/google-chrome.list 2>/dev/null
-  then
+  if [ -f /etc/apt/sources.list.d/google-chrome.sources ] || [ -f /etc/apt/sources.list.d/google-chrome.list ]; then
     echo 'Repo exists'
   else
-    wget https://dl-ssl.google.com/linux/linux_signing_key.pub -O /tmp/google.pub
-    sudo gpg --no-default-keyring --keyring /etc/apt/keyrings/google-chrome.gpg --import /tmp/google.pub
-    echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg]  https://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --batch --yes --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+    echo 'deb [arch=amd64 signed-by=/etc/apt/keyrings/google-chrome.gpg] https://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
     sudo apt update -y
   fi
 
