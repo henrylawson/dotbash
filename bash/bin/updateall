@@ -47,3 +47,27 @@ then
   fwupdmgr refresh || true
   fwupdmgr update -y || true
 fi
+
+if hash bun 2>/dev/null
+then
+  printf "\n${GREEN}## Update Bun${NO_COLOR}\n"
+  bun upgrade || true
+fi
+
+if hash flutter 2>/dev/null
+then
+  printf "\n${GREEN}## Update Flutter${NO_COLOR}\n"
+  flutter upgrade --quiet || true
+fi
+
+if hash rclone 2>/dev/null
+then
+  printf "\n${GREEN}## Update Rclone${NO_COLOR}\n"
+  sudo rclone selfupdate || true
+fi
+
+if hash agy 2>/dev/null
+then
+  printf "\n${GREEN}## Update Google Antigravity CLI${NO_COLOR}\n"
+  agy update || true
+fi

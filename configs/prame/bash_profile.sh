@@ -5,7 +5,9 @@ export PATH=$PATH:/usr/local/go/bin
 export CLOUDSDK_PYTHON_SITEPACKAGES=1
 
 # ssh agent
-if [ -z "$SSH_AUTH_SOCK" ] ; then
+if [ -S "$HOME/.1password/t/agent.sock" ]; then
+    export SSH_AUTH_SOCK="$HOME/.1password/t/agent.sock"
+elif [ -z "$SSH_AUTH_SOCK" ] ; then
     eval `ssh-agent` &> /dev/null
 fi
 

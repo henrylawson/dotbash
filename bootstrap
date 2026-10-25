@@ -13,6 +13,25 @@ create_workspace_folder() {
   mkdir -p $WORKSPACE_PATH
 }
 
+keep_sudo_alive() {
+  if [ "${EUID:-$(id -u)}" -ne 0 ]; then
+    sudo -v
+    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+  fi
+}
+
+link_file() {
+  local src="$1"
+  local dst="$2"
+
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+    local backup="${dst}.bak.$(date +%s)"
+    echo "Backing up existing non-symlink $dst to $backup"
+    mv "$dst" "$backup"
+  fi
+  ln -sfn "$src" "$dst"
+}
+
 clone_app() {
   APP=$1
   HTTPS_URL="https://github.com/henrylawson/$APP.git"
@@ -37,11 +56,11 @@ clone_app() {
 }
 
 configure_dotbash() {
-  ln -sfn $WORKSPACE_PATH/dotbash/bashrc ~/.bashrc
-  ln -sfn $WORKSPACE_PATH/dotbash/bash_profile ~/.bash_profile
-  ln -sfn $WORKSPACE_PATH/dotbash/bash ~/.bash
-  ln -sfn $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
-  ln -sfn $WORKSPACE_PATH/dotbash/tmux.conf ~/.tmux.conf
+  link_file $WORKSPACE_PATH/dotbash/bashrc ~/.bashrc
+  link_file $WORKSPACE_PATH/dotbash/bash_profile ~/.bash_profile
+  link_file $WORKSPACE_PATH/dotbash/bash ~/.bash
+  link_file $WORKSPACE_PATH/dotbash/inputrc ~/.inputrc
+  link_file $WORKSPACE_PATH/dotbash/tmux.conf ~/.tmux.conf
   chmod 755 ~/.bash/bin/*
 
   echo $BOX_HOSTNAME > $WORKSPACE_PATH/dotbash/.hostname
@@ -90,16 +109,16 @@ manually_configure_apps() {
 }
 
 configure_dotvim() {
-  ln -sfn $WORKSPACE_PATH/dotvim/gvimrc ~/.gvimrc
-  ln -sfn $WORKSPACE_PATH/dotvim/vimrc ~/.vimrc
+  link_file $WORKSPACE_PATH/dotvim/gvimrc ~/.gvimrc
+  link_file $WORKSPACE_PATH/dotvim/vimrc ~/.vimrc
   [[ -L ~/.vim  ]] || rm -rf ~/.vim
-  ln -sfn $WORKSPACE_PATH/dotvim/vim ~/.vim
-  ln -sfn $WORKSPACE_PATH/dotvim/ctags ~/.ctags
+  link_file $WORKSPACE_PATH/dotvim/vim ~/.vim
+  link_file $WORKSPACE_PATH/dotvim/ctags ~/.ctags
 }
 
 configure_dotgit() {
-  ln -sfn $WORKSPACE_PATH/dotgit/gitconfig ~/.gitconfig
-  ln -sfn $WORKSPACE_PATH/dotgit/gitignore ~/.gitignore
+  link_file $WORKSPACE_PATH/dotgit/gitconfig ~/.gitconfig
+  link_file $WORKSPACE_PATH/dotgit/gitignore ~/.gitignore
 }
 
 symlink_drive() {
@@ -132,6 +151,7 @@ clean_up() {
 
 pp "Creating workspace folder"        && create_workspace_folder
 pp "Downloading dotbash"              && clone_app dotbash
+pp "Authenticating sudo"              && keep_sudo_alive
 pp "Installing native applications"   && install_native_apps
 pp "Installing manual applications"   && install_manual_apps
 pp "Installing pip applications"      && install_pip_apps

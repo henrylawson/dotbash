@@ -36,3 +36,5 @@ libraw-bin
 gthumb
 net-tools
 edid-decode
+ripgrep
+zoxide

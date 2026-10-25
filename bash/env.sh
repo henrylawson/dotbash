@@ -22,6 +22,13 @@ export PATH=$JAVA_HOME/bin:$PATH
 [ -x "$(command -v kubectl)" ] && source <(kubectl completion bash)
 
 # fzf
-export FZF_DEFAULT_COMMAND='ag -l --nocolor -g ""'
+if hash rg 2>/dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+else
+  export FZF_DEFAULT_COMMAND='ag -l --nocolor -g ""'
+fi
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# zoxide
+hash zoxide 2>/dev/null && eval "$(zoxide init bash)"

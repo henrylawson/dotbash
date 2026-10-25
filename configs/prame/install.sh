@@ -291,7 +291,11 @@ customize_ubuntu_and_gnome() {
   gsettings set com.ubuntu.update-notifier show-livepatch-status-icon false
 
   # hide accessibility icon
-  echo "Manually install 'Hide Universal Access' gnome extension"
+  if hash gnome-extensions 2>/dev/null && gnome-extensions list | grep -q 'hide-universal-access'; then
+    gnome-extensions enable hide-universal-access@akiirui.github.io 2>/dev/null || true
+  else
+    echo "Manually install 'Hide Universal Access' gnome extension"
+  fi
 
   # set font scaling factor
   gsettings set org.gnome.desktop.interface text-scaling-factor 1.35
