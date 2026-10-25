@@ -20,16 +20,20 @@ clone_app() {
 
   if [ -d "$WORKSPACE_PATH/$APP" ]
   then
-    cd "$WORKSPACE_PATH/$APP"
-    git remote set-url origin $GIT_URL
-    git pull --rebase
+    (
+      cd "$WORKSPACE_PATH/$APP"
+      git remote set-url origin $GIT_URL
+      git pull --rebase
+    )
     return 0
   fi
 
-  cd $WORKSPACE_PATH
-  git clone $HTTPS_URL
-  cd $APP
-  git remote set-url origin $GIT_URL
+  (
+    cd $WORKSPACE_PATH
+    git clone $HTTPS_URL
+    cd $APP
+    git remote set-url origin $GIT_URL
+  )
 }
 
 configure_dotbash() {
@@ -44,11 +48,11 @@ configure_dotbash() {
 }
 
 install_native_apps() {
-  mkdir -p "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
+  local config_dir="${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
+  mkdir -p "${config_dir}"
 
-  cd "${WORKSPACE_PATH}/dotbash/configs/${BOX_HOSTNAME}"
-  touch packages.txt
-  xargs sudo apt --yes install < packages.txt
+  touch "${config_dir}/packages.txt"
+  xargs -r sudo apt --yes install < "${config_dir}/packages.txt"
 
   sudo mkdir -p /opt/user
   sudo chown "${USER}" /opt/user

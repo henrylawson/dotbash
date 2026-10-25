@@ -118,9 +118,9 @@ install_spotify() {
 install_golang() {
   local go_version=1.22.4
 
-  if go version | grep "${go_version}"
+  if hash go 2>/dev/null && go version | grep -q "${go_version}"
   then
-    echo "go already installed"
+    echo "go ${go_version} already installed"
   else
     curl -OL "https://golang.org/dl/go${go_version}.linux-amd64.tar.gz"
     sudo rm -rf /usr/local/go
@@ -132,7 +132,7 @@ install_golang() {
 install_nodejs() {
   local node_version=22
 
-  if node -v | grep "${node_version}"
+  if hash node 2>/dev/null && node -v | grep -q "v${node_version}\."
   then
     node -v
   else
@@ -149,7 +149,7 @@ install_nodejs() {
 install_ruby() {
   local ruby_version=3.3.5
 
-  if ruby -v | grep "${ruby_version}"
+  if hash ruby 2>/dev/null && ruby -v | grep -q "${ruby_version}"
   then
     ruby -v
   else
@@ -166,16 +166,17 @@ install_ruby() {
       libffi-dev \
       libgdbm-dev
 
-    git clone https://github.com/rbenv/rbenv.git ~/.rbenv || true
-    cd ~/.rbenv 
-    git pull --rebase
+    [ -d ~/.rbenv ] || git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+    git -C ~/.rbenv pull --rebase || true
 
-    git clone https://github.com/rbenv/ruby-build.git "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build || true
-    git -C "$(~/.rbenv/bin/rbenv root)"/plugins/ruby-build pull
+    local ruby_build_dir
+    ruby_build_dir="$(~/.rbenv/bin/rbenv root 2>/dev/null || echo ~/.rbenv)/plugins/ruby-build"
+    [ -d "$ruby_build_dir" ] || git clone https://github.com/rbenv/ruby-build.git "$ruby_build_dir"
+    git -C "$ruby_build_dir" pull || true
 
-    bin/rbenv install --skip-existing "${ruby_version}"
-    bin/rbenv global "${ruby_version}"
-    shims/gem install bundler
+    ~/.rbenv/bin/rbenv install --skip-existing "${ruby_version}"
+    ~/.rbenv/bin/rbenv global "${ruby_version}"
+    ~/.rbenv/shims/gem install bundler
   fi
 }
 
@@ -183,7 +184,7 @@ install_framework_firmware() {
   sudo apt install -y fwupd
   fwupdmgr refresh --force || true
   fwupdmgr get-updates || true
-  fwupdmgr update || true
+  fwupdmgr update -y || true
 }
 
 install_google_antigravity() {

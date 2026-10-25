@@ -7,7 +7,7 @@ brew="brew update && brew cleanup"
 cask="brew update && brew cask list | xargs brew cask install"
 macosx="softwareupdate -i -a --verbose"
 npm="sudo npm update -g --verbose --no-save"
-aptget="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo systemctl daemon-reload && sudo do-release-upgrade || true"
+aptget="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean && sudo systemctl daemon-reload"
 gcloud="gcloud components update --quiet"
 snap="snap refresh"
 
@@ -39,4 +39,11 @@ if hash snap 2>/dev/null
 then
   printf "\n${GREEN}## Update snap packages${NO_COLOR}\n"
   bash -c "$snap"
+fi
+
+if hash fwupdmgr 2>/dev/null
+then
+  printf "\n${GREEN}## Update firmware${NO_COLOR}\n"
+  fwupdmgr refresh || true
+  fwupdmgr update -y || true
 fi
