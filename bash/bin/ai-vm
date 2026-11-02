@@ -1,0 +1,441 @@
+#!/usr/bin/env bash
+#
+# ai-vm: Launch or connect to a shared Multipass AI development VM (ai-vm).
+# Mounts the current directory into the VM, provisions key developer toolchains,
+# installs and configures Pi coding harness wired to Qwen 2.5 Coder
+# (hosted at http://192.168.20.23:11434/), and drops directly into the working directory.
+#
+
+set -euo pipefail
+
+if ! command -v multipass >/dev/null 2>&1; then
+  echo "multipass is not installed" >&2
+  exit 1
+fi
+
+PROJECT_DIR="$(pwd)"
+PROJECT_NAME="$(basename "$PROJECT_DIR")"
+if [ -z "$PROJECT_NAME" ] || [ "$PROJECT_NAME" = "/" ]; then
+  PROJECT_NAME="workspace"
+fi
+
+VM_NAME="${AI_VM_NAME:-${AGY_VM_NAME:-ai-vm}}"
+CPUS="${AI_VM_CPUS:-${AGY_VM_CPUS:-4}}"
+MEM="${AI_VM_MEM:-${AGY_VM_MEM:-8G}}"
+DISK="${AI_VM_DISK:-${AGY_VM_DISK:-40G}}"
+IMAGE="${AI_VM_IMAGE:-${AGY_VM_IMAGE:-24.04}}"
+OLLAMA_ENDPOINT="${AI_VM_OLLAMA_URL:-http://192.168.20.23:11434}"
+DEFAULT_MODEL="${AI_VM_MODEL:-qwen2.5-coder:7b}"
+
+vm_exists() {
+  multipass list --format csv 2>/dev/null | awk -F',' -v name="$VM_NAME" '$1 == name {found=1} END {exit !found}'
+}
+
+vm_status() {
+  multipass list --format csv 2>/dev/null | awk -F',' -v name="$VM_NAME" '$1 == name {print $2}'
+}
+
+if ! vm_exists; then
+  echo "Creating VM '$VM_NAME' (${CPUS} CPUs, ${MEM} RAM, ${DISK} Disk)..."
+  echo "Launching instance..."
+
+  cat << 'EOF' | multipass launch "$IMAGE" \
+    --name "$VM_NAME" \
+    --cpus "$CPUS" \
+    --memory "$MEM" \
+    --disk "$DISK" \
+    --cloud-init -
+#cloud-config
+package_update: true
+packages:
+  # Base system and utilities
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - wget
+  - gnupg
+  - lsb-release
+  - software-properties-common
+  # Build tools and compilers
+  - build-essential
+  - gcc
+  - g++
+  - clang
+  - llvm
+  - make
+  - cmake
+  - ninja-build
+  - pkg-config
+  - autoconf
+  - automake
+  - libtool
+  - gdb
+  - valgrind
+  - strace
+  - lsof
+  # Header libraries (enables native compiling of Python/Ruby/Node extensions)
+  - libssl-dev
+  - zlib1g-dev
+  - libbz2-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - libffi-dev
+  - libncurses5-dev
+  - libgdbm-dev
+  - liblzma-dev
+  - libyaml-dev
+  # CLI search, processing and text tools
+  - git
+  - gh
+  - ripgrep
+  - fd-find
+  - fzf
+  - bat
+  - jq
+  - yq
+  - tree
+  - htop
+  - tmux
+  - unzip
+  - zip
+  - p7zip-full
+  - tar
+  - gzip
+  - bzip2
+  - xz-utils
+  - zstd
+  - file
+  - patch
+  - shellcheck
+  - shfmt
+  # Networking & HTTP testing
+  - httpie
+  - netcat-openbsd
+  - socat
+  - dnsutils
+  - iputils-ping
+  - traceroute
+  # Languages & Runtimes
+  - python3
+  - python3-pip
+  - python3-venv
+  - python3-dev
+  - pipx
+  - ruby-full
+  - ruby-dev
+  - bundler
+  - golang-go
+  - openjdk-21-jdk-headless
+  - maven
+  - php-cli
+  - php-curl
+  - php-mbstring
+  - php-xml
+  - php-zip
+  - composer
+  # Database & cache clients
+  - sqlite3
+  - postgresql-client
+  - default-mysql-client
+  - redis-tools
+  # Containers
+  - docker.io
+  - docker-compose-v2
+  - docker-buildx
+
+groups:
+  - docker
+
+system_info:
+  default_user:
+    groups: [docker, sudo]
+
+write_files:
+  - path: /etc/profile.d/99-ai-vm.sh
+    permissions: '0644'
+    owner: root:root
+    content: |
+      export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.bun/bin:$HOME/go/bin:/usr/local/go/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+      export GOPATH="$HOME/go"
+
+      # Ollama & Qwen 2.5 Coder endpoint configuration
+      export OLLAMA_HOST="${OLLAMA_HOST:-http://192.168.20.23:11434}"
+      export OPENAI_BASE_URL="${OPENAI_BASE_URL:-http://192.168.20.23:11434/v1}"
+      export OPENAI_API_KEY="${OPENAI_API_KEY:-ollama}"
+      export PI_DEFAULT_PROVIDER="ollama"
+      export PI_DEFAULT_MODEL="qwen2.5-coder:7b"
+
+      if [ -d "$HOME/.rbenv" ]; then
+        eval "$(rbenv init - bash 2>/dev/null || true)"
+      fi
+
+      if command -v mise >/dev/null 2>&1; then
+        eval "$(mise activate bash 2>/dev/null || true)"
+      fi
+
+      if command -v fnm >/dev/null 2>&1; then
+        eval "$(fnm env --use-on-cd 2>/dev/null || true)"
+      fi
+
+  - path: /usr/local/bin/provision-ai-vm.sh
+    permissions: '0755'
+    owner: root:root
+    content: |
+      #!/usr/bin/env bash
+      set -euxo pipefail
+
+      # 1. Docker daemon configuration & user access
+      usermod -aG docker ubuntu
+      systemctl enable --now docker
+
+      # 2. Package command aliases (Ubuntu package naming aliases)
+      if command -v fdfind >/dev/null 2>&1; then
+        ln -sf "$(command -v fdfind)" /usr/local/bin/fd
+      fi
+      if command -v batcat >/dev/null 2>&1; then
+        ln -sf "$(command -v batcat)" /usr/local/bin/bat
+      fi
+
+      # 3. HashiCorp Terraform
+      install -m 0755 -d /usr/share/keyrings
+      wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor --yes -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
+      apt-get update -y
+      apt-get install -y terraform
+
+      # 4. tenv (Terraform / OpenTofu / Terragrunt version manager)
+      ARCH="$(dpkg --print-architecture)"
+      TENV_DEB_URL="$(curl -fsSL https://api.github.com/repos/tofuutils/tenv/releases/latest | grep -o "https://github.com/tofuutils/tenv/releases/download/[^\"]*_${ARCH}.deb" | head -n 1 || true)"
+      if [ -n "$TENV_DEB_URL" ]; then
+        curl -fsSL -o /tmp/tenv.deb "$TENV_DEB_URL"
+        dpkg -i /tmp/tenv.deb || true
+        rm -f /tmp/tenv.deb
+      fi
+
+      # 5. Kubernetes CLI (kubectl)
+      KUBECTL_ARCH="$ARCH"
+      curl -fsSL "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${KUBECTL_ARCH}/kubectl" -o /usr/local/bin/kubectl || true
+      chmod +x /usr/local/bin/kubectl || true
+
+      # 6. Node.js 22 LTS + npm + Corepack (yarn & pnpm) + common TS tools
+      curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+      apt-get install -y nodejs
+      corepack enable || true
+      npm install -g yarn pnpm typescript tsx ts-node prettier eslint || true
+
+      # 7. Fast Node Manager (fnm)
+      curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir /usr/local/bin --skip-shell || true
+
+      # 8. Astral uv (Ultra-fast Python package & version manager) + core Python tools
+      curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh || true
+      su - ubuntu -c "uv tool install ruff || true"
+      su - ubuntu -c "uv tool install pytest || true"
+      su - ubuntu -c "uv tool install mypy || true"
+      su - ubuntu -c "uv tool install black || true"
+
+      # 9. Rust toolchain (rustup & cargo)
+      su - ubuntu -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable" || true
+      if [ -d "/home/ubuntu/.cargo/bin" ]; then
+        for bin in /home/ubuntu/.cargo/bin/*; do
+          if [ -f "$bin" ]; then
+            ln -sf "$bin" "/usr/local/bin/$(basename "$bin")" || true
+          fi
+        done
+      fi
+
+      # 10. Bun runtime & package manager
+      su - ubuntu -c "curl -fsSL https://bun.sh/install | bash" || true
+      if [ -f /home/ubuntu/.bun/bin/bun ]; then
+        ln -sf /home/ubuntu/.bun/bin/bun /usr/local/bin/bun
+      fi
+
+      # 11. Deno runtime
+      curl -fsSL https://deno.land/install.sh | env DENO_INSTALL=/usr/local sh || true
+
+      # 12. mise (Universal runtime version manager)
+      curl https://mise.run | env MISE_INSTALL_PATH=/usr/local/bin/mise sh || true
+
+      # 13. rbenv & ruby-build
+      if [ ! -d "/home/ubuntu/.rbenv" ]; then
+        su - ubuntu -c "git clone https://github.com/rbenv/rbenv.git ~/.rbenv"
+        su - ubuntu -c "git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build"
+      fi
+
+      # 14. Antigravity CLI (agy)
+      su - ubuntu -c "curl -fsSL https://antigravity.google/cli/install.sh | bash" || true
+      if [ -f /home/ubuntu/.local/bin/agy ]; then
+        ln -sf /home/ubuntu/.local/bin/agy /usr/local/bin/agy
+      fi
+
+      # 15. Pi coding agent harness installation
+      npm install -g --ignore-scripts @earendil-works/pi-coding-agent || true
+      su - ubuntu -c "curl -fsSL https://pi.dev/install.sh | sh" || true
+      if [ -f /home/ubuntu/.local/bin/pi ]; then
+        ln -sf /home/ubuntu/.local/bin/pi /usr/local/bin/pi
+      fi
+
+      # 16. Configure Pi coding harness wired to Qwen 2.5 Coder
+      mkdir -p /home/ubuntu/.pi/agent
+
+      cat << 'PI_MODELS_EOF' > /home/ubuntu/.pi/agent/models.json
+      {
+        "$schema": "https://pi.dev/schemas/models.schema.json",
+        "providers": {
+          "ollama": {
+            "name": "Qwen 2.5 Coder (Ollama)",
+            "baseUrl": "http://192.168.20.23:11434/v1",
+            "api": "openai-completions",
+            "apiKey": "ollama",
+            "models": [
+              {
+                "id": "qwen2.5-coder:7b",
+                "name": "Qwen 2.5 Coder 7B",
+                "contextWindow": 32768,
+                "maxTokens": 8192,
+                "reasoning": false,
+                "input": ["text"]
+              },
+              {
+                "id": "qwen2.5-coder:7b-instruct",
+                "name": "Qwen 2.5 Coder 7B Instruct",
+                "contextWindow": 32768,
+                "maxTokens": 8192,
+                "reasoning": false,
+                "input": ["text"]
+              },
+              {
+                "id": "Qwen2.5-Coder-7B-Instruct:latest",
+                "name": "Qwen 2.5 Coder 7B Instruct (latest)",
+                "contextWindow": 32768,
+                "maxTokens": 8192,
+                "reasoning": false,
+                "input": ["text"]
+              }
+            ]
+          }
+        }
+      }
+      PI_MODELS_EOF
+
+      cat << 'PI_SETTINGS_EOF' > /home/ubuntu/.pi/agent/settings.json
+      {
+        "$schema": "https://pi.dev/schemas/settings.schema.json",
+        "defaultProvider": "ollama",
+        "defaultModel": "qwen2.5-coder:7b",
+        "defaultProjectTrust": "always",
+        "defaultTools": [
+          "read",
+          "bash",
+          "edit",
+          "write",
+          "grep",
+          "find",
+          "ls"
+        ],
+        "packages": [
+          "npm:pi-subagents",
+          "npm:@schovest/pi-goal",
+          "npm:@narumitw/pi-plan-mode",
+          "npm:pi-web-access"
+        ]
+      }
+      PI_SETTINGS_EOF
+
+      cat << 'PI_MCP_EOF' > /home/ubuntu/.pi/agent/mcp.json
+      {
+        "mcpServers": {
+          "filesystem": {
+            "command": "npx",
+            "args": [
+              "-y",
+              "@modelcontextprotocol/server-filesystem",
+              "/home/ubuntu"
+            ]
+          },
+          "git": {
+            "command": "uvx",
+            "args": [
+              "mcp-server-git"
+            ]
+          },
+          "fetch": {
+            "command": "uvx",
+            "args": [
+              "mcp-server-fetch"
+            ]
+          }
+        }
+      }
+      PI_MCP_EOF
+
+      # Pre-cache Pi packages and ensure correct ownership
+      chown -R ubuntu:ubuntu /home/ubuntu/.pi
+      su - ubuntu -c "pi install npm:pi-subagents" || true
+      su - ubuntu -c "pi install npm:@schovest/pi-goal" || true
+      su - ubuntu -c "pi install npm:@narumitw/pi-plan-mode" || true
+      su - ubuntu -c "pi install npm:pi-web-access" || true
+      chown -R ubuntu:ubuntu /home/ubuntu/.pi
+
+      # 17. Ensure environment source in user bashrc
+      echo "[ -f /etc/profile.d/99-ai-vm.sh ] && source /etc/profile.d/99-ai-vm.sh" >> /home/ubuntu/.bashrc
+
+runcmd:
+  - /usr/local/bin/provision-ai-vm.sh
+EOF
+
+  echo "Waiting for provisioning to complete..."
+  multipass exec "$VM_NAME" -- cloud-init status --wait || true
+  echo "VM '$VM_NAME' ready."
+else
+  CURRENT_STATUS="$(vm_status)"
+  if [ "$CURRENT_STATUS" != "Running" ]; then
+    echo "Starting VM '$VM_NAME'..."
+    multipass start "$VM_NAME"
+  fi
+fi
+
+# Ensure VM is responsive before checking mounts or executing commands
+if ! multipass exec "$VM_NAME" -- true >/dev/null 2>&1; then
+  echo "Waiting for '$VM_NAME' to be responsive..."
+  WAIT_TIMEOUT=60
+  ELAPSED=0
+  until multipass exec "$VM_NAME" -- true >/dev/null 2>&1; do
+    if [ "$ELAPSED" -ge "$WAIT_TIMEOUT" ]; then
+      echo "Timed out waiting for '$VM_NAME' to become responsive." >&2
+      exit 1
+    fi
+    sleep 2
+    ELAPSED=$((ELAPSED + 2))
+  done
+fi
+
+# Check if current directory is already mounted in the VM
+MOUNT_TARGET=""
+if command -v jq >/dev/null 2>&1; then
+  MOUNT_TARGET="$(multipass info "$VM_NAME" --format json 2>/dev/null | jq -r --arg src "$PROJECT_DIR" '.info["'"$VM_NAME"'"]?.mounts // {} | to_entries[]? | select(.value.source_path == $src) | .key' 2>/dev/null | head -n 1 || true)"
+else
+  MOUNT_TARGET="$(multipass info "$VM_NAME" 2>/dev/null | awk -v src="$PROJECT_DIR" '$1 == src && $2 == "=>" {print $3}' | head -n 1 || true)"
+fi
+
+if [ -n "$MOUNT_TARGET" ]; then
+  TARGET_DIR="$MOUNT_TARGET"
+else
+  TARGET_DIR="/home/ubuntu/$PROJECT_NAME"
+  if command -v jq >/dev/null 2>&1; then
+    COLLIDING_SRC="$(multipass info "$VM_NAME" --format json 2>/dev/null | jq -r --arg tgt "$TARGET_DIR" '.info["'"$VM_NAME"'"]?.mounts[$tgt]?.source_path // empty' 2>/dev/null || true)"
+    if [ -n "$COLLIDING_SRC" ]; then
+      PARENT_DIR="$(basename "$(dirname "$PROJECT_DIR")")"
+      TARGET_DIR="/home/ubuntu/${PARENT_DIR}-${PROJECT_NAME}"
+    fi
+  elif multipass info "$VM_NAME" 2>/dev/null | grep -F " => $TARGET_DIR" >/dev/null 2>&1; then
+    PARENT_DIR="$(basename "$(dirname "$PROJECT_DIR")")"
+    TARGET_DIR="/home/ubuntu/${PARENT_DIR}-${PROJECT_NAME}"
+  fi
+
+  echo "Mounting '$PROJECT_DIR' -> '$VM_NAME:$TARGET_DIR'..."
+  multipass exec "$VM_NAME" -- mkdir -p "$TARGET_DIR"
+  multipass mount "$PROJECT_DIR" "$VM_NAME:$TARGET_DIR"
+fi
+
+echo "Entering '$VM_NAME' in '$TARGET_DIR'..."
+exec multipass exec "$VM_NAME" -- bash -c "cd '$TARGET_DIR' && exec bash -l"
