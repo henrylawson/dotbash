@@ -127,6 +127,7 @@ packages:
   - golang-go
   - openjdk-21-jdk-headless
   - maven
+  - gradle
   - php-cli
   - php-curl
   - php-mbstring
@@ -253,12 +254,12 @@ write_files:
       curl -fsSL https://deno.land/install.sh | env DENO_INSTALL=/usr/local sh || true
 
       # 12. mise (Universal runtime version manager)
-      curl https://mise.run | env MISE_INSTALL_PATH=/usr/local/bin/mise sh || true
+      curl -fsSL https://mise.run | env MISE_INSTALL_PATH=/usr/local/bin/mise sh || true
 
       # 13. rbenv & ruby-build
       if [ ! -d "/home/ubuntu/.rbenv" ]; then
-        su - ubuntu -c "git clone https://github.com/rbenv/rbenv.git ~/.rbenv"
-        su - ubuntu -c "git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build"
+        su - ubuntu -c "git clone --depth 1 https://github.com/rbenv/rbenv.git ~/.rbenv"
+        su - ubuntu -c "git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build"
       fi
 
       # 14. Antigravity CLI (agy)
@@ -267,14 +268,9 @@ write_files:
         ln -sf /home/ubuntu/.local/bin/agy /usr/local/bin/agy
       fi
 
-      # 15. Pi coding agent harness installation
+      # 15. Pi coding agent harness (lightweight & simple)
       npm install -g --ignore-scripts @earendil-works/pi-coding-agent || true
-      su - ubuntu -c "curl -fsSL https://pi.dev/install.sh | sh" || true
-      if [ -f /home/ubuntu/.local/bin/pi ]; then
-        ln -sf /home/ubuntu/.local/bin/pi /usr/local/bin/pi
-      fi
 
-      # 16. Configure Pi coding harness wired to Qwen 2.5 Coder
       mkdir -p /home/ubuntu/.pi/agent
 
       cat << 'PI_MODELS_EOF' > /home/ubuntu/.pi/agent/models.json
@@ -294,22 +290,6 @@ write_files:
                 "maxTokens": 8192,
                 "reasoning": false,
                 "input": ["text"]
-              },
-              {
-                "id": "qwen2.5-coder:7b-instruct",
-                "name": "Qwen 2.5 Coder 7B Instruct",
-                "contextWindow": 32768,
-                "maxTokens": 8192,
-                "reasoning": false,
-                "input": ["text"]
-              },
-              {
-                "id": "Qwen2.5-Coder-7B-Instruct:latest",
-                "name": "Qwen 2.5 Coder 7B Instruct (latest)",
-                "contextWindow": 32768,
-                "maxTokens": 8192,
-                "reasoning": false,
-                "input": ["text"]
               }
             ]
           }
@@ -322,61 +302,13 @@ write_files:
         "$schema": "https://pi.dev/schemas/settings.schema.json",
         "defaultProvider": "ollama",
         "defaultModel": "qwen2.5-coder:7b",
-        "defaultProjectTrust": "always",
-        "defaultTools": [
-          "read",
-          "bash",
-          "edit",
-          "write",
-          "grep",
-          "find",
-          "ls"
-        ],
-        "packages": [
-          "npm:pi-subagents",
-          "npm:@schovest/pi-goal",
-          "npm:@narumitw/pi-plan-mode",
-          "npm:pi-web-access"
-        ]
+        "defaultProjectTrust": "always"
       }
       PI_SETTINGS_EOF
 
-      cat << 'PI_MCP_EOF' > /home/ubuntu/.pi/agent/mcp.json
-      {
-        "mcpServers": {
-          "filesystem": {
-            "command": "npx",
-            "args": [
-              "-y",
-              "@modelcontextprotocol/server-filesystem",
-              "/home/ubuntu"
-            ]
-          },
-          "git": {
-            "command": "uvx",
-            "args": [
-              "mcp-server-git"
-            ]
-          },
-          "fetch": {
-            "command": "uvx",
-            "args": [
-              "mcp-server-fetch"
-            ]
-          }
-        }
-      }
-      PI_MCP_EOF
-
-      # Pre-cache Pi packages and ensure correct ownership
-      chown -R ubuntu:ubuntu /home/ubuntu/.pi
-      su - ubuntu -c "pi install npm:pi-subagents" || true
-      su - ubuntu -c "pi install npm:@schovest/pi-goal" || true
-      su - ubuntu -c "pi install npm:@narumitw/pi-plan-mode" || true
-      su - ubuntu -c "pi install npm:pi-web-access" || true
       chown -R ubuntu:ubuntu /home/ubuntu/.pi
 
-      # 17. Ensure environment source in user bashrc
+      # 16. Ensure environment source in user bashrc
       echo "[ -f /etc/profile.d/99-ai-vm.sh ] && source /etc/profile.d/99-ai-vm.sh" >> /home/ubuntu/.bashrc
 
 runcmd:
