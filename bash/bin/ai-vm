@@ -161,8 +161,6 @@ write_files:
 
       # Ollama & Qwen 2.5 Coder endpoint configuration
       export OLLAMA_HOST="${OLLAMA_HOST:-http://192.168.20.23:11434}"
-      export OPENAI_BASE_URL="${OPENAI_BASE_URL:-http://192.168.20.23:11434/v1}"
-      export OPENAI_API_KEY="${OPENAI_API_KEY:-ollama}"
       export PI_DEFAULT_PROVIDER="ollama"
       export PI_DEFAULT_MODEL="qwen2.5-coder:7b"
 
