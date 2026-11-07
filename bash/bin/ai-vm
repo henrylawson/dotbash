@@ -2,8 +2,7 @@
 #
 # ai-vm: Launch or connect to a shared Multipass AI development VM (ai-vm).
 # Mounts the current directory into the VM, provisions key developer toolchains,
-# installs and configures Pi coding harness wired to Qwen 2.5 Coder
-# (hosted at http://192.168.20.23:11434/), and drops directly into the working directory.
+# installs Antigravity CLI (agy), and drops directly into the working directory.
 #
 
 set -euo pipefail
@@ -24,8 +23,6 @@ CPUS="${AI_VM_CPUS:-${AGY_VM_CPUS:-4}}"
 MEM="${AI_VM_MEM:-${AGY_VM_MEM:-8G}}"
 DISK="${AI_VM_DISK:-${AGY_VM_DISK:-40G}}"
 IMAGE="${AI_VM_IMAGE:-${AGY_VM_IMAGE:-24.04}}"
-OLLAMA_ENDPOINT="${AI_VM_OLLAMA_URL:-http://192.168.20.23:11434}"
-DEFAULT_MODEL="${AI_VM_MODEL:-qwen2.5-coder:7b}"
 
 vm_exists() {
   multipass list --format csv 2>/dev/null | awk -F',' -v name="$VM_NAME" '$1 == name {found=1} END {exit !found}'
@@ -159,11 +156,6 @@ write_files:
       export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.bun/bin:$HOME/go/bin:/usr/local/go/bin:$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
       export GOPATH="$HOME/go"
 
-      # Ollama & Qwen 2.5 Coder endpoint configuration
-      export OLLAMA_HOST="${OLLAMA_HOST:-http://192.168.20.23:11434}"
-      export PI_DEFAULT_PROVIDER="ollama"
-      export PI_DEFAULT_MODEL="qwen2.5-coder:7b"
-
       if [ -d "$HOME/.rbenv" ]; then
         eval "$(rbenv init - bash 2>/dev/null || true)"
       fi
@@ -266,47 +258,7 @@ write_files:
         ln -sf /home/ubuntu/.local/bin/agy /usr/local/bin/agy
       fi
 
-      # 15. Pi coding agent harness (lightweight & simple)
-      npm install -g --ignore-scripts @earendil-works/pi-coding-agent || true
-
-      mkdir -p /home/ubuntu/.pi/agent
-
-      cat << 'PI_MODELS_EOF' > /home/ubuntu/.pi/agent/models.json
-      {
-        "$schema": "https://pi.dev/schemas/models.schema.json",
-        "providers": {
-          "ollama": {
-            "name": "Qwen 2.5 Coder (Ollama)",
-            "baseUrl": "http://192.168.20.23:11434/v1",
-            "api": "openai-completions",
-            "apiKey": "ollama",
-            "models": [
-              {
-                "id": "qwen2.5-coder:7b",
-                "name": "Qwen 2.5 Coder 7B",
-                "contextWindow": 32768,
-                "maxTokens": 8192,
-                "reasoning": false,
-                "input": ["text"]
-              }
-            ]
-          }
-        }
-      }
-      PI_MODELS_EOF
-
-      cat << 'PI_SETTINGS_EOF' > /home/ubuntu/.pi/agent/settings.json
-      {
-        "$schema": "https://pi.dev/schemas/settings.schema.json",
-        "defaultProvider": "ollama",
-        "defaultModel": "qwen2.5-coder:7b",
-        "defaultProjectTrust": "always"
-      }
-      PI_SETTINGS_EOF
-
-      chown -R ubuntu:ubuntu /home/ubuntu/.pi
-
-      # 16. Ensure environment source in user bashrc
+      # 15. Ensure environment source in user bashrc
       echo "[ -f /etc/profile.d/99-ai-vm.sh ] && source /etc/profile.d/99-ai-vm.sh" >> /home/ubuntu/.bashrc
 
 runcmd:
