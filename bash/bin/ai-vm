@@ -24,15 +24,224 @@ MEM="${AI_VM_MEM:-${AGY_VM_MEM:-8G}}"
 DISK="${AI_VM_DISK:-${AGY_VM_DISK:-40G}}"
 IMAGE="${AI_VM_IMAGE:-${AGY_VM_IMAGE:-24.04}}"
 
+run_with_timeout() {
+  local secs="$1"
+  shift
+  if command -v timeout >/dev/null 2>&1; then
+    timeout "$secs" "$@"
+  elif command -v gtimeout >/dev/null 2>&1; then
+    gtimeout "$secs" "$@"
+  else
+    "$@" &
+    local cmd_pid=$!
+    (
+      trap 'kill "${sleep_pid:-}" 2>/dev/null || true; exit 0' TERM
+      sleep "$secs" &
+      sleep_pid=$!
+      wait "$sleep_pid" 2>/dev/null || exit 0
+      kill -TERM "$cmd_pid" 2>/dev/null || true
+      sleep 2
+      kill -KILL "$cmd_pid" 2>/dev/null || true
+    ) >/dev/null 2>&1 &
+    local timer_pid=$!
+    local rc=0
+    wait "$cmd_pid" || rc=$?
+    kill "$timer_pid" 2>/dev/null || true
+    wait "$timer_pid" 2>/dev/null || true
+    return "$rc"
+  fi
+}
+
+run_mp_timeout() {
+  local secs="$1"
+  shift
+  run_with_timeout "$secs" multipass "$@" </dev/null
+}
+
 vm_exists() {
-  multipass list --format csv 2>/dev/null | awk -F',' -v name="$VM_NAME" '$1 == name {found=1} END {exit !found}'
+  local csv
+  if ! csv="$(run_mp_timeout 10 list --format csv 2>/dev/null)"; then
+    sleep 2
+    csv="$(run_mp_timeout 10 list --format csv 2>/dev/null)" || return 2
+  fi
+  printf '%s\n' "$csv" | awk -F',' -v name="$VM_NAME" '$1 == name {found=1} END {exit !found}'
 }
 
 vm_status() {
-  multipass list --format csv 2>/dev/null | awk -F',' -v name="$VM_NAME" '$1 == name {print $2}'
+  local csv status
+  csv="$(run_mp_timeout 10 list --format csv 2>/dev/null || true)"
+  status="$(printf '%s\n' "$csv" | awk -F',' -v name="$VM_NAME" '$1 == name {print $2; exit}')"
+  printf '%s\n' "${status:-Unknown}"
 }
 
-if ! vm_exists; then
+vm_is_responsive() {
+  run_mp_timeout 5 exec "$VM_NAME" -- true >/dev/null 2>&1
+}
+
+wait_for_vm_responsive() {
+  local timeout_secs="$1"
+  local deadline=$((SECONDS + timeout_secs))
+  while true; do
+    if vm_is_responsive; then
+      return 0
+    fi
+    if [ "$SECONDS" -ge "$deadline" ]; then
+      return 1
+    fi
+    sleep 2
+  done
+}
+
+force_restart_vm() {
+  run_mp_timeout 30 stop --force "$VM_NAME" >/dev/null 2>&1 || true
+  sleep 2
+  run_mp_timeout 90 start --timeout 60 "$VM_NAME" || true
+}
+
+ensure_vm_running() {
+  local status
+  status="$(vm_status)"
+
+  if [ "$status" = "Deleted" ]; then
+    echo "VM '$VM_NAME' is in Deleted state; recovering..."
+    run_mp_timeout 30 recover "$VM_NAME" || true
+    status="$(vm_status)"
+  fi
+
+  if [ "$status" = "Delayed Shutdown" ]; then
+    echo "VM '$VM_NAME' has a pending shutdown; cancelling..."
+    run_mp_timeout 10 stop --cancel "$VM_NAME" >/dev/null 2>&1 || true
+    status="$(vm_status)"
+  fi
+
+  # Fast path if already running and responsive (with short grace wait if finishing boot)
+  if [ "$status" = "Running" ] && vm_is_responsive; then
+    return 0
+  fi
+
+  if [ "$status" = "Running" ] || [ "$status" = "Starting" ] || [ "$status" = "Restarting" ]; then
+    echo "Checking if '$VM_NAME' (state: $status) becomes responsive..."
+    if wait_for_vm_responsive 10; then
+      return 0
+    fi
+    status="$(vm_status)"
+  fi
+
+  local max_attempts=3
+  local attempt
+  for attempt in $(seq 1 "$max_attempts"); do
+    if [ "$attempt" -eq 1 ]; then
+      case "$status" in
+        Stopped|Suspended)
+          echo "Starting VM '$VM_NAME' (state: $status, attempt $attempt/$max_attempts)..."
+          if ! run_mp_timeout 90 start --timeout 60 "$VM_NAME"; then
+            echo "Start failed for '$VM_NAME'; force-stopping to discard stale state and retrying start..." >&2
+            force_restart_vm
+          fi
+          ;;
+        Running)
+          echo "VM '$VM_NAME' is Running but unresponsive; restarting (attempt $attempt/$max_attempts)..." >&2
+          if ! run_mp_timeout 25 restart --timeout 20 "$VM_NAME"; then
+            echo "Restart failed or timed out for '$VM_NAME'; force-stopping and starting..." >&2
+            force_restart_vm
+          fi
+          ;;
+        *)
+          echo "VM '$VM_NAME' is in state '$status'; force-stopping and starting (attempt $attempt/$max_attempts)..." >&2
+          force_restart_vm
+          ;;
+      esac
+    else
+      echo "Recovering VM '$VM_NAME' via force-stop and start (attempt $attempt/$max_attempts)..." >&2
+      force_restart_vm
+    fi
+
+    echo "Waiting for '$VM_NAME' to become responsive..."
+    if wait_for_vm_responsive 45; then
+      return 0
+    fi
+
+    status="$(vm_status)"
+  done
+
+  echo "Error: '$VM_NAME' failed to become responsive after $max_attempts recovery attempts (last state: $status)." >&2
+  exit 1
+}
+
+mount_is_healthy() {
+  local target="$1"
+  run_mp_timeout 10 exec "$VM_NAME" -- bash -c "cd '$target' && ls >/dev/null" >/dev/null 2>&1
+}
+
+ensure_project_mounted() {
+  local mount_target=""
+  local info_json=""
+  local info_text=""
+
+  if command -v jq >/dev/null 2>&1; then
+    info_json="$(run_mp_timeout 10 info "$VM_NAME" --format json 2>/dev/null || true)"
+    if [ -n "$info_json" ]; then
+      mount_target="$(printf '%s\n' "$info_json" | jq -r --arg vm "$VM_NAME" --arg src "$PROJECT_DIR" '.info[$vm]?.mounts // {} | to_entries[]? | select(.value.source_path == $src) | .key' 2>/dev/null | head -n 1 || true)"
+    fi
+  else
+    info_text="$(run_mp_timeout 10 info "$VM_NAME" 2>/dev/null || true)"
+    if [ -n "$info_text" ]; then
+      mount_target="$(printf '%s\n' "$info_text" | awk -v src="$PROJECT_DIR" '($1 == src && $2 == "=>") {print $3; exit} ($1 == "Mounts:" && $2 == src && $3 == "=>") {print $4; exit}' || true)"
+    fi
+  fi
+
+  if [ -n "$mount_target" ]; then
+    TARGET_DIR="$mount_target"
+    if mount_is_healthy "$TARGET_DIR"; then
+      return 0
+    fi
+    echo "Existing mount '$VM_NAME:$TARGET_DIR' is stale or unreadable; remounting..." >&2
+    run_mp_timeout 15 umount "$VM_NAME:$TARGET_DIR" >/dev/null 2>&1 || true
+  else
+    TARGET_DIR="/home/ubuntu/$PROJECT_NAME"
+    local has_collision=0
+    if command -v jq >/dev/null 2>&1; then
+      if [ -n "$info_json" ] && [ -n "$(printf '%s\n' "$info_json" | jq -r --arg vm "$VM_NAME" --arg tgt "$TARGET_DIR" '.info[$vm]?.mounts[$tgt]?.source_path // empty' 2>/dev/null || true)" ]; then
+        has_collision=1
+      fi
+    elif [ -n "$info_text" ] && printf '%s\n' "$info_text" | grep -F " => $TARGET_DIR" >/dev/null 2>&1; then
+      has_collision=1
+    fi
+    if [ "$has_collision" -eq 1 ]; then
+      local parent_dir
+      parent_dir="$(basename "$(dirname "$PROJECT_DIR")")"
+      TARGET_DIR="/home/ubuntu/${parent_dir}-${PROJECT_NAME}"
+    fi
+  fi
+
+  local max_mount_attempts=3
+  local attempt
+  for attempt in $(seq 1 "$max_mount_attempts"); do
+    echo "Mounting '$PROJECT_DIR' -> '$VM_NAME:$TARGET_DIR' (attempt $attempt/$max_mount_attempts)..."
+    if [ "$attempt" -gt 1 ]; then
+      run_mp_timeout 15 umount "$VM_NAME:$TARGET_DIR" >/dev/null 2>&1 || true
+      sleep 2
+    fi
+    if run_mp_timeout 10 exec "$VM_NAME" -- mkdir -p "$TARGET_DIR" && \
+       run_mp_timeout 30 mount "$PROJECT_DIR" "$VM_NAME:$TARGET_DIR" && \
+       mount_is_healthy "$TARGET_DIR"; then
+      return 0
+    fi
+    echo "Mount attempt $attempt/$max_mount_attempts failed for '$VM_NAME:$TARGET_DIR'." >&2
+  done
+
+  echo "Error: Failed to mount '$PROJECT_DIR' into '$VM_NAME:$TARGET_DIR' after $max_mount_attempts attempts." >&2
+  exit 1
+}
+
+run_mp_timeout 15 wait-ready >/dev/null 2>&1 || true
+
+EXISTS_RC=0
+vm_exists || EXISTS_RC=$?
+if [ "$EXISTS_RC" -eq 2 ]; then
+  echo "Error: Failed to query Multipass instances (multipassd may be unavailable)." >&2
+  exit 1
+elif [ "$EXISTS_RC" -eq 1 ]; then
   echo "Creating VM '$VM_NAME' (${CPUS} CPUs, ${MEM} RAM, ${DISK} Disk)..."
   echo "Launching instance..."
 
@@ -259,65 +468,22 @@ write_files:
       fi
 
       # 15. Ensure environment source in user bashrc
-      echo "[ -f /etc/profile.d/99-ai-vm.sh ] && source /etc/profile.d/99-ai-vm.sh" >> /home/ubuntu/.bashrc
+      PROFILE_LINE="[ -f /etc/profile.d/99-ai-vm.sh ] && source /etc/profile.d/99-ai-vm.sh"
+      if ! grep -qxF "$PROFILE_LINE" /home/ubuntu/.bashrc 2>/dev/null; then
+        echo "$PROFILE_LINE" >> /home/ubuntu/.bashrc
+      fi
 
 runcmd:
   - /usr/local/bin/provision-ai-vm.sh
 EOF
 
   echo "Waiting for provisioning to complete..."
-  multipass exec "$VM_NAME" -- cloud-init status --wait || true
+  multipass exec "$VM_NAME" -- cloud-init status --wait </dev/null || true
   echo "VM '$VM_NAME' ready."
-else
-  CURRENT_STATUS="$(vm_status)"
-  if [ "$CURRENT_STATUS" != "Running" ]; then
-    echo "Starting VM '$VM_NAME'..."
-    multipass start "$VM_NAME"
-  fi
 fi
 
-# Ensure VM is responsive before checking mounts or executing commands
-if ! multipass exec "$VM_NAME" -- true >/dev/null 2>&1; then
-  echo "Waiting for '$VM_NAME' to be responsive..."
-  WAIT_TIMEOUT=60
-  ELAPSED=0
-  until multipass exec "$VM_NAME" -- true >/dev/null 2>&1; do
-    if [ "$ELAPSED" -ge "$WAIT_TIMEOUT" ]; then
-      echo "Timed out waiting for '$VM_NAME' to become responsive." >&2
-      exit 1
-    fi
-    sleep 2
-    ELAPSED=$((ELAPSED + 2))
-  done
-fi
-
-# Check if current directory is already mounted in the VM
-MOUNT_TARGET=""
-if command -v jq >/dev/null 2>&1; then
-  MOUNT_TARGET="$(multipass info "$VM_NAME" --format json 2>/dev/null | jq -r --arg src "$PROJECT_DIR" '.info["'"$VM_NAME"'"]?.mounts // {} | to_entries[]? | select(.value.source_path == $src) | .key' 2>/dev/null | head -n 1 || true)"
-else
-  MOUNT_TARGET="$(multipass info "$VM_NAME" 2>/dev/null | awk -v src="$PROJECT_DIR" '$1 == src && $2 == "=>" {print $3}' | head -n 1 || true)"
-fi
-
-if [ -n "$MOUNT_TARGET" ]; then
-  TARGET_DIR="$MOUNT_TARGET"
-else
-  TARGET_DIR="/home/ubuntu/$PROJECT_NAME"
-  if command -v jq >/dev/null 2>&1; then
-    COLLIDING_SRC="$(multipass info "$VM_NAME" --format json 2>/dev/null | jq -r --arg tgt "$TARGET_DIR" '.info["'"$VM_NAME"'"]?.mounts[$tgt]?.source_path // empty' 2>/dev/null || true)"
-    if [ -n "$COLLIDING_SRC" ]; then
-      PARENT_DIR="$(basename "$(dirname "$PROJECT_DIR")")"
-      TARGET_DIR="/home/ubuntu/${PARENT_DIR}-${PROJECT_NAME}"
-    fi
-  elif multipass info "$VM_NAME" 2>/dev/null | grep -F " => $TARGET_DIR" >/dev/null 2>&1; then
-    PARENT_DIR="$(basename "$(dirname "$PROJECT_DIR")")"
-    TARGET_DIR="/home/ubuntu/${PARENT_DIR}-${PROJECT_NAME}"
-  fi
-
-  echo "Mounting '$PROJECT_DIR' -> '$VM_NAME:$TARGET_DIR'..."
-  multipass exec "$VM_NAME" -- mkdir -p "$TARGET_DIR"
-  multipass mount "$PROJECT_DIR" "$VM_NAME:$TARGET_DIR"
-fi
+ensure_vm_running
+ensure_project_mounted
 
 echo "Entering '$VM_NAME' in '$TARGET_DIR'..."
 exec multipass exec "$VM_NAME" -- bash -c "cd '$TARGET_DIR' && exec bash -l"
